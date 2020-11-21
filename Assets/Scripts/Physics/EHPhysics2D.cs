@@ -25,7 +25,7 @@ public class EHPhysics2D : MonoBehaviour, ITickableComponent
 
         if (AttachedCollider)
         {
-            AttachedCollider.OnCollision2DStay += OnCollision;
+            AttachedCollider.OnCollision2DStay += OnEHCollisionStay;
         }
     }
 
@@ -40,7 +40,7 @@ public class EHPhysics2D : MonoBehaviour, ITickableComponent
         EHBaseCollider2D AttachedCollider = GetComponent<EHBaseCollider2D>();
         if (AttachedCollider)
         {
-            AttachedCollider.OnCollision2DStay -= OnCollision;
+            AttachedCollider.OnCollision2DStay -= OnEHCollisionStay;
         }
     }
     #endregion monobehaviour methods
@@ -66,7 +66,7 @@ public class EHPhysics2D : MonoBehaviour, ITickableComponent
         this.transform.position += new Vector3(Velocity.x, Velocity.y) * DeltaTime;
     }
 
-    private void OnCollision(EHBaseCollider2D BaseCollider, EHBaseCollider2D.FHitData HitData)
+    private void OnEHCollisionStay(EHBaseCollider2D.FHitData HitData)
     {
         if (HitData.HitDirection.y != 0 && Mathf.Sign(HitData.HitDirection.y) != Mathf.Sign(Velocity.y))
         {

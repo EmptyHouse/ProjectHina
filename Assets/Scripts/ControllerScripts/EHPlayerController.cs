@@ -15,6 +15,8 @@ public class EHPlayerController : EHBaseController
     {
         base.Awake();
     }
+
+    
     #endregion monobehaviour methods
 
     #region override methods

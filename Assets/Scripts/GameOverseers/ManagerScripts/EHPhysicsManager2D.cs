@@ -10,7 +10,7 @@ public class EHPhysicsManager2D : ITickableComponent
     public EHPhysicsManager2D()
     {
         ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.STATIC, new HashSet<EHBaseCollider2D>());
-        ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.MOVABLE, new HashSet<EHBaseCollider2D>());
+        ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.MOVEABLE, new HashSet<EHBaseCollider2D>());
         ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.PHYSICS, new HashSet<EHBaseCollider2D>());
     }
 
@@ -74,7 +74,7 @@ public class EHPhysicsManager2D : ITickableComponent
             PhysicsComponent.Tick(DeltaTime);
         }
 
-        foreach (EHBaseCollider2D MoveableCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVABLE])
+        foreach (EHBaseCollider2D MoveableCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVEABLE])
         {
             if (MoveableCollider.gameObject.activeInHierarchy) MoveableCollider.UpdateColliderBounds(true);
         }
@@ -92,7 +92,6 @@ public class EHPhysicsManager2D : ITickableComponent
     {
         foreach (EHBaseCollider2D PhysicsCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.PHYSICS])
         {
-            PhysicsCollisions.Clear();
             if (PhysicsCollider.gameObject.activeInHierarchy)
             {
                 CollisionNodeHeap.Clear();
@@ -107,13 +106,13 @@ public class EHPhysicsManager2D : ITickableComponent
                     }
                 }
 
-                foreach (EHBaseCollider2D Movable in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVABLE])
+                foreach (EHBaseCollider2D Moveable in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVEABLE])
                 {
-                    if (Movable.gameObject.activeInHierarchy)
+                    if (Moveable.gameObject.activeInHierarchy)
                     {
-                        if (PhysicsCollider.IsColliderOverlapping(Movable))
+                        if (PhysicsCollider.IsColliderOverlapping(Moveable))
                         {
-                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetPreviousColliderGeometry().ShortestDistance(Movable.GetColliderGeometry()), Movable));
+                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetPreviousColliderGeometry().ShortestDistance(Moveable.GetColliderGeometry()), Moveable));
                         }
                     }
                 }

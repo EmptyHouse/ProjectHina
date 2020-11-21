@@ -50,6 +50,7 @@ public class EHBox2DCollider : EHBaseCollider2D
         if (RectColliderGeometry.IsOverlapping(ColliderToPushOut.GetColliderGeometry()))
         {
             FHitData HitData = new FHitData();
+            HitData.OwningCollider = this;
             HitData.OtherCollider = ColliderToPushOut;
 
             if (PreviousRectColliderGeometry.MaxBounds.y < ColliderToPushOut.GetPreviousColliderGeometry().MinBounds.y)
@@ -78,19 +79,24 @@ public class EHBox2DCollider : EHBaseCollider2D
             }
 
             FHitData OtherHitData = HitData;
+            OtherHitData.OwningCollider = HitData.OtherCollider;
+            OtherHitData.OtherCollider = HitData.OwningCollider;
+
             OtherHitData.HitDirection *= -1;
 
-            OnCollision2DStay?.Invoke(this, HitData);
-            ColliderToPushOut.OnCollision2DStay?.Invoke(ColliderToPushOut, OtherHitData);
+            OnCollision2DStay?.Invoke(HitData);
+            ColliderToPushOut.OnCollision2DStay?.Invoke(OtherHitData);
 
-            if (!CollisionSet.Contains(ColliderToPushOut))
+            if (!ContainOverlappingCollider(ColliderToPushOut))
             {
-                CollisionSet.Add(ColliderToPushOut);
-                
+                AddColliderToHitSet(ColliderToPushOut);
+                OnCollision2DEnter?.Invoke(HitData);
+                ColliderToPushOut.OnCollision2DEnter?.Invoke(OtherHitData);
             }
-            
+
             return true;
         }
+
         return false;
     }
     #endregion override methods

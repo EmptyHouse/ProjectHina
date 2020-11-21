@@ -9,13 +9,13 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public enum EColliderType
     {
         STATIC,
-        MOVABLE,
+        MOVEABLE,
         PHYSICS,
         TRIGGER,
     }
     #endregion enums
-    public UnityAction<EHBaseCollider2D, FHitData> OnCollision2DStay;
-    public UnityAction<EHBaseCollider2D> OnCollision2DEnter;
+    public UnityAction<FHitData> OnCollision2DStay;
+    public UnityAction<FHitData> OnCollision2DEnter;
 
     private EHGeometry.BaseGeometry BaseColliderGeometry { get { return GetColliderGeometry(); } }
     private EHGeometry.BaseGeometry PreviousColliderGeometry { get { return GetPreviousColliderGeometry(); } }
@@ -24,7 +24,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     [Tooltip("The type of our collider. This will determine how we update our collider as well as certain interactions we will have with other colliders")]
     public EColliderType ColliderType = EColliderType.STATIC;
 
-    protected HashSet<EHBaseCollider2D> CollisionSet = new HashSet<EHBaseCollider2D>();
+    private HashSet<EHBaseCollider2D> OverlappingColliders = new HashSet<EHBaseCollider2D>();
 
     #region monobehaviour methods
     protected virtual void Awake()
@@ -38,6 +38,15 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         if (BaseGameOverseer.Instance)
         {
             BaseGameOverseer.Instance.PhysicsManager.AddCollisionComponent(this);
+        }
+    }
+
+    private void OnDisable()
+    {
+        List<EHBaseCollider2D> ColliderIterator = new List<EHBaseCollider2D>(OverlappingColliders);
+        foreach (EHBaseCollider2D OtherCollider in ColliderIterator)
+        {
+            RemoveColliderFromHitSet(OtherCollider);
         }
     }
 
@@ -59,7 +68,16 @@ public abstract class EHBaseCollider2D : MonoBehaviour
 
     public bool IsColliderOverlapping(EHBaseCollider2D OtherCollider)
     {
-        return BaseColliderGeometry.IsOverlapping(OtherCollider.BaseColliderGeometry);
+        if (BaseColliderGeometry.IsOverlapping(OtherCollider.BaseColliderGeometry))
+        {
+            return true;
+        }
+       
+        if (ContainOverlappingCollider(OtherCollider))
+        {
+            RemoveColliderFromHitSet(OtherCollider);
+        }
+        return false;
     }
 
     protected virtual void OnDestroy()
@@ -88,12 +106,34 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public abstract EHGeometry.BaseGeometry GetPreviousColliderGeometry();
     public abstract bool PushOutCollider(EHBaseCollider2D ColliderToPushOut);
 
+    protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider)
+    {
+        if (OtherCollider != null && OverlappingColliders.Add(OtherCollider))
+        {
+            print(OtherCollider.name + " was added");
+            OtherCollider.OverlappingColliders.Add(this);
+        }
+    }
 
+    protected void RemoveColliderFromHitSet(EHBaseCollider2D OtherCollider)
+    {
+        if (OtherCollider != null && OverlappingColliders.Remove(OtherCollider))
+        {
+            print(OtherCollider.name + " was removed");
+            OtherCollider.OverlappingColliders.Remove(this);
+        }    
+    }
+
+    protected bool ContainOverlappingCollider(EHBaseCollider2D OtherCollider)
+    {
+        return OverlappingColliders.Contains(OtherCollider);
+    }
 
     public struct FHitData
     {
         public Vector2 HitDirection;
         public float HitForce;
+        public EHBaseCollider2D OwningCollider;
         public EHBaseCollider2D OtherCollider;
     }
 }

@@ -108,7 +108,7 @@ public class EHDebugUIScreen : MonoBehaviour
 
         if (FramesPassedSinceLastUpdate >= FRAMES_PER_UPDATE)
         {
-            FrameCounterText.text = (FramesPassedSinceLastUpdate / FrameTimePassedSinceLastUpdate).ToString("0.00") + " FPS";
+            FrameCounterText.text = "FPS: " + (FramesPassedSinceLastUpdate / FrameTimePassedSinceLastUpdate).ToString("0.00");
             FramesPassedSinceLastUpdate = 0;
             FrameTimePassedSinceLastUpdate = 0;
         }
