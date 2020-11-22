@@ -101,7 +101,7 @@ public class EHPhysicsManager2D : ITickableComponent
                     {
                         if (PhysicsCollider.IsColliderOverlapping(Static))
                         {
-                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetPreviousColliderGeometry().ShortestDistance(Static.GetColliderGeometry()), Static));
+                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetShortestDistanceFromPreviousPosition(Static), Static));
                         }
                     }
                 }
@@ -112,7 +112,7 @@ public class EHPhysicsManager2D : ITickableComponent
                     {
                         if (PhysicsCollider.IsColliderOverlapping(Moveable))
                         {
-                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetPreviousColliderGeometry().ShortestDistance(Moveable.GetColliderGeometry()), Moveable));
+                            CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetShortestDistanceFromPreviousPosition(Moveable), Moveable));
                         }
                     }
                 }

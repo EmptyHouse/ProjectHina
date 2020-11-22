@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EHPhysics2D))]
+[RequireComponent(typeof(EHBaseCollider2D))]
 public class EHMovementComponent : MonoBehaviour
 {
     #region enums
@@ -18,23 +19,41 @@ public class EHMovementComponent : MonoBehaviour
     #region const values
     private const float JOYSTICK_WALK_THRESHOLD = .25f;
     private const float JOYSTICK_RUN_THRESHOLD = .7f;
+    private const float JOYSTICK_CROUCH_THRESHOLD = .6f;
     #endregion const values
 
     #region main variables
     [Header("Walking")]
+    [Tooltip("The max walking speed of our character")]
     public float WalkingSpeed = 5f;
+    [Tooltip("The max running speed of our character")]
     public float RunningSpeed = 11f;
+    [Tooltip("Acceleration of movement while our character is standing")]
     public float GroundAcceleration = 100f;
 
+    [Header("Crouching")]
+    [Tooltip("The acceleration of our character while they are crouching")]
+    public float CrouchingAcceleration = 100f;
+    [Tooltip("The max speed of our character while they are crouched")]
+    public float CrouchingSpeed = 5f;
+    [Tooltip("The percentage at which we will shorten the height of our character's collider while they are crouched")]
+    [Range(0f, 1f)]
+    public float CrouchingHeightPercentage = .5f;
+
     [Header("Jumping")]
+    [Tooltip("The acceleration or control that the character will have while they are in the air")]
+    public float HorizontalAirAcceleration = 100f;
     public int DoubleJumpCount = 1;
+    [Tooltip("The max height of our jump")]
     public float JumpHeightApex = 5;
+    [Tooltip("The time it will take us in seconds to reach that height")]
     public float TimeToReachApex = .5f;
     private float JumpVelocity;
 
     #endregion main variables
 
     private EHPhysics2D Physics2D;
+    private EHBaseCollider2D AssociatedCollider;
     private Vector2 CurrentMovementInput = Vector2.zero;
     private Vector2 PreviousMovementInput = Vector2.zero;
     private float CurrentSpeed;
@@ -45,7 +64,12 @@ public class EHMovementComponent : MonoBehaviour
     protected virtual void Awake()
     {
         Physics2D = GetComponent<EHPhysics2D>();
-        GetComponent<EHBaseCollider2D>().OnCollision2DEnter += OnEHCollisionEnter;
+        AssociatedCollider = GetComponent<EHBaseCollider2D>();
+
+        if (Physics2D == null) Debug.LogError("There is no associated with physics component with our movement component");
+        if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
+
+        AssociatedCollider.OnCollision2DEnter += OnEHCollisionEnter;
     }
 
     protected virtual void Update()
@@ -129,6 +153,25 @@ public class EHMovementComponent : MonoBehaviour
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
     }
 
+    private void UpdateMovementBasedOnMovementType()
+    {
+        switch (CurrentMovementType)
+        {
+            case MovementType.STANDING:
+                if (CurrentMovementInput.y < -JOYSTICK_CROUCH_THRESHOLD)
+                {
+
+                }
+                return;
+            case MovementType.CROUCH:
+
+                return;
+            case MovementType.IN_AIR:
+
+                return;
+        }
+    }
+
     /// <summary>
     /// Updates the movement type of our character. If we return true, it means that our movement type has
     /// changed
@@ -155,6 +198,16 @@ public class EHMovementComponent : MonoBehaviour
 
                 return;
         }
+    }
+
+    private void AttemptCrouch()
+    {
+
+    }
+
+    private void AttemptStand()
+    {
+
     }
 
     public void BeginJump()

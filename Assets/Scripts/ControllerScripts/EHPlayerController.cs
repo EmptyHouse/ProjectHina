@@ -6,7 +6,9 @@ public class EHPlayerController : EHBaseController
 {
     #region const variables
     private const string JUMP_COMMAND = "Jump";
+
     private const string HORIZONTAL_AXIS = "Horizontal";
+    private const string VERTICAL_AXIS = "Vertical";
     #endregion const variables
 
 
@@ -28,6 +30,7 @@ public class EHPlayerController : EHBaseController
         BindActionToInput(JUMP_COMMAND, false, MovementComponent.EndJump);
 
         BindActionToAxis(HORIZONTAL_AXIS, MovementComponent.SetHorizontalInput);
+        BindActionToAxis(VERTICAL_AXIS, MovementComponent.SetVerticalInput);
     }
     #endregion override methods
 }

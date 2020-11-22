@@ -10,7 +10,16 @@ public class EHHitboxRect : EHHitbox
     /// <summary>
     /// 
     /// </summary>
-    private EHGeometry.Rect2D AssociatedRect2D = new EHGeometry.Rect2D();
+    private EHRect2D RectGeometry;
+
+    #region monobehaviour methods
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        EHGeometry.DebugDrawRect(RectGeometry);
+    }
+    #endregion monobehaviour methods
+
 
     #region override methods
     public override void UpdateHitbox()
@@ -18,14 +27,24 @@ public class EHHitboxRect : EHHitbox
         Vector2 AdjustedSize = HitboxSize * new Vector2(transform.localScale.x, transform.localScale.y);
         Vector2 AdjustedPosition = new Vector2(transform.position.x, transform.position.y) + HitboxOffset - AdjustedSize / 2;
 
-        AssociatedRect2D.RectPosition = AdjustedPosition;
-        AssociatedRect2D.RectSize = AdjustedSize;
+        RectGeometry.RectPosition = AdjustedPosition;
+        RectGeometry.RectSize = AdjustedSize;
     }
 
-
-    protected override EHGeometry.BaseGeometry GetHitboxBaseGeometry()
+    public override EHGeometry.ShapeType GetHitbxoShape()
     {
-        return AssociatedRect2D;
+        return EHGeometry.ShapeType.Rect2D;
+    }
+
+    protected override bool IsHitboxOverlapping(EHHitbox OtherHitbox)
+    {
+        switch (OtherHitbox.GetHitbxoShape())
+        {
+            case EHGeometry.ShapeType.Rect2D:
+                return RectGeometry.IsOverlappingRect(((EHHitboxRect)OtherHitbox).RectGeometry);
+        }
+
+        return false;
     }
     #endregion override methods
 }

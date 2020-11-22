@@ -22,7 +22,6 @@ public abstract class EHHitbox : MonoBehaviour
     [Tooltip("The hitbox type that will be assigned to this hitbox component")]
     private EHitboxType HitboxType = EHitboxType.HITBOX;
     private HashSet<EHHitbox> IntersectingHitboxList = new HashSet<EHHitbox>();
-    private EHGeometry.BaseGeometry BaseGeometry { get { return GetHitboxBaseGeometry(); } }
     public EHDamageableComponent DamageableComponent { get; protected set; }
 
     #region monobehaviour methods
@@ -54,13 +53,13 @@ public abstract class EHHitbox : MonoBehaviour
         UpdateHitbox();
     }
 
+
     protected virtual void OnDrawGizmos()
     {
         if (!Application.isPlaying)
         {
             UpdateHitbox();
         }
-        BaseGeometry.DebugDrawGeometry(DebugGetColor(), true);
     }
 
     protected virtual void OnDisable()
@@ -72,9 +71,12 @@ public abstract class EHHitbox : MonoBehaviour
         }
     }
 
+    public virtual EHGeometry.ShapeType GetHitbxoShape() { return EHGeometry.ShapeType.None; }
+
+
     public bool CheckForHitboxOverlap(EHHitbox OtherHitbox)
     {
-        if (BaseGeometry.IsOverlapping(OtherHitbox.BaseGeometry))
+        if (IsHitboxOverlapping(OtherHitbox))
         {
             if (!IntersectingHitboxList.Contains(OtherHitbox))
             {
@@ -88,6 +90,8 @@ public abstract class EHHitbox : MonoBehaviour
         }
         return false;
     }
+
+    protected abstract bool IsHitboxOverlapping(EHHitbox OtherHitbox);
 
     private void HitboxOverlap(EHHitbox OtherHitbox)
     {
@@ -112,7 +116,6 @@ public abstract class EHHitbox : MonoBehaviour
     /// This is where we should update the hitboxes bounds
     /// </summary>
     public abstract void UpdateHitbox();
-    protected abstract EHGeometry.BaseGeometry GetHitboxBaseGeometry();
 
     #region debug methods
     public readonly Color DEBUG_HITBOX_COLOR = Color.red;

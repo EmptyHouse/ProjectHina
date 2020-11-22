@@ -8,22 +8,39 @@ public class EHBox2DCollider : EHBaseCollider2D
     public Vector2 ColliderOffset;
     public Vector2 ColliderSize = Vector2.one;
 
-    private EHGeometry.Rect2D RectColliderGeometry = new EHGeometry.Rect2D();
-    private EHGeometry.Rect2D PreviousRectColliderGeometry = new EHGeometry.Rect2D();
+    private EHRect2D RectGeometry = new EHRect2D();
+    private EHRect2D PrevoiusRectGeometry = new EHRect2D();
     private readonly Vector2 BUFFER = Vector2.one * 0.001f;
     #endregion main variables
+
+    #region monobehaviour methods
+    protected override void Awake()
+    {
+        base.Awake();
+        PrevoiusRectGeometry = RectGeometry;
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        if (Application.isPlaying && ColliderType == EColliderType.PHYSICS)
+        {
+            EHGeometry.DebugDrawRect(PrevoiusRectGeometry, Color.red);
+        }
+        EHGeometry.DebugDrawRect(RectGeometry, GetDebugColor());
+    }
+    #endregion monobehaviour methods
 
     #region override methods
     public override void UpdateColliderBounds(bool bUpdatePreviousBounds)
     {
         if (bUpdatePreviousBounds)
         {
-            PreviousRectColliderGeometry.RectPosition = RectColliderGeometry.RectPosition;
-            PreviousRectColliderGeometry.RectSize = RectColliderGeometry.RectSize;
+            PrevoiusRectGeometry = RectGeometry;
             if (ColliderType == EColliderType.PHYSICS)
             {
-                PreviousRectColliderGeometry.RectPosition += BUFFER;
-                PreviousRectColliderGeometry.RectSize -= (2 * BUFFER);
+                PrevoiusRectGeometry.RectPosition += BUFFER;
+                PrevoiusRectGeometry.RectSize -= (2 * BUFFER);
             }
         }
         
@@ -38,42 +55,47 @@ public class EHBox2DCollider : EHBaseCollider2D
         {
             RectPosition = ColliderOffset + WorldPosition - (RectSize / 2);
         }
-        RectColliderGeometry.RectSize = RectSize;
-        RectColliderGeometry.RectPosition = RectPosition;
+        RectGeometry.RectSize = RectSize;
+        RectGeometry.RectPosition = RectPosition;
     }
-
-    public override EHGeometry.BaseGeometry GetColliderGeometry() { return RectColliderGeometry; }
-    public override EHGeometry.BaseGeometry GetPreviousColliderGeometry() { return PreviousRectColliderGeometry; }
 
     public override bool PushOutCollider(EHBaseCollider2D ColliderToPushOut)
     {
-        if (RectColliderGeometry.IsOverlapping(ColliderToPushOut.GetColliderGeometry()))
+        EHBox2DCollider OtherRectCollier = (EHBox2DCollider)ColliderToPushOut;
+        if (OtherRectCollier == null) return false;
+
+        if (RectGeometry.IsOverlappingRect(OtherRectCollier.RectGeometry))
         {
             FHitData HitData = new FHitData();
             HitData.OwningCollider = this;
             HitData.OtherCollider = ColliderToPushOut;
 
-            if (PreviousRectColliderGeometry.MaxBounds.y < ColliderToPushOut.GetPreviousColliderGeometry().MinBounds.y)
+            EHBounds2D ThisCurrentBounds = RectGeometry.GetBounds();
+            EHBounds2D OtherCurrentBounds = OtherRectCollier.RectGeometry.GetBounds();
+            EHBounds2D ThisPreviousBounds = PrevoiusRectGeometry.GetBounds();
+            EHBounds2D OtherPreviousBounds = OtherRectCollier.PrevoiusRectGeometry.GetBounds();
+
+            if (ThisPreviousBounds.MaxBounds.y < OtherPreviousBounds.MinBounds.y)
             {
-                float OffsetY = RectColliderGeometry.MaxBounds.y - ColliderToPushOut.GetColliderGeometry().MinBounds.y;
+                float OffsetY = ThisCurrentBounds.MaxBounds.y - OtherCurrentBounds.MinBounds.y;
                 ColliderToPushOut.transform.position += Vector3.up * OffsetY;
                 HitData.HitDirection = Vector2.down;
             }
-            else if (PreviousRectColliderGeometry.MinBounds.y > ColliderToPushOut.GetPreviousColliderGeometry().MaxBounds.y)
+            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y)
             {
-                float OffsetY = RectColliderGeometry.MinBounds.y - ColliderToPushOut.GetColliderGeometry().MaxBounds.y;
+                float OffsetY = ThisCurrentBounds.MinBounds.y - OtherCurrentBounds.MaxBounds.y;
                 ColliderToPushOut.transform.position += Vector3.up * OffsetY;
                 HitData.HitDirection = Vector2.up;
             }
-            else if (PreviousRectColliderGeometry.MaxBounds.x < ColliderToPushOut.GetPreviousColliderGeometry().MinBounds.x)
+            else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x)
             {
-                float OffsetX = RectColliderGeometry.MaxBounds.x - ColliderToPushOut.GetColliderGeometry().MinBounds.x;
+                float OffsetX = ThisCurrentBounds.MaxBounds.x - OtherCurrentBounds.MinBounds.x;
                 ColliderToPushOut.transform.position += Vector3.right * OffsetX;
                 HitData.HitDirection = Vector2.left;
             }
-            else if (PreviousRectColliderGeometry.MinBounds.x > ColliderToPushOut.GetPreviousColliderGeometry().MaxBounds.x)
+            else if (ThisPreviousBounds.MinBounds.x > OtherPreviousBounds.MaxBounds.x)
             {
-                float OffsetX = RectColliderGeometry.MinBounds.x - ColliderToPushOut.GetColliderGeometry().MaxBounds.x;
+                float OffsetX = ThisCurrentBounds.MinBounds.x - OtherCurrentBounds.MaxBounds.x;
                 ColliderToPushOut.transform.position += Vector3.right * OffsetX;
                 HitData.HitDirection = Vector2.right;
             }
@@ -96,8 +118,41 @@ public class EHBox2DCollider : EHBaseCollider2D
 
             return true;
         }
-
         return false;
     }
+
+    public override float GetShortestDistanceToGeometry(EHBaseCollider2D OtherCollider)
+    {
+        switch (OtherCollider.GetColliderShape())
+        {
+            case EHGeometry.ShapeType.Rect2D:
+                return RectGeometry.GetShortestDistance(((EHBox2DCollider)OtherCollider).RectGeometry);
+        }
+        return -1;
+    }
+
+    public override float GetShortestDistanceFromPreviousPosition(EHBaseCollider2D OtherCollider)
+    {
+        switch (OtherCollider.GetColliderShape())
+        {
+            case EHGeometry.ShapeType.Rect2D:
+                return PrevoiusRectGeometry.GetShortestDistance(((EHBox2DCollider)OtherCollider).RectGeometry);
+        }
+        return -1;
+    }
+
+    
+
+    protected override bool ValidateColliderOverlapping(EHBaseCollider2D OtherCollider)
+    {
+        switch (OtherCollider.GetColliderShape())
+        {
+            case EHGeometry.ShapeType.Rect2D:
+                return RectGeometry.IsOverlappingRect(((EHBox2DCollider)OtherCollider).RectGeometry);
+        }
+        return false;
+    }
+
+    public override EHGeometry.ShapeType GetColliderShape() { return EHGeometry.ShapeType.Rect2D; }
     #endregion override methods
 }

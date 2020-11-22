@@ -16,9 +16,6 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     #endregion enums
     public UnityAction<FHitData> OnCollision2DStay;
     public UnityAction<FHitData> OnCollision2DEnter;
-
-    private EHGeometry.BaseGeometry BaseColliderGeometry { get { return GetColliderGeometry(); } }
-    private EHGeometry.BaseGeometry PreviousColliderGeometry { get { return GetPreviousColliderGeometry(); } }
     [Tooltip("Toggles whether or not we treat this as a character collider. Meaning that that origin point is at the base of the collider instead of the center")]
     public bool bIsCharacterCollider;
     [Tooltip("The type of our collider. This will determine how we update our collider as well as certain interactions we will have with other colliders")]
@@ -29,8 +26,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     #region monobehaviour methods
     protected virtual void Awake()
     {
-        UpdateColliderBounds(true);
-        PreviousColliderGeometry.CopyGeometry(BaseColliderGeometry);//This is to start the current and base collider at the same place
+        UpdateColliderBounds(false);
     }
 
     protected virtual void Start()
@@ -56,19 +52,11 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         {
             UpdateColliderBounds(false);
         }
-        else
-        {
-            if (ColliderType == EColliderType.PHYSICS)
-            {
-                GetPreviousColliderGeometry().DebugDrawGeometry(Color.red);
-            }
-        }
-        BaseColliderGeometry.DebugDrawGeometry(Color.green);
     }
 
     public bool IsColliderOverlapping(EHBaseCollider2D OtherCollider)
     {
-        if (BaseColliderGeometry.IsOverlapping(OtherCollider.BaseColliderGeometry))
+        if (ValidateColliderOverlapping(OtherCollider))
         {
             return true;
         }
@@ -80,6 +68,8 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         return false;
     }
 
+    protected abstract bool ValidateColliderOverlapping(EHBaseCollider2D OtherCollider);
+
     protected virtual void OnDestroy()
     {
         if (BaseGameOverseer.Instance)
@@ -89,28 +79,18 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     }
     #endregion monobehaviour methods
 
-    public virtual void UpdateColliderBounds(bool bUpdatePreviousBounds)
-    {
-        if (bUpdatePreviousBounds)
-        {
-            PreviousColliderGeometry.CopyGeometry(BaseColliderGeometry);
-        }
-    }
+    public abstract void UpdateColliderBounds(bool bUpdatePreviousBounds);
 
-    public float GetShortestDistance(EHBaseCollider2D OtherCollider)
-    {
-        return BaseColliderGeometry.ShortestDistance(OtherCollider.BaseColliderGeometry);
-    }
+    public abstract float GetShortestDistanceToGeometry(EHBaseCollider2D OtherCollider);
 
-    public abstract EHGeometry.BaseGeometry GetColliderGeometry();
-    public abstract EHGeometry.BaseGeometry GetPreviousColliderGeometry();
+    public abstract float GetShortestDistanceFromPreviousPosition(EHBaseCollider2D OtherCollider);
+
     public abstract bool PushOutCollider(EHBaseCollider2D ColliderToPushOut);
 
     protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider)
     {
         if (OtherCollider != null && OverlappingColliders.Add(OtherCollider))
         {
-            print(OtherCollider.name + " was added");
             OtherCollider.OverlappingColliders.Add(this);
         }
     }
@@ -119,7 +99,6 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     {
         if (OtherCollider != null && OverlappingColliders.Remove(OtherCollider))
         {
-            print(OtherCollider.name + " was removed");
             OtherCollider.OverlappingColliders.Remove(this);
         }    
     }
@@ -128,6 +107,26 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     {
         return OverlappingColliders.Contains(OtherCollider);
     }
+
+    public virtual EHGeometry.ShapeType GetColliderShape() { return EHGeometry.ShapeType.None; }
+
+    #region debug
+    public Color GetDebugColor()
+    {
+        switch (ColliderType)
+        {
+            case EColliderType.STATIC:
+                return Color.green;
+            case EColliderType.MOVEABLE:
+                return new Color(.258f, .96f, .761f);
+            case EColliderType.PHYSICS:
+                return new Color(.761f, .256f, .96f);
+            case EColliderType.TRIGGER:
+                return new Color(.914f, .961f, .256f);
+        }
+        return Color.green;
+    }
+    #endregion debug
 
     public struct FHitData
     {
