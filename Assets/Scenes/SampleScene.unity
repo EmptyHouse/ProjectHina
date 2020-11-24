@@ -941,6 +941,7 @@ GameObject:
   - component: {fileID: 1500336666}
   - component: {fileID: 1500336667}
   - component: {fileID: 1500336668}
+  - component: {fileID: 1500336669}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -1013,6 +1014,7 @@ MonoBehaviour:
     AlternateKey: 330
   AxisInputNodes:
   - AxisName: Horizontal
+  - AxisName: Vertical
 --- !u!114 &1500336668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,9 +1030,32 @@ MonoBehaviour:
   WalkingSpeed: 5
   RunningSpeed: 11
   GroundAcceleration: 250
+  CrouchingAcceleration: 100
+  CrouchingSpeed: 5
+  CrouchingHeightPercentage: 0.5
+  HorizontalAirAcceleration: 100
   DoubleJumpCount: 1
   JumpHeightApex: 2.5
   TimeToReachApex: 0.32
+--- !u!95 &1500336669
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500336663}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f24029a83b116049bbaa2776e5b7fda, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1752609975
 GameObject:
   m_ObjectHideFlags: 0

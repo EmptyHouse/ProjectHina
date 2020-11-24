@@ -6,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(EHBaseCollider2D))]
 public class EHMovementComponent : MonoBehaviour
 {
+    #region const values
+    private const string ANIM_MOVEMENT_STATE = "MovementState";
+    #endregion const values
+
     #region enums
     public enum MovementType : byte
     {
@@ -59,6 +63,8 @@ public class EHMovementComponent : MonoBehaviour
     private float CurrentSpeed;
     private MovementType CurrentMovementType;
     private int RemainingDoubleJumps;
+    private Animator CharacterAnimator;
+
 
     #region monobehaviour methods
     protected virtual void Awake()
@@ -70,12 +76,14 @@ public class EHMovementComponent : MonoBehaviour
         if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
 
         AssociatedCollider.OnCollision2DEnter += OnEHCollisionEnter;
+        CharacterAnimator = GetComponent<Animator>();
     }
 
     protected virtual void Update()
     {
         UpdateMovementVelocity();
         PreviousMovementInput = CurrentMovementInput;
+        UpdateMovementBasedOnMovementType();
         if (CurrentMovementType != MovementType.IN_AIR && Mathf.Abs(Physics2D.Velocity.y) > 0)
         {
             SetMovementType(MovementType.IN_AIR);
@@ -160,11 +168,14 @@ public class EHMovementComponent : MonoBehaviour
             case MovementType.STANDING:
                 if (CurrentMovementInput.y < -JOYSTICK_CROUCH_THRESHOLD)
                 {
-
+                    SetMovementType(MovementType.CROUCH);
                 }
                 return;
             case MovementType.CROUCH:
-
+                if (CurrentMovementInput.y > -JOYSTICK_CROUCH_THRESHOLD)
+                {
+                    SetMovementType(MovementType.STANDING);
+                }
                 return;
             case MovementType.IN_AIR:
 
@@ -190,14 +201,15 @@ public class EHMovementComponent : MonoBehaviour
         {
             case MovementType.STANDING:
                 RemainingDoubleJumps = DoubleJumpCount;
-                return;
+                break;
             case MovementType.CROUCH:
 
-                return;
+                break;
             case MovementType.IN_AIR:
 
-                return;
+                break;
         }
+        CharacterAnimator.SetInteger(ANIM_MOVEMENT_STATE, (int)CurrentMovementType);
     }
 
     private void AttemptCrouch()
