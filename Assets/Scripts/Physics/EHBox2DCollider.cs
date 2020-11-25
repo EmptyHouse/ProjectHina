@@ -10,6 +10,7 @@ public class EHBox2DCollider : EHBaseCollider2D
 
     private EHRect2D RectGeometry = new EHRect2D();
     private EHRect2D PrevoiusRectGeometry = new EHRect2D();
+    public Vector2 DefaultColliderSize { get; private set; }
     private readonly Vector2 BUFFER = Vector2.one * 0.001f;
     #endregion main variables
 
@@ -18,6 +19,7 @@ public class EHBox2DCollider : EHBaseCollider2D
     {
         base.Awake();
         PrevoiusRectGeometry = RectGeometry;
+        DefaultColliderSize = ColliderSize;
     }
 
     protected override void OnDrawGizmos()
@@ -141,6 +143,10 @@ public class EHBox2DCollider : EHBaseCollider2D
         return -1;
     }
 
+    public override bool IsOverlappingRect2D(EHRect2D Rect)
+    {
+        return RectGeometry.IsOverlappingRect(Rect);
+    }
     
 
     protected override bool ValidateColliderOverlapping(EHBaseCollider2D OtherCollider)
@@ -148,11 +154,12 @@ public class EHBox2DCollider : EHBaseCollider2D
         switch (OtherCollider.GetColliderShape())
         {
             case EHGeometry.ShapeType.Rect2D:
-                return RectGeometry.IsOverlappingRect(((EHBox2DCollider)OtherCollider).RectGeometry);
+                return IsOverlappingRect2D(((EHBox2DCollider)OtherCollider).RectGeometry);
         }
         return false;
     }
 
     public override EHGeometry.ShapeType GetColliderShape() { return EHGeometry.ShapeType.Rect2D; }
+    public override EHBounds2D GetBounds() { return RectGeometry.GetBounds(); }
     #endregion override methods
 }

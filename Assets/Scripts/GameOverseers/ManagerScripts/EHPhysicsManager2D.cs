@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EHPhysicsManager2D : ITickableComponent
 {
+    private static EHPhysicsManager2D CachedInstance;
     private HashSet<EHPhysics2D> PhysicsComponentSet = new HashSet<EHPhysics2D>();
     private Dictionary<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderComponentDictionary = new Dictionary<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>>();
 
@@ -12,6 +13,7 @@ public class EHPhysicsManager2D : ITickableComponent
         ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.STATIC, new HashSet<EHBaseCollider2D>());
         ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.MOVEABLE, new HashSet<EHBaseCollider2D>());
         ColliderComponentDictionary.Add(EHBaseCollider2D.EColliderType.PHYSICS, new HashSet<EHBaseCollider2D>());
+        CachedInstance = this;
     }
 
     public void AddPhysicsComponent(EHPhysics2D PhysicsComponent)
@@ -149,5 +151,55 @@ public class EHPhysicsManager2D : ITickableComponent
             CollisionNode OtherNode = (CollisionNode)obj;
             return (int)Mathf.Sign(CollisionDistance - OtherNode.CollisionDistance);
         }
+    }
+
+
+    public static bool BoxCast2D(ref EHRect2D BoxToCast, out EHBaseCollider2D HitCollider, int LayerMask = 0)
+    {
+        if (CachedInstance == null)
+        {
+            Debug.LogWarning("Game Overseer not initialized");
+            HitCollider = null;
+            return false;
+        }
+
+        foreach (KeyValuePair<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderSet in CachedInstance.ColliderComponentDictionary)
+        {
+            if (BoxCast2D(ref BoxToCast, ColliderSet.Key, out HitCollider, LayerMask))
+            {
+                return true;
+            }
+        }
+        HitCollider = null;
+        return false;
+    }
+
+    public static bool BoxCast2D(ref EHRect2D BoxToCast, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D HitCollider, int Mask = 0)
+    {
+        if (CachedInstance == null)
+        {
+            Debug.LogWarning("Game Overseer not initialized");
+            HitCollider = null;
+            return false;
+        }
+        if (!CachedInstance.ColliderComponentDictionary.ContainsKey(ColliderType))
+        {
+            HitCollider = null;
+            return false;
+        }
+
+        foreach (EHBaseCollider2D Collider in CachedInstance.ColliderComponentDictionary[ColliderType])
+        {
+            if (Collider.gameObject.activeInHierarchy && (Mask & 1 << Collider.gameObject.layer) != 0)
+            {
+                if (Collider.IsOverlappingRect2D(BoxToCast))
+                {
+                    HitCollider = Collider;
+                    return true;
+                }
+            }
+        }
+        HitCollider = null;
+        return false;
     }
 }

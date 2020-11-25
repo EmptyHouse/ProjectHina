@@ -19,6 +19,10 @@ public class BaseGameOverseer : MonoBehaviour
     }
     #endregion static variables
 
+    #region main variables
+    public bool IsTimeSlowed;
+    #endregion main variables
+
     public EHPhysicsManager2D PhysicsManager { get; private set; }
     public EHHitboxManager HitboxManager { get; private set; }
 

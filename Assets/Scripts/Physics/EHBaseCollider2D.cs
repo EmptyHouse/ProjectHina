@@ -5,10 +5,6 @@ using UnityEngine.Events;
 
 public abstract class EHBaseCollider2D : MonoBehaviour
 {
-    #region const values
-    private const string ANIM_MOVEMENT_STATE = "MovementState";
-    #endregion const values
-
     #region enums
     public enum EColliderType
     {
@@ -24,15 +20,12 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public bool bIsCharacterCollider;
     [Tooltip("The type of our collider. This will determine how we update our collider as well as certain interactions we will have with other colliders")]
     public EColliderType ColliderType = EColliderType.STATIC;
-
     private HashSet<EHBaseCollider2D> OverlappingColliders = new HashSet<EHBaseCollider2D>();
-    private Animator CharacterAnimator;
 
     #region monobehaviour methods
     protected virtual void Awake()
     {
         UpdateColliderBounds(false);
-        CharacterAnimator = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -141,4 +134,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         public EHBaseCollider2D OwningCollider;
         public EHBaseCollider2D OtherCollider;
     }
+
+    public abstract bool IsOverlappingRect2D(EHRect2D Rect);
+    public abstract EHBounds2D GetBounds();
 }

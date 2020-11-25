@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EHPhysics2D))]
-[RequireComponent(typeof(EHBaseCollider2D))]
+[RequireComponent(typeof(EHBox2DCollider))]
 public class EHMovementComponent : MonoBehaviour
 {
     #region const values
     private const string ANIM_MOVEMENT_STATE = "MovementState";
+
+    private const string ENVIRONMENT_LAYER = "Environment";
     #endregion const values
 
     #region enums
@@ -47,6 +49,7 @@ public class EHMovementComponent : MonoBehaviour
     [Header("Jumping")]
     [Tooltip("The acceleration or control that the character will have while they are in the air")]
     public float HorizontalAirAcceleration = 100f;
+    public float AirSpeed;
     public int DoubleJumpCount = 1;
     [Tooltip("The max height of our jump")]
     public float JumpHeightApex = 5;
@@ -57,7 +60,7 @@ public class EHMovementComponent : MonoBehaviour
     #endregion main variables
 
     private EHPhysics2D Physics2D;
-    private EHBaseCollider2D AssociatedCollider;
+    private EHBox2DCollider AssociatedCollider;
     private Vector2 CurrentMovementInput = Vector2.zero;
     private Vector2 PreviousMovementInput = Vector2.zero;
     private float CurrentSpeed;
@@ -70,7 +73,7 @@ public class EHMovementComponent : MonoBehaviour
     protected virtual void Awake()
     {
         Physics2D = GetComponent<EHPhysics2D>();
-        AssociatedCollider = GetComponent<EHBaseCollider2D>();
+        AssociatedCollider = GetComponent<EHBox2DCollider>();
 
         if (Physics2D == null) Debug.LogError("There is no associated with physics component with our movement component");
         if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
@@ -148,16 +151,37 @@ public class EHMovementComponent : MonoBehaviour
     private void UpdateMovementVelocity()
     {
         float GoalSpeed = 0;
-
-        if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_RUN_THRESHOLD)
+        float Acceleration = 0;
+        switch (CurrentMovementType)
         {
-            GoalSpeed = Mathf.Sign(CurrentMovementInput.x) * RunningSpeed;
+            case MovementType.STANDING:
+                Acceleration = GroundAcceleration;
+                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_RUN_THRESHOLD)
+                {
+                    GoalSpeed = RunningSpeed;
+                }
+                else if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                {
+                    GoalSpeed = WalkingSpeed;
+                }
+                break;
+            case MovementType.CROUCH:
+                Acceleration = GroundAcceleration;
+                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                {
+                    GoalSpeed = CrouchingSpeed;
+                }
+                break;
+            case MovementType.IN_AIR:
+                Acceleration = HorizontalAirAcceleration;
+                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                {
+                    GoalSpeed = AirSpeed;
+                }
+                break;
         }
-        else if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
-        {
-            GoalSpeed = Mathf.Sign(CurrentMovementInput.x) * WalkingSpeed;
-        }
-        CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DELTA_TIME * GroundAcceleration);
+        GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
+        CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DELTA_TIME * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
     }
 
@@ -174,7 +198,18 @@ public class EHMovementComponent : MonoBehaviour
             case MovementType.CROUCH:
                 if (CurrentMovementInput.y > -JOYSTICK_CROUCH_THRESHOLD)
                 {
-                    SetMovementType(MovementType.STANDING);
+                    EHRect2D CastBox = new EHRect2D();
+                    CastBox.RectPosition = AssociatedCollider.GetBounds().MinBounds;
+                    CastBox.RectSize = AssociatedCollider.DefaultColliderSize;
+                    EHBaseCollider2D HitCollider;
+                    if (!EHPhysicsManager2D.BoxCast2D(ref CastBox, out HitCollider, LayerMask.GetMask(ENVIRONMENT_LAYER)))
+                    {
+                        SetMovementType(MovementType.STANDING);
+                    }
+                    else
+                    {
+                        print("I am here");
+                    }
                 }
                 return;
             case MovementType.IN_AIR:

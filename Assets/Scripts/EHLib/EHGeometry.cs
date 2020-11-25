@@ -33,13 +33,18 @@ public static class EHGeometry
     }
 
 
-#endregion debug methods
+    #endregion debug methods
 }
 
 public struct EHBounds2D
 {
     public Vector2 MinBounds;
     public Vector2 MaxBounds;
+
+    public override string ToString()
+    {
+        return "Min: " + MinBounds + " Max: " + MaxBounds;
+    }
 }
 
 public struct EHRect2D
@@ -111,6 +116,11 @@ public struct EHRect2D
         Bounds.MinBounds = MinBounds;
         Bounds.MaxBounds = MaxBounds;
         return Bounds;
+    }
+
+    public override string ToString()
+    {
+        return "Pos: " + RectPosition + " Size: " + RectSize;
     }
 }
 
