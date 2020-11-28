@@ -14,11 +14,14 @@ public static class EHTime
     #endregion enums
 
     private static Dictionary<TimeGroup, float> TimeGroupTimeScaleDictionary = new Dictionary<TimeGroup, float>();
+
+    private const float MAX_DELTA_TIME = .1f;//in case we ever dip below 10 fps
+
     public static float DELTA_TIME
     {
         get
         {
-            return Time.deltaTime;
+            return Mathf.Min(Time.deltaTime, MAX_DELTA_TIME);
         }
     }
 

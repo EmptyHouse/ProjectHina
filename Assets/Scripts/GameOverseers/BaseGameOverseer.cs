@@ -45,4 +45,27 @@ public class BaseGameOverseer : MonoBehaviour
     }
     #endregion monobehaviour methods
 
+
+    #region saving/loading
+    private readonly string SAVE_GAME_PATH;
+
+    public void SaveGame()
+    {
+
+    }
+
+    public void LoadGame()
+    {
+
+    }
+
+    public class SaveGameData
+    {
+        private const int SAVE_VERSION = 0;
+        private int SaveGameVersion;
+        public float TimePlayingGame;
+        public int NumberOfDeaths;
+    }
+    #endregion saving/loading
+
 }
