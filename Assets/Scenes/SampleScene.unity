@@ -551,6 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitboxType: 1
+  ListenForCollisions: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &935228994
@@ -644,6 +645,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitboxType: 1
+  ListenForCollisions: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &1156162164
@@ -738,6 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitboxType: 0
+  ListenForCollisions: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &1234806796
@@ -878,6 +881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitboxType: 1
+  ListenForCollisions: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &1444161794
@@ -1013,6 +1017,9 @@ MonoBehaviour:
   - InputName: Jump
     MainKey: 32
     AlternateKey: 330
+  - InputName: Dash
+    MainKey: 106
+    AlternateKey: 332
   AxisInputNodes:
   - AxisName: Horizontal
   - AxisName: Vertical
@@ -1028,6 +1035,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ee640781bb8db4ab40a003eaebbf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsFacingLeft: 0
+  CharacterSpriteRenderer: {fileID: 707617258}
   WalkingSpeed: 5
   RunningSpeed: 11
   GroundAcceleration: 250
@@ -1039,6 +1048,9 @@ MonoBehaviour:
   DoubleJumpCount: 1
   JumpHeightApex: 2.5
   TimeToReachApex: 0.32
+  InitialDashSpeed: 20
+  AnimationDashDuration: 0.1
+  MaxNumberOfDashes: 1
 --- !u!95 &1500336669
 Animator:
   serializedVersion: 3
@@ -1102,6 +1114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitboxType: 0
+  ListenForCollisions: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &1766053764

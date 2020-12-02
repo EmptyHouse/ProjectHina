@@ -29,6 +29,17 @@ public class EHMovementComponent : MonoBehaviour
     #endregion const values
 
     #region main variables
+    [Header("Orientation Variables")]
+    [SerializeField]
+    private bool IsFacingLeft = false;
+    [SerializeField]
+    private SpriteRenderer CharacterSpriteRenderer;
+    /// <summary>
+    /// The child transform of the character that this component attaches that contains the character's sprite renderer object
+    /// </summary>
+    private Transform CharacterSpriteTransform;
+    private float CachedXScale;
+
     [Header("Walking")]
     [Tooltip("The max walking speed of our character")]
     public float WalkingSpeed = 5f;
@@ -49,6 +60,7 @@ public class EHMovementComponent : MonoBehaviour
     [Header("Jumping")]
     [Tooltip("The acceleration or control that the character will have while they are in the air")]
     public float HorizontalAirAcceleration = 100f;
+    [Tooltip("The speed at which our character will try to move while in the air")]
     public float AirSpeed;
     public int DoubleJumpCount = 1;
     [Tooltip("The max height of our jump")]
@@ -56,6 +68,13 @@ public class EHMovementComponent : MonoBehaviour
     [Tooltip("The time it will take us in seconds to reach that height")]
     public float TimeToReachApex = .5f;
     private float JumpVelocity;
+
+    [Header("Dashing")]
+    public float InitialDashSpeed = 20;
+    public float EndDashSpeed = 12;
+    public float AnimationDashDuration = 1.2f;
+    public int MaxNumberOfDashes = 1;
+    private int RemainingDashes;
 
     #endregion main variables
 
@@ -80,6 +99,9 @@ public class EHMovementComponent : MonoBehaviour
 
         AssociatedCollider.OnCollision2DEnter += OnEHCollisionEnter;
         CharacterAnimator = GetComponent<Animator>();
+        CharacterSpriteTransform = CharacterSpriteRenderer.transform;
+        CachedXScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
+        RemainingDashes = MaxNumberOfDashes;
     }
 
     protected virtual void Update()
@@ -108,6 +130,7 @@ public class EHMovementComponent : MonoBehaviour
         {
             WalkingSpeed = 0;
         }
+
         if (RunningSpeed < 0)
         {
             RunningSpeed = 0;
@@ -117,10 +140,12 @@ public class EHMovementComponent : MonoBehaviour
         {
             DoubleJumpCount = 0;
         }
+
         if (JumpHeightApex < 0)
         {
             JumpHeightApex = 0;
         }
+
         if (TimeToReachApex < 0)
         {
             TimeToReachApex = 0;
@@ -130,10 +155,16 @@ public class EHMovementComponent : MonoBehaviour
         {
             Physics2D = GetComponent<EHPhysics2D>();
         }
+
         if (TimeToReachApex != 0)
         {
             Physics2D.GravityScale = (2 * JumpHeightApex) / (EHPhysics2D.GRAVITATIONAL_CONSTANT * Mathf.Pow(TimeToReachApex, 2));
             JumpVelocity = 2 * JumpHeightApex / TimeToReachApex;
+        }
+
+        if (IsFacingLeft && CharacterSpriteTransform.localScale.x > 0)
+        {
+            SetIsFacingLeft(IsFacingLeft);
         }
     }
     #endregion monobehaviour methods
@@ -198,18 +229,8 @@ public class EHMovementComponent : MonoBehaviour
             case MovementType.CROUCH:
                 if (CurrentMovementInput.y > -JOYSTICK_CROUCH_THRESHOLD)
                 {
-                    EHRect2D CastBox = new EHRect2D();
-                    CastBox.RectPosition = AssociatedCollider.GetBounds().MinBounds;
-                    CastBox.RectSize = AssociatedCollider.DefaultColliderSize;
-                    EHBaseCollider2D HitCollider;
-                    if (!EHPhysicsManager2D.BoxCast2D(ref CastBox, out HitCollider, LayerMask.GetMask(ENVIRONMENT_LAYER)))
-                    {
-                        SetMovementType(MovementType.STANDING);
-                    }
-                    else
-                    {
-                        print("I am here");
-                    }
+                    //Attempt to stand if the player has gone above the crouch threshold
+                    AttemptStand();
                 }
                 return;
             case MovementType.IN_AIR:
@@ -247,14 +268,17 @@ public class EHMovementComponent : MonoBehaviour
         CharacterAnimator.SetInteger(ANIM_MOVEMENT_STATE, (int)CurrentMovementType);
     }
 
-    private void AttemptCrouch()
-    {
-
-    }
 
     private void AttemptStand()
     {
-
+        EHRect2D CastBox = new EHRect2D();
+        CastBox.RectPosition = AssociatedCollider.GetBounds().MinBounds;
+        CastBox.RectSize = AssociatedCollider.DefaultColliderSize;
+        EHBaseCollider2D HitCollider;
+        if (!EHPhysicsManager2D.BoxCast2D(ref CastBox, out HitCollider, LayerMask.GetMask(ENVIRONMENT_LAYER)))
+        {
+            SetMovementType(MovementType.STANDING);
+        }
     }
 
     public void BeginJump()
@@ -269,16 +293,93 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// When this method is called it will begin 
+    /// </summary>
     public void EndJump()
     {
 
     }
 
+    /// <summary>
+    /// Event that is called when we begin a new collision
+    /// </summary>
+    /// <param name="HitData"></param>
     public void OnEHCollisionEnter(EHBaseCollider2D.FHitData HitData)
     {
         if (HitData.HitDirection.y > 0 && CurrentMovementType == MovementType.IN_AIR)
         {
             SetMovementType(MovementType.STANDING);
+            RemainingDashes = MaxNumberOfDashes;
         }
     }
+
+    /// <summary>
+    /// Set the orientation of the character
+    /// </summary>
+    /// <param name="IsFacingLeft"></param>
+    public void SetIsFacingLeft(bool IsFacingLeft)
+    {
+        if (IsFacingLeft == this.IsFacingLeft)
+        {
+            return;
+        }
+        this.IsFacingLeft = IsFacingLeft;
+
+        if (IsFacingLeft)
+        {
+            CharacterSpriteTransform.localScale = new Vector3(-CachedXScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
+        }
+        else
+        {
+            CharacterSpriteTransform.localScale = new Vector3(CachedXScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
+        }
+    }
+
+    public bool GetIsFacingLeft() { return this.IsFacingLeft; }
+
+    #region dashing methods
+    /// <summary>
+    /// 
+    /// </summary>
+    public void AttemptDash()
+    {
+        if (CurrentMovementType == MovementType.IN_AIR)
+        {
+            if (RemainingDashes <= 0)
+            {
+                return;
+            }
+            --RemainingDashes;
+        }
+        StartCoroutine(BeginDashCoroutine());
+    }
+
+    private IEnumerator BeginDashCoroutine()
+    {
+        float TimeThatHasPassed = 0;
+        Vector2 DashDirectionUnitVector = Vector2.zero;
+        DashDirectionUnitVector.x = (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.x) : 0;
+        DashDirectionUnitVector.y = (Mathf.Abs(CurrentMovementInput.y) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.y) : 0;
+
+        if (DashDirectionUnitVector.y < 0 && CurrentMovementType != MovementType.IN_AIR)
+        {
+            DashDirectionUnitVector.y = 0;
+        }
+
+        if (DashDirectionUnitVector == Vector2.zero)
+        {
+            DashDirectionUnitVector.x = IsFacingLeft ? -1 : 1;
+        }
+
+        DashDirectionUnitVector = DashDirectionUnitVector.normalized;
+
+        while (TimeThatHasPassed < AnimationDashDuration)
+        {
+            Physics2D.Velocity = DashDirectionUnitVector * InitialDashSpeed;
+            yield return null;
+            TimeThatHasPassed += EHTime.DELTA_TIME;
+        }
+    }
+    #endregion dashing methods
 }

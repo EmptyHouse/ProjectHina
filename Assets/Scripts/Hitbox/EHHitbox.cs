@@ -21,6 +21,9 @@ public abstract class EHHitbox : MonoBehaviour
     [SerializeField]
     [Tooltip("The hitbox type that will be assigned to this hitbox component")]
     private EHitboxType HitboxType = EHitboxType.HITBOX;
+
+    public bool ListenForCollisions = false;
+
     private HashSet<EHHitbox> IntersectingHitboxList = new HashSet<EHHitbox>();
     public EHDamageableComponent DamageableComponent { get; protected set; }
 

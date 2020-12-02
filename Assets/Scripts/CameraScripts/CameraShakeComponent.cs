@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class CameraShakeComponent : MonoBehaviour
 {
-    public float TimeRemainingForCameraShake;
-    public float CameraShakeIntensity;
+    private float TimeRemainingForCameraShake;
+    private float CameraShakeIntensity;
+
+    private bool CameraShakeRunning;
 
 
 
-
-    private IEnumerator CameraShakeCoroutine()
+    public void BeginCameraShake(float TimeForCameraShake, float CameraIntensity)
     {
-        yield return null;
+        this.TimeRemainingForCameraShake = TimeForCameraShake;
+        this.CameraShakeIntensity = CameraIntensity;
+        StartCoroutine(BeginCameraShakeCoroutine());
+    }
+
+    private IEnumerator BeginCameraShakeCoroutine()
+    {
+        if (CameraShakeRunning) yield break;
+        CameraShakeRunning = true;
+        Vector3 OriginalLocalPosition = transform.localPosition;
+
+        float XShakePos, YShakePos;
+
+        while (TimeRemainingForCameraShake > 0)
+        {
+            XShakePos = Random.Range(-1f, 1) * CameraShakeIntensity;
+            YShakePos = Random.Range(-1f, 1f) * CameraShakeIntensity;
+            transform.localPosition = new Vector3(XShakePos, YShakePos, 0) + OriginalLocalPosition;
+
+            yield return null;
+            TimeRemainingForCameraShake -= EHTime.DELTA_TIME;
+        }
+
+        transform.localPosition = OriginalLocalPosition;
+        CameraShakeRunning = false;
     }
 }
