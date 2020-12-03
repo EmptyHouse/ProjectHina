@@ -67,7 +67,11 @@ public class EHMovementComponent : MonoBehaviour
     public float JumpHeightApex = 5;
     [Tooltip("The time it will take us in seconds to reach that height")]
     public float TimeToReachApex = .5f;
+    [Tooltip("The multiplier to gravity that we will apply when we are falling")]
+    public float LowJumpMultiplier = 2f;
     private float JumpVelocity;
+    // The original gravity multiplier before applying any multipliers
+    private float CachedGravityScale;
 
     [Header("Dashing")]
     public float InitialDashSpeed = 20;
@@ -79,6 +83,7 @@ public class EHMovementComponent : MonoBehaviour
     #endregion main variables
 
     private EHPhysics2D Physics2D;
+    private Vector2 PreviousVelocity;
     private EHBox2DCollider AssociatedCollider;
     private Vector2 CurrentMovementInput = Vector2.zero;
     private Vector2 PreviousMovementInput = Vector2.zero;
@@ -102,6 +107,7 @@ public class EHMovementComponent : MonoBehaviour
         CharacterSpriteTransform = CharacterSpriteRenderer.transform;
         CachedXScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
         RemainingDashes = MaxNumberOfDashes;
+        CachedGravityScale = Physics2D.GravityScale;
     }
 
     protected virtual void Update()
@@ -113,6 +119,7 @@ public class EHMovementComponent : MonoBehaviour
         {
             SetMovementType(MovementType.IN_AIR);
         }
+        PreviousVelocity = Physics2D.Velocity;
     }
 
     protected virtual void OnDestroy()
@@ -234,7 +241,10 @@ public class EHMovementComponent : MonoBehaviour
                 }
                 return;
             case MovementType.IN_AIR:
-
+                if (PreviousVelocity.y >= 0 && Physics2D.Velocity.y < 0)
+                {
+                    EndJump();
+                }
                 return;
         }
     }
@@ -281,16 +291,22 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
-    public void BeginJump()
+    public void AttemptJump()
     {
         if (CurrentMovementType == MovementType.STANDING)
         {
-            Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
+            Jump();
         }
         else if (RemainingDoubleJumps-- > 0)
         {
-            Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
+            Jump();
         }
+    }
+
+    private void Jump()
+    {
+        Physics2D.GravityScale = CachedGravityScale;
+        Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
     }
 
     /// <summary>
@@ -298,7 +314,17 @@ public class EHMovementComponent : MonoBehaviour
     /// </summary>
     public void EndJump()
     {
+        if (CurrentMovementType == MovementType.IN_AIR)
+        {
+            Physics2D.GravityScale = CachedGravityScale * LowJumpMultiplier;
+        }
+    }
 
+    public void OnLanded()
+    {
+        SetMovementType(MovementType.STANDING);
+        RemainingDashes = MaxNumberOfDashes;
+        Physics2D.GravityScale = CachedGravityScale;
     }
 
     /// <summary>
@@ -309,8 +335,7 @@ public class EHMovementComponent : MonoBehaviour
     {
         if (HitData.HitDirection.y > 0 && CurrentMovementType == MovementType.IN_AIR)
         {
-            SetMovementType(MovementType.STANDING);
-            RemainingDashes = MaxNumberOfDashes;
+            OnLanded();
         }
     }
 

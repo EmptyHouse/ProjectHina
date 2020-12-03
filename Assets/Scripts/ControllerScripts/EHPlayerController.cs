@@ -27,7 +27,7 @@ public class EHPlayerController : EHBaseController
     {
         EHMovementComponent MovementComponent = GetComponent<EHMovementComponent>();
 
-        BindActionToInput(JUMP_COMMAND, true, MovementComponent.BeginJump);
+        BindActionToInput(JUMP_COMMAND, true, MovementComponent.AttemptJump);
         BindActionToInput(JUMP_COMMAND, false, MovementComponent.EndJump);
         BindActionToInput(DASH_COMMAND, true, MovementComponent.AttemptDash);
 

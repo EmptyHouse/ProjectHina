@@ -11,7 +11,7 @@ public class EHBox2DCollider : EHBaseCollider2D
     private EHRect2D RectGeometry = new EHRect2D();
     private EHRect2D PrevoiusRectGeometry = new EHRect2D();
     public Vector2 DefaultColliderSize { get; private set; }
-    private readonly Vector2 BUFFER = Vector2.one * 0.001f;
+    private readonly Vector2 BUFFER = Vector2.one * 0.02f;
     #endregion main variables
 
     #region monobehaviour methods

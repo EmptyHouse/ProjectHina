@@ -1048,7 +1048,9 @@ MonoBehaviour:
   DoubleJumpCount: 1
   JumpHeightApex: 2.5
   TimeToReachApex: 0.32
+  LowJumpMultiplier: 1.4
   InitialDashSpeed: 20
+  EndDashSpeed: 12
   AnimationDashDuration: 0.1
   MaxNumberOfDashes: 1
 --- !u!95 &1500336669
