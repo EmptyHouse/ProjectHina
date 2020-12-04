@@ -53,7 +53,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         }
     }
 
-    public bool IsColliderOverlapping(EHBaseCollider2D OtherCollider)
+    public bool IsPhysicsColliderOverlapping(EHBaseCollider2D OtherCollider)
     {
         if (ValidateColliderOverlapping(OtherCollider))
         {
@@ -136,5 +136,8 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     }
 
     public abstract bool IsOverlappingRect2D(EHRect2D Rect);
+
+    public abstract bool IsOverlappingRect2DSweep(EHRect2D Rect);
+
     public abstract EHBounds2D GetBounds();
 }

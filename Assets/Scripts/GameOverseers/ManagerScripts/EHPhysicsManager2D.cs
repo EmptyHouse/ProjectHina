@@ -89,7 +89,11 @@ public class EHPhysicsManager2D : ITickableComponent
         
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private EHPriorityQueue<CollisionNode> CollisionNodeHeap = new EHPriorityQueue<CollisionNode>(true);
+
     private void CheckPhysicsCollidersAgainstCategory()
     {
         foreach (EHBaseCollider2D PhysicsCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.PHYSICS])
@@ -101,7 +105,7 @@ public class EHPhysicsManager2D : ITickableComponent
                 {
                     if (Static.gameObject.activeInHierarchy)
                     {
-                        if (PhysicsCollider.IsColliderOverlapping(Static))
+                        if (PhysicsCollider.IsPhysicsColliderOverlapping(Static))
                         {
                             CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetShortestDistanceFromPreviousPosition(Static), Static));
                         }
@@ -112,7 +116,7 @@ public class EHPhysicsManager2D : ITickableComponent
                 {
                     if (Moveable.gameObject.activeInHierarchy)
                     {
-                        if (PhysicsCollider.IsColliderOverlapping(Moveable))
+                        if (PhysicsCollider.IsPhysicsColliderOverlapping(Moveable))
                         {
                             CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetShortestDistanceFromPreviousPosition(Moveable), Moveable));
                         }
@@ -174,7 +178,7 @@ public class EHPhysicsManager2D : ITickableComponent
         return false;
     }
 
-    public static bool BoxCast2D(ref EHRect2D BoxToCast, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D HitCollider, int Mask = 0)
+    public static bool BoxCast2D(ref EHRect2D BoxToCast, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D HitCollider, int LayerMask = 0)
     {
         if (CachedInstance == null)
         {
@@ -190,7 +194,7 @@ public class EHPhysicsManager2D : ITickableComponent
 
         foreach (EHBaseCollider2D Collider in CachedInstance.ColliderComponentDictionary[ColliderType])
         {
-            if (Collider.gameObject.activeInHierarchy && (Mask & 1 << Collider.gameObject.layer) != 0)
+            if (Collider.gameObject.activeInHierarchy && (LayerMask & 1 << Collider.gameObject.layer) != 0)
             {
                 if (Collider.IsOverlappingRect2D(BoxToCast))
                 {
@@ -200,6 +204,37 @@ public class EHPhysicsManager2D : ITickableComponent
             }
         }
         HitCollider = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Returns a list of all colliders that are intersected
+    /// </summary>
+    /// <param name="BoxToCast"></param>
+    /// <param name="ColliderType"></param>
+    /// <param name="HitColliderList"></param>
+    /// <param name="LayerMask"></param>
+    /// <returns></returns>
+    public static bool BoxCastAll2D(ref EHRect2D BoxToCast, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D[] HitColliderList, int LayerMask)
+    {
+        List<EHBaseCollider2D> BaseColliderList = new List<EHBaseCollider2D>();
+        foreach (EHBaseCollider2D Collider2D in CachedInstance.ColliderComponentDictionary[ColliderType])
+        {
+            if (Collider2D.gameObject.activeInHierarchy && (LayerMask & 1 << Collider2D.gameObject.layer) != 0)
+            {
+                if (Collider2D.IsOverlappingRect2D(BoxToCast))
+                {
+                    BaseColliderList.Add(Collider2D);
+                }
+            }
+        }
+
+        HitColliderList = BaseColliderList.ToArray();
+        if (BaseColliderList.Count > 0)
+        {
+            return true;
+        }
+
         return false;
     }
 }
