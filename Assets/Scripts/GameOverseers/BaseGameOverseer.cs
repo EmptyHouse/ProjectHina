@@ -40,8 +40,8 @@ public class BaseGameOverseer : MonoBehaviour
     {
 
 
-        HitboxManager.Tick(EHTime.DELTA_TIME);
-        PhysicsManager.Tick(EHTime.DELTA_TIME);
+        HitboxManager.Tick(EHTime.DeltaTime);
+        PhysicsManager.Tick(EHTime.DeltaTime);
     }
     #endregion monobehaviour methods
 

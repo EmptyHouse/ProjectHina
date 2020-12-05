@@ -102,6 +102,33 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         }    
     }
 
+    /// <summary>
+    /// This method will shift any collider's transform by the amount that this collider has shifted.
+    /// Collider that is being dragged must be a physics type collider
+    /// NOTE: Update with PhysicsManager only.
+    /// </summary>
+    public void DragIntersectingColliders()
+    {
+        switch (ColliderType)
+        {
+            case EColliderType.MOVEABLE:
+                //Vector3 OffsetPosition = PreviousRectGeometry.RectPosition - RectGeometry.RectPosition;
+                foreach (EHBaseCollider2D TouchedCollider in GetAllOverlappingColliders())
+                {
+                    if (TouchedCollider.ColliderType == EColliderType.PHYSICS)
+                    {
+                        //TouchedCollider.transform.position += OffsetPosition;
+                    }
+                }
+                return;
+        }
+    }
+
+    protected HashSet<EHBaseCollider2D> GetAllOverlappingColliders()
+    {
+        return OverlappingColliders;
+    }
+
     protected bool ContainOverlappingCollider(EHBaseCollider2D OtherCollider)
     {
         return OverlappingColliders.Contains(OtherCollider);

@@ -15,9 +15,28 @@ public static class EHTime
 
     private static Dictionary<TimeGroup, float> TimeGroupTimeScaleDictionary = new Dictionary<TimeGroup, float>();
 
+    /// <summary>
+    /// Max delta constant between each frame. If delta time reaches above this value, this is what will be returned instead.
+    /// </summary>
     private const float MAX_DELTA_TIME = .1f;//in case we ever dip below 10 fps
 
-    public static float DELTA_TIME
+    /// <summary>
+    /// The time in seconds that has passed between each frame. This contains a max cap of time that has passed between each.
+    /// If the frame rate dips below that, this will return .1f
+    /// </summary>
+    public static float DeltaTime
+    {
+        get
+        {
+            return TimeScale * Mathf.Min(Time.deltaTime, MAX_DELTA_TIME);
+        }
+    }
+
+    /// <summary>
+    /// Unscaled Delta Time between each frame. Like DeltaTime, this will also contain a cap on the amount
+    /// of time that has passed between each frame.
+    /// </summary>
+    public static float RealDeltaTime
     {
         get
         {
@@ -25,11 +44,28 @@ public static class EHTime
         }
     }
 
+    public static float TimeScale { get; private set; }
+
     static EHTime()
     {
         TimeGroupTimeScaleDictionary.Add(EHTime.TimeGroup.NONE, 1);
         TimeGroupTimeScaleDictionary.Add(EHTime.TimeGroup.PLAYER, 1);
         TimeGroupTimeScaleDictionary.Add(EHTime.TimeGroup.ENEMY, 1);
+        TimeScale = 1;
+    }
+
+    /// <summary>
+    /// Sets the time scale of the game
+    /// </summary>
+    /// <param name="NewTimeScale"></param>
+    public static void SetTimeScale(float NewTimeScale)
+    {
+        if (NewTimeScale < 0)
+        {
+            TimeScale = 0;
+            return;
+        }
+        TimeScale = NewTimeScale;
     }
     
     /// <summary>
@@ -37,14 +73,14 @@ public static class EHTime
     /// </summary>
     /// <param name="Group"></param>
     /// <returns></returns>
-    public static float DeltaTime(TimeGroup Group = TimeGroup.NONE)
+    public static float DeltaTimeGroup(TimeGroup Group = TimeGroup.NONE)
     {
         if (TimeGroupTimeScaleDictionary.ContainsKey(Group))
         {
-            return DELTA_TIME * TimeGroupTimeScaleDictionary[Group];
+            return DeltaTime * TimeGroupTimeScaleDictionary[Group];
         }
         Debug.LogWarning("There is no group assigned to our dictionary");
-        return DELTA_TIME;
+        return DeltaTime;
     }
 
     /// <summary>

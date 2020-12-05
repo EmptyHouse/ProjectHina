@@ -97,12 +97,6 @@ public class EHBox2DCollider : EHBaseCollider2D
                 ColliderToPushOut.transform.position += Vector3.up * OffsetY;
                 HitData.HitDirection = Vector2.down;
             }
-            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y)
-            {
-                float OffsetY = ThisCurrentBounds.MinBounds.y - OtherCurrentBounds.MaxBounds.y;
-                ColliderToPushOut.transform.position += Vector3.up * OffsetY;
-                HitData.HitDirection = Vector2.up;
-            }
             else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x)
             {
                 float OffsetX = ThisCurrentBounds.MaxBounds.x - OtherCurrentBounds.MinBounds.x;
@@ -114,6 +108,12 @@ public class EHBox2DCollider : EHBaseCollider2D
                 float OffsetX = ThisCurrentBounds.MinBounds.x - OtherCurrentBounds.MaxBounds.x;
                 ColliderToPushOut.transform.position += Vector3.right * OffsetX;
                 HitData.HitDirection = Vector2.right;
+            }
+            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y)
+            {
+                float OffsetY = ThisCurrentBounds.MinBounds.y - OtherCurrentBounds.MaxBounds.y;
+                ColliderToPushOut.transform.position += Vector3.up * OffsetY;
+                HitData.HitDirection = Vector2.up;
             }
 
             FHitData OtherHitData = HitData;

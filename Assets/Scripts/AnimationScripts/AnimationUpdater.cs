@@ -32,7 +32,7 @@ public class AnimationUpdater : MonoBehaviour
     {
         while (true)
         {
-            Anim.Update(EHTime.DELTA_TIME);
+            Anim.Update(EHTime.DeltaTime);
             yield return null;
         }
     }

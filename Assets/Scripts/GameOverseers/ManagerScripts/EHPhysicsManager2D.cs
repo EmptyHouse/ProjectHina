@@ -78,7 +78,11 @@ public class EHPhysicsManager2D : ITickableComponent
 
         foreach (EHBaseCollider2D MoveableCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVEABLE])
         {
-            if (MoveableCollider.gameObject.activeInHierarchy) MoveableCollider.UpdateColliderBounds(true);
+            if (MoveableCollider.gameObject.activeInHierarchy)
+            {
+                MoveableCollider.UpdateColliderBounds(true);
+                MoveableCollider.DragIntersectingColliders();
+            }
         }
         foreach (EHBaseCollider2D PhysicsCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.PHYSICS])
         {
@@ -86,7 +90,6 @@ public class EHPhysicsManager2D : ITickableComponent
         }
 
         CheckPhysicsCollidersAgainstCategory();
-        
     }
 
     /// <summary>

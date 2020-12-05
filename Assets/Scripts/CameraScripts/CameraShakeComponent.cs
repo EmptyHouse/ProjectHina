@@ -33,7 +33,7 @@ public class CameraShakeComponent : MonoBehaviour
             transform.localPosition = new Vector3(XShakePos, YShakePos, 0) + OriginalLocalPosition;
 
             yield return null;
-            TimeRemainingForCameraShake -= EHTime.DELTA_TIME;
+            TimeRemainingForCameraShake -= EHTime.DeltaTime;
         }
 
         transform.localPosition = OriginalLocalPosition;

@@ -220,7 +220,7 @@ public class EHMovementComponent : MonoBehaviour
                 break;
         }
         GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
-        CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DELTA_TIME * Acceleration);
+        CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
     }
 
@@ -422,7 +422,7 @@ public class EHMovementComponent : MonoBehaviour
         {
             Physics2D.Velocity = DashDirectionUnitVector * InitialDashSpeed;
             yield return null;
-            TimeThatHasPassed += EHTime.DELTA_TIME;
+            TimeThatHasPassed += EHTime.DeltaTime;
         }
     }
     #endregion dashing methods
