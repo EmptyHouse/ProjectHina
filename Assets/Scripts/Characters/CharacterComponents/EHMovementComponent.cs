@@ -13,7 +13,7 @@ public class EHMovementComponent : MonoBehaviour
     #endregion const values
 
     #region enums
-    public enum MovementType : byte
+    public enum EMovementType : byte
     {
         STANDING = 0x00,
         CROUCH = 0x01,
@@ -54,8 +54,8 @@ public class EHMovementComponent : MonoBehaviour
     [Tooltip("The max speed of our character while they are crouched")]
     public float CrouchingSpeed = 5f;
     [Tooltip("The percentage at which we will shorten the height of our character's collider while they are crouched")]
-    [Range(0f, 1f)]
-    public float CrouchingHeightPercentage = .5f;
+    public float CrouchingHeight = .6f;
+    private float StandingHeight;
 
     [Header("Jumping")]
     [Tooltip("The acceleration or control that the character will have while they are in the air")]
@@ -88,7 +88,7 @@ public class EHMovementComponent : MonoBehaviour
     private Vector2 CurrentMovementInput = Vector2.zero;
     private Vector2 PreviousMovementInput = Vector2.zero;
     private float CurrentSpeed;
-    private MovementType CurrentMovementType;
+    private EMovementType CurrentMovementType;
     private int RemainingDoubleJumps;
     private Animator CharacterAnimator;
 
@@ -98,6 +98,7 @@ public class EHMovementComponent : MonoBehaviour
     {
         Physics2D = GetComponent<EHPhysics2D>();
         AssociatedCollider = GetComponent<EHBox2DCollider>();
+        StandingHeight = AssociatedCollider.ColliderSize.y;
 
         if (Physics2D == null) Debug.LogError("There is no associated with physics component with our movement component");
         if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
@@ -115,9 +116,9 @@ public class EHMovementComponent : MonoBehaviour
         UpdateMovementVelocity();
         PreviousMovementInput = CurrentMovementInput;
         UpdateMovementBasedOnMovementType();
-        if (CurrentMovementType != MovementType.IN_AIR && Mathf.Abs(Physics2D.Velocity.y) > 0)
+        if (CurrentMovementType != EMovementType.IN_AIR && Mathf.Abs(Physics2D.Velocity.y) > 0)
         {
-            SetMovementType(MovementType.IN_AIR);
+            SetMovementType(EMovementType.IN_AIR);
         }
         PreviousVelocity = Physics2D.Velocity;
     }
@@ -192,7 +193,7 @@ public class EHMovementComponent : MonoBehaviour
         float Acceleration = 0;
         switch (CurrentMovementType)
         {
-            case MovementType.STANDING:
+            case EMovementType.STANDING:
                 Acceleration = GroundAcceleration;
                 if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_RUN_THRESHOLD)
                 {
@@ -203,14 +204,14 @@ public class EHMovementComponent : MonoBehaviour
                     GoalSpeed = WalkingSpeed;
                 }
                 break;
-            case MovementType.CROUCH:
+            case EMovementType.CROUCH:
                 Acceleration = GroundAcceleration;
                 if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
                 {
                     GoalSpeed = CrouchingSpeed;
                 }
                 break;
-            case MovementType.IN_AIR:
+            case EMovementType.IN_AIR:
                 Acceleration = HorizontalAirAcceleration;
                 if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
                 {
@@ -227,20 +228,20 @@ public class EHMovementComponent : MonoBehaviour
     {
         switch (CurrentMovementType)
         {
-            case MovementType.STANDING:
+            case EMovementType.STANDING:
                 if (CurrentMovementInput.y < -JOYSTICK_CROUCH_THRESHOLD)
                 {
-                    SetMovementType(MovementType.CROUCH);
+                    SetMovementType(EMovementType.CROUCH);
                 }
                 return;
-            case MovementType.CROUCH:
+            case EMovementType.CROUCH:
                 if (CurrentMovementInput.y > -JOYSTICK_CROUCH_THRESHOLD)
                 {
                     //Attempt to stand if the player has gone above the crouch threshold
                     AttemptStand();
                 }
                 return;
-            case MovementType.IN_AIR:
+            case EMovementType.IN_AIR:
                 if (PreviousVelocity.y >= 0 && Physics2D.Velocity.y < 0)
                 {
                     EndJump();
@@ -254,28 +255,46 @@ public class EHMovementComponent : MonoBehaviour
     /// changed
     /// </summary>
     /// <returns></returns>
-    private void SetMovementType(MovementType NewMovementType)
+    private void SetMovementType(EMovementType NewMovementType)
     {
         if (NewMovementType == CurrentMovementType)
         {
             return;
         }
 
+        EndMovementType(CurrentMovementType);
+        print(NewMovementType);
         CurrentMovementType = NewMovementType;
 
         switch (CurrentMovementType)
         {
-            case MovementType.STANDING:
+            case EMovementType.STANDING:
                 RemainingDoubleJumps = DoubleJumpCount;
                 break;
-            case MovementType.CROUCH:
-
+            case EMovementType.CROUCH:
+                AssociatedCollider.ColliderSize.y = CrouchingHeight;
                 break;
-            case MovementType.IN_AIR:
+            case EMovementType.IN_AIR:
 
                 break;
         }
         CharacterAnimator.SetInteger(ANIM_MOVEMENT_STATE, (int)CurrentMovementType);
+    }
+
+    private void EndMovementType(EMovementType MovementTypeToEnd)
+    {
+        switch (MovementTypeToEnd)
+        {
+            case EMovementType.STANDING:
+
+                break;
+            case EMovementType.CROUCH:
+                AssociatedCollider.ColliderSize.y = StandingHeight;
+                break;
+            case EMovementType.IN_AIR:
+
+                break;
+        }
     }
 
 
@@ -287,13 +306,13 @@ public class EHMovementComponent : MonoBehaviour
         EHBaseCollider2D HitCollider;
         if (!EHPhysicsManager2D.BoxCast2D(ref CastBox, out HitCollider, LayerMask.GetMask(ENVIRONMENT_LAYER)))
         {
-            SetMovementType(MovementType.STANDING);
+            SetMovementType(EMovementType.STANDING);
         }
     }
 
     public void AttemptJump()
     {
-        if (CurrentMovementType == MovementType.STANDING)
+        if (CurrentMovementType == EMovementType.STANDING)
         {
             Jump();
         }
@@ -314,7 +333,7 @@ public class EHMovementComponent : MonoBehaviour
     /// </summary>
     public void EndJump()
     {
-        if (CurrentMovementType == MovementType.IN_AIR)
+        if (CurrentMovementType == EMovementType.IN_AIR)
         {
             Physics2D.GravityScale = CachedGravityScale * LowJumpMultiplier;
         }
@@ -322,7 +341,7 @@ public class EHMovementComponent : MonoBehaviour
 
     public void OnLanded()
     {
-        SetMovementType(MovementType.STANDING);
+        SetMovementType(EMovementType.STANDING);
         RemainingDashes = MaxNumberOfDashes;
         Physics2D.GravityScale = CachedGravityScale;
     }
@@ -333,7 +352,7 @@ public class EHMovementComponent : MonoBehaviour
     /// <param name="HitData"></param>
     public void OnEHCollisionEnter(EHBaseCollider2D.FHitData HitData)
     {
-        if (HitData.HitDirection.y > 0 && CurrentMovementType == MovementType.IN_AIR)
+        if (HitData.HitDirection.y > 0 && CurrentMovementType == EMovementType.IN_AIR)
         {
             OnLanded();
         }
@@ -369,7 +388,7 @@ public class EHMovementComponent : MonoBehaviour
     /// </summary>
     public void AttemptDash()
     {
-        if (CurrentMovementType == MovementType.IN_AIR)
+        if (CurrentMovementType == EMovementType.IN_AIR)
         {
             if (RemainingDashes <= 0)
             {
@@ -387,7 +406,7 @@ public class EHMovementComponent : MonoBehaviour
         DashDirectionUnitVector.x = (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.x) : 0;
         DashDirectionUnitVector.y = (Mathf.Abs(CurrentMovementInput.y) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.y) : 0;
 
-        if (DashDirectionUnitVector.y < 0 && CurrentMovementType != MovementType.IN_AIR)
+        if (DashDirectionUnitVector.y < 0 && CurrentMovementType != EMovementType.IN_AIR)
         {
             DashDirectionUnitVector.y = 0;
         }
