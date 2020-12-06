@@ -1128,13 +1128,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb5ff10986a1b0438107b02c07b5131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDashSpeed: 20
-  DashTime: 0.2
-  DelayBeforeStartDash: 0.08
+  InitialDashSpeed: 45
+  DashTime: 0.1
+  DelayBeforeStartDash: 0.064
   DashCoolDown: 0.1
   DashAnimationCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.000008303921
+      outSlope: 0.000008303921
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.10049048
+    - serializedVersion: 3
+      time: 1
+      value: 0.5
+      inSlope: -1.1870735
+      outSlope: -1.1870735
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.0727337
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

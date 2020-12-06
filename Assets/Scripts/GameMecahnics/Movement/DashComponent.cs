@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EHPhysics2D))]
 [RequireComponent(typeof(EHMovementComponent))]
 public class DashComponent : MonoBehaviour
 {
+    #region const variables
+    private const float DASH_INPUT_THRESHOLD = .45f;
+    #endregion const variables
+
     [Tooltip("")]
     public float InitialDashSpeed = 20f;
     [Tooltip("")]
@@ -17,6 +22,16 @@ public class DashComponent : MonoBehaviour
     public AnimationCurve DashAnimationCurve;
 
     private bool bIsPerformingDash;
+    private EHMovementComponent MovementComponent;
+    private EHPhysics2D Physics2D;
+
+    #region monobehaviour methods
+    private void Awake()
+    {
+        MovementComponent = GetComponent<EHMovementComponent>();
+        Physics2D = GetComponent<EHPhysics2D>();
+    }
+    #endregion monobehaviour methods
 
 
     public void AttemptDash()
@@ -31,7 +46,9 @@ public class DashComponent : MonoBehaviour
     {
         bIsPerformingDash = true;
         yield return StartCoroutine(PerformDelayBeforeDash());
+        yield return StartCoroutine(PerformDash());
         bIsPerformingDash = false;
+        yield return StartCoroutine(PerformDashCoolDown());
     }
 
     private IEnumerator PerformDelayBeforeDash()
@@ -50,7 +67,28 @@ public class DashComponent : MonoBehaviour
 
     private IEnumerator PerformDash()
     {
-        yield break;
+        Vector2 MovementInputAxis = MovementComponent.GetMovementInput();
+        MovementInputAxis.x = Mathf.Abs(MovementInputAxis.x) > DASH_INPUT_THRESHOLD ? Mathf.Sign(MovementInputAxis.x) : 0;
+        MovementInputAxis.y = Mathf.Abs(MovementInputAxis.y) > DASH_INPUT_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
+
+        Vector2 DashDirection;
+        if (MovementInputAxis == Vector2.zero)
+        {
+            MovementInputAxis = Vector2.right * (MovementComponent.GetIsFacingLeft() ? -1 : 1);
+        }
+        DashDirection = MovementInputAxis.normalized;
+
+        float TimeThatHasPassed = 0;
+        float CachedGravity = Physics2D.GravityScale;
+        
+        Physics2D.GravityScale = 0;
+        while (TimeThatHasPassed < DashTime)
+        {
+            Physics2D.Velocity = InitialDashSpeed * DashAnimationCurve.Evaluate(TimeThatHasPassed / DashTime) * DashDirection;
+            yield return null;
+            TimeThatHasPassed += EHTime.DeltaTime;
+        }
+        Physics2D.GravityScale = CachedGravity;
     }
 
     private IEnumerator PerformDashCoolDown()

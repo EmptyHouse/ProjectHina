@@ -169,15 +169,57 @@ public class EHMovementComponent : MonoBehaviour
     }
     #endregion monobehaviour methods
 
+    #region input methods
+    /// <summary>
+    /// Sets the horizontal input for our movement component
+    /// </summary>
+    /// <param name="HorizontalInput"></param>
     public void SetHorizontalInput(float HorizontalInput)
     {
         CurrentMovementInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
     }
 
+    /// <summary>
+    /// Sets the vertical input for our movement component
+    /// </summary>
+    /// <param name="VerticalInput"></param>
     public void SetVerticalInput(float VerticalInput)
     {
         CurrentMovementInput.y = Mathf.Clamp(VerticalInput, -1f, 1f);
     }
+
+    /// <summary>
+    /// Returns the current input for our movement component
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetMovementInput()
+    {
+        return CurrentMovementInput;
+    }
+
+    /// <summary>
+    /// This method will make our character jump if it is valid
+    /// </summary>
+    /// <returns></returns>
+    public void AttemptJump()
+    {
+        switch (CurrentMovementType)
+        {
+            case EMovementType.STANDING:
+                Jump();
+                return;
+            case EMovementType.CROUCH:
+                if (AttemptStand()) Jump();
+                return;
+            case EMovementType.IN_AIR:
+                if (RemainingDoubleJumps-- > 0)
+                {
+                    Jump();
+                }
+                return;
+        }
+    }
+    #endregion input methods
 
     private void UpdateMovementVelocity()
     {
@@ -303,24 +345,7 @@ public class EHMovementComponent : MonoBehaviour
         return false;
     }
 
-    public void AttemptJump()
-    {
-        switch (CurrentMovementType)
-        {
-            case EMovementType.STANDING:
-                Jump();
-                return;
-            case EMovementType.CROUCH:
-                if (AttemptStand()) Jump();
-                return;
-            case EMovementType.IN_AIR:
-                if (RemainingDoubleJumps-- > 0)
-                {
-                    Jump();
-                }
-                return;
-        }
-    }
+    
 
     private void Jump()
     {
