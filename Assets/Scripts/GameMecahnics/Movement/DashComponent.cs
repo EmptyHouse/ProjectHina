@@ -13,19 +13,28 @@ public class DashComponent : MonoBehaviour
     public float DelayBeforeStartDash;
     [Tooltip("The amount of time to wait before you can use dash again")]
     public float DashCoolDown = .1f;
+    [Tooltip("Curve will determine the velocity of our character when using the dash ability")]
+    public AnimationCurve DashAnimationCurve;
+
+    private bool bIsPerformingDash;
 
 
     public void AttemptDash()
     {
-
+        if (!bIsPerformingDash)
+        {
+            StartCoroutine(BeginDash());
+        }
     }
 
-    public IEnumerator PerformDash()
+    private IEnumerator BeginDash()
     {
+        bIsPerformingDash = true;
         yield return StartCoroutine(PerformDelayBeforeDash());
+        bIsPerformingDash = false;
     }
 
-    public IEnumerator PerformDelayBeforeDash()
+    private IEnumerator PerformDelayBeforeDash()
     {
         if (DelayBeforeStartDash <= 0) yield break;
         float CachedTimeScale = EHTime.TimeScale;
@@ -37,5 +46,15 @@ public class DashComponent : MonoBehaviour
             TimeThatHasPassed += EHTime.RealDeltaTime;
         }
         EHTime.SetTimeScale(CachedTimeScale);
+    }
+
+    private IEnumerator PerformDash()
+    {
+        yield break;
+    }
+
+    private IEnumerator PerformDashCoolDown()
+    {
+        yield break;
     }
 }

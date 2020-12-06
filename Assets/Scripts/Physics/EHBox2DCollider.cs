@@ -184,5 +184,9 @@ public class EHBox2DCollider : EHBaseCollider2D
 
     public override EHGeometry.ShapeType GetColliderShape() { return EHGeometry.ShapeType.Rect2D; }
     public override EHBounds2D GetBounds() { return RectGeometry.GetBounds(); }
+    protected override Vector2 GetOffsetFromPreviousPosition()
+    {
+        return RectGeometry.RectPosition - PreviousRectGeometry.RectPosition;
+    }
     #endregion override methods
 }

@@ -73,13 +73,6 @@ public class EHMovementComponent : MonoBehaviour
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
 
-    [Header("Dashing")]
-    public float InitialDashSpeed = 20;
-    public float EndDashSpeed = 12;
-    public float AnimationDashDuration = 1.2f;
-    public int MaxNumberOfDashes = 1;
-    private int RemainingDashes;
-
     #endregion main variables
 
     private EHPhysics2D Physics2D;
@@ -107,7 +100,6 @@ public class EHMovementComponent : MonoBehaviour
         CharacterAnimator = GetComponent<Animator>();
         CharacterSpriteTransform = CharacterSpriteRenderer.transform;
         CachedXScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
-        RemainingDashes = MaxNumberOfDashes;
         CachedGravityScale = Physics2D.GravityScale;
     }
 
@@ -342,7 +334,6 @@ public class EHMovementComponent : MonoBehaviour
     public void OnLanded()
     {
         SetMovementType(EMovementType.STANDING);
-        RemainingDashes = MaxNumberOfDashes;
         Physics2D.GravityScale = CachedGravityScale;
     }
 
@@ -380,50 +371,9 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
-    public bool GetIsFacingLeft() { return this.IsFacingLeft; }
-
-    #region dashing methods
     /// <summary>
-    /// 
+    /// Returns true if our character facing to the left.
     /// </summary>
-    public void AttemptDash()
-    {
-        if (CurrentMovementType == EMovementType.IN_AIR)
-        {
-            if (RemainingDashes <= 0)
-            {
-                return;
-            }
-            --RemainingDashes;
-        }
-        StartCoroutine(BeginDashCoroutine());
-    }
-
-    private IEnumerator BeginDashCoroutine()
-    {
-        float TimeThatHasPassed = 0;
-        Vector2 DashDirectionUnitVector = Vector2.zero;
-        DashDirectionUnitVector.x = (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.x) : 0;
-        DashDirectionUnitVector.y = (Mathf.Abs(CurrentMovementInput.y) > JOYSTICK_WALK_THRESHOLD) ? Mathf.Sign(CurrentMovementInput.y) : 0;
-
-        if (DashDirectionUnitVector.y < 0 && CurrentMovementType != EMovementType.IN_AIR)
-        {
-            DashDirectionUnitVector.y = 0;
-        }
-
-        if (DashDirectionUnitVector == Vector2.zero)
-        {
-            DashDirectionUnitVector.x = IsFacingLeft ? -1 : 1;
-        }
-
-        DashDirectionUnitVector = DashDirectionUnitVector.normalized;
-
-        while (TimeThatHasPassed < AnimationDashDuration)
-        {
-            Physics2D.Velocity = DashDirectionUnitVector * InitialDashSpeed;
-            yield return null;
-            TimeThatHasPassed += EHTime.DeltaTime;
-        }
-    }
-    #endregion dashing methods
+    /// <returns></returns>
+    public bool GetIsFacingLeft() { return this.IsFacingLeft; }
 }

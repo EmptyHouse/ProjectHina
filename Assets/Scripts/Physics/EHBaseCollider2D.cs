@@ -86,6 +86,8 @@ public abstract class EHBaseCollider2D : MonoBehaviour
 
     public abstract bool PushOutCollider(EHBaseCollider2D ColliderToPushOut);
 
+    protected abstract Vector2 GetOffsetFromPreviousPosition();
+
     protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider)
     {
         if (OtherCollider != null && OverlappingColliders.Add(OtherCollider))
@@ -105,22 +107,17 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// <summary>
     /// This method will shift any collider's transform by the amount that this collider has shifted.
     /// Collider that is being dragged must be a physics type collider
-    /// NOTE: Update with PhysicsManager only.
+    /// NOTE: Update with PhysicsManager only. This should only be used on movable colliders
     /// </summary>
     public void DragIntersectingColliders()
     {
-        switch (ColliderType)
+        Vector3 OffsetPosition = GetOffsetFromPreviousPosition();
+        foreach (EHBaseCollider2D Collider in OverlappingColliders)
         {
-            case EColliderType.MOVEABLE:
-                //Vector3 OffsetPosition = PreviousRectGeometry.RectPosition - RectGeometry.RectPosition;
-                foreach (EHBaseCollider2D TouchedCollider in GetAllOverlappingColliders())
-                {
-                    if (TouchedCollider.ColliderType == EColliderType.PHYSICS)
-                    {
-                        //TouchedCollider.transform.position += OffsetPosition;
-                    }
-                }
-                return;
+            if (Collider.ColliderType == EColliderType.PHYSICS)
+            {
+                Collider.transform.position += OffsetPosition;
+            }
         }
     }
 

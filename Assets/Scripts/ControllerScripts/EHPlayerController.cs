@@ -26,10 +26,11 @@ public class EHPlayerController : EHBaseController
     public override void SetUpInput()
     {
         EHMovementComponent MovementComponent = GetComponent<EHMovementComponent>();
+        DashComponent DashComponent = GetComponent<DashComponent>();
 
         BindActionToInput(JUMP_COMMAND, true, MovementComponent.AttemptJump);
         BindActionToInput(JUMP_COMMAND, false, MovementComponent.EndJump);
-        BindActionToInput(DASH_COMMAND, true, MovementComponent.AttemptDash);
+        BindActionToInput(DASH_COMMAND, true, DashComponent.AttemptDash);
 
         BindActionToAxis(HORIZONTAL_AXIS, MovementComponent.SetHorizontalInput);
         BindActionToAxis(VERTICAL_AXIS, MovementComponent.SetVerticalInput);
