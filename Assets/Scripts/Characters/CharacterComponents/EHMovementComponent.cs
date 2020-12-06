@@ -255,7 +255,6 @@ public class EHMovementComponent : MonoBehaviour
         }
 
         EndMovementType(CurrentMovementType);
-        print(NewMovementType);
         CurrentMovementType = NewMovementType;
 
         switch (CurrentMovementType)
@@ -290,7 +289,7 @@ public class EHMovementComponent : MonoBehaviour
     }
 
 
-    private void AttemptStand()
+    private bool AttemptStand()
     {
         EHRect2D CastBox = new EHRect2D();
         CastBox.RectPosition = AssociatedCollider.GetBounds().MinBounds;
@@ -299,18 +298,27 @@ public class EHMovementComponent : MonoBehaviour
         if (!EHPhysicsManager2D.BoxCast2D(ref CastBox, out HitCollider, LayerMask.GetMask(ENVIRONMENT_LAYER)))
         {
             SetMovementType(EMovementType.STANDING);
+            return true;
         }
+        return false;
     }
 
     public void AttemptJump()
     {
-        if (CurrentMovementType == EMovementType.STANDING)
+        switch (CurrentMovementType)
         {
-            Jump();
-        }
-        else if (RemainingDoubleJumps-- > 0)
-        {
-            Jump();
+            case EMovementType.STANDING:
+                Jump();
+                return;
+            case EMovementType.CROUCH:
+                if (AttemptStand()) Jump();
+                return;
+            case EMovementType.IN_AIR:
+                if (RemainingDoubleJumps-- > 0)
+                {
+                    Jump();
+                }
+                return;
         }
     }
 
