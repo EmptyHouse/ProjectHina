@@ -933,6 +933,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1476533359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1476533360}
+  - component: {fileID: 1476533361}
+  m_Layer: 8
+  m_Name: MovingBlock3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1476533360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476533359}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2010965990}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1476533361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476533359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e730862882e3d9b479e96682a635a71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bIsCharacterCollider: 0
+  ColliderType: 1
+  ColliderOffset: {x: 0, y: 0}
+  ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &1500336663
 GameObject:
   m_ObjectHideFlags: 0
@@ -946,6 +993,7 @@ GameObject:
   - component: {fileID: 1500336666}
   - component: {fileID: 1500336667}
   - component: {fileID: 1500336668}
+  - component: {fileID: 1500336670}
   - component: {fileID: 1500336669}
   m_Layer: 9
   m_Name: PlayerCharacter
@@ -1042,17 +1090,13 @@ MonoBehaviour:
   GroundAcceleration: 250
   CrouchingAcceleration: 100
   CrouchingSpeed: 5
-  CrouchingHeightPercentage: 0.5
+  CrouchingHeight: 0.6
   HorizontalAirAcceleration: 100
   AirSpeed: 11
   DoubleJumpCount: 1
   JumpHeightApex: 2.75
   TimeToReachApex: 0.32
   LowJumpMultiplier: 1.55
-  InitialDashSpeed: 20
-  EndDashSpeed: 12
-  AnimationDashDuration: 0.1
-  MaxNumberOfDashes: 1
 --- !u!95 &1500336669
 Animator:
   serializedVersion: 3
@@ -1072,6 +1116,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1500336670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500336663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcb5ff10986a1b0438107b02c07b5131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialDashSpeed: 20
+  DashTime: 0.2
+  DelayBeforeStartDash: 0.08
+  DashCoolDown: 0.1
+  DashAnimationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1752609975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1441,7 @@ Transform:
   - {fileID: 338789320}
   - {fileID: 1234806797}
   - {fileID: 1855633191}
+  - {fileID: 1476533360}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
