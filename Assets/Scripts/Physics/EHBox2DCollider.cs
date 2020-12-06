@@ -82,6 +82,7 @@ public class EHBox2DCollider : EHBaseCollider2D
 
         if (RectGeometry.IsOverlappingRect(OtherRectCollier.PhysicsSweepGeometry))
         {
+
             FHitData HitData = new FHitData();
             HitData.OwningCollider = this;
             HitData.OtherCollider = ColliderToPushOut;
@@ -91,28 +92,29 @@ public class EHBox2DCollider : EHBaseCollider2D
             EHBounds2D ThisPreviousBounds = PreviousRectGeometry.GetBounds();
             EHBounds2D OtherPreviousBounds = OtherRectCollier.PreviousRectGeometry.GetBounds();
 
-            if (ThisPreviousBounds.MaxBounds.y < OtherPreviousBounds.MinBounds.y)
+            Vector2 RightUpOffset = ThisCurrentBounds.MaxBounds - OtherCurrentBounds.MinBounds;
+            Vector2 LeftBottomOffset = ThisCurrentBounds.MinBounds - OtherCurrentBounds.MaxBounds;
+
+
+
+            if (ThisPreviousBounds.MaxBounds.y < OtherPreviousBounds.MinBounds.y && RightUpOffset.y > 0)
             {
-                float OffsetY = ThisCurrentBounds.MaxBounds.y - OtherCurrentBounds.MinBounds.y;
-                ColliderToPushOut.transform.position += Vector3.up * OffsetY;
+                ColliderToPushOut.transform.position += Vector3.up * RightUpOffset.y;
                 HitData.HitDirection = Vector2.down;
             }
-            else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x)
+            else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x && RightUpOffset.x > 0)
             {
-                float OffsetX = ThisCurrentBounds.MaxBounds.x - OtherCurrentBounds.MinBounds.x;
-                ColliderToPushOut.transform.position += Vector3.right * OffsetX;
+                ColliderToPushOut.transform.position += Vector3.right * RightUpOffset.x;
                 HitData.HitDirection = Vector2.left;
             }
-            else if (ThisPreviousBounds.MinBounds.x > OtherPreviousBounds.MaxBounds.x)
+            else if (ThisPreviousBounds.MinBounds.x > OtherPreviousBounds.MaxBounds.x && LeftBottomOffset.x < 0)
             {
-                float OffsetX = ThisCurrentBounds.MinBounds.x - OtherCurrentBounds.MaxBounds.x;
-                ColliderToPushOut.transform.position += Vector3.right * OffsetX;
+                ColliderToPushOut.transform.position += Vector3.right * LeftBottomOffset.x;
                 HitData.HitDirection = Vector2.right;
             }
-            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y)
+            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y && LeftBottomOffset.y < 0)
             {
-                float OffsetY = ThisCurrentBounds.MinBounds.y - OtherCurrentBounds.MaxBounds.y;
-                ColliderToPushOut.transform.position += Vector3.up * OffsetY;
+                ColliderToPushOut.transform.position += Vector3.up * LeftBottomOffset.y;
                 HitData.HitDirection = Vector2.up;
             }
 
