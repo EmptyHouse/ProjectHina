@@ -10,17 +10,22 @@ public class DashComponent : MonoBehaviour
     private const float DASH_INPUT_THRESHOLD = .45f;
     #endregion const variables
 
-    [Tooltip("")]
+    [Tooltip("The initial speed of our dash")]
     public float InitialDashSpeed = 20f;
-    [Tooltip("")]
+    [Tooltip("The total amount of time that we will perform our dash")]
     public float DashTime = .016f * 4;
-    [Tooltip("")]
-    public float DelayBeforeStartDash;
+    [Tooltip("The delay before we start our dash animation")]
+    public float DelayBeforeStartDash = 10f;
     [Tooltip("The amount of time to wait before you can use dash again")]
-    public float DashCoolDown = .1f;
+    public float DashCoolDownTime = .1f;
+    [Tooltip("The amount of drag that we will apply to our chaaracter when it is performing our dash cool down")]
+    public float DragValueForDashCoolDown = 10;
     [Tooltip("Curve will determine the velocity of our character when using the dash ability")]
     public AnimationCurve DashAnimationCurve;
 
+    /// <summary>
+    /// True during our dash. Indicates that we can perform another dash if avaiable. This will be false during our dash cooldown
+    /// </summary>
     private bool bIsPerformingDash;
     private EHMovementComponent MovementComponent;
     private EHPhysics2D Physics2D;
@@ -93,6 +98,17 @@ public class DashComponent : MonoBehaviour
 
     private IEnumerator PerformDashCoolDown()
     {
+        float TimeThatHasPassed = 0;
+        Vector2 PreviousVelocity = Physics2D.Velocity;
+        while (TimeThatHasPassed < DashCoolDownTime && !bIsPerformingDash && PreviousVelocity.y <= Physics2D.Velocity.y)
+        {
+            TimeThatHasPassed += EHTime.DeltaTime;
+            if (Physics2D.Velocity.y > 0)
+            {
+                Physics2D.Velocity -= EHTime.DeltaTime * DragValueForDashCoolDown * Vector2.up;
+            }
+            yield return null;
+        }
         yield break;
     }
 }

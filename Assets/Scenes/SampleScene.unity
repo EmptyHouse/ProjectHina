@@ -1014,7 +1014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37e8701f8965004da09e0085542da44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GravityScale: 5.480708
+  GravityScale: 4.3304358
   bUseTerminalVelocity: 1
   TerminalVelocity: 10
 --- !u!4 &1500336665
@@ -1095,7 +1095,7 @@ MonoBehaviour:
   AirSpeed: 11
   DoubleJumpCount: 1
   JumpHeightApex: 2.75
-  TimeToReachApex: 0.32
+  TimeToReachApex: 0.36
   LowJumpMultiplier: 1.55
 --- !u!95 &1500336669
 Animator:
@@ -1131,7 +1131,8 @@ MonoBehaviour:
   InitialDashSpeed: 45
   DashTime: 0.1
   DelayBeforeStartDash: 0.064
-  DashCoolDown: 0.1
+  DashCoolDownTime: 0.15
+  DragValueForDashCoolDown: 500
   DashAnimationCurve:
     serializedVersion: 2
     m_Curve:
