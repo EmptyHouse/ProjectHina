@@ -96,7 +96,7 @@ public class EHMovementComponent : MonoBehaviour
         if (Physics2D == null) Debug.LogError("There is no associated with physics component with our movement component");
         if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
 
-        AssociatedCollider.OnCollision2DEnter += OnEHCollisionEnter;
+        AssociatedCollider.OnCollision2DBegin += OnEHCollisionEnter;
         CharacterAnimator = GetComponent<Animator>();
         CharacterSpriteTransform = CharacterSpriteRenderer.transform;
         CachedXScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
@@ -120,7 +120,7 @@ public class EHMovementComponent : MonoBehaviour
         EHBaseCollider2D BaseCollider = GetComponent<EHBaseCollider2D>();
         if (BaseCollider)
         {
-            BaseCollider.OnCollision2DEnter -= OnEHCollisionEnter;
+            BaseCollider.OnCollision2DBegin -= OnEHCollisionEnter;
         }
     }
 

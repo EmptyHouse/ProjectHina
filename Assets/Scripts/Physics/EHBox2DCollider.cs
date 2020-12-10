@@ -130,8 +130,8 @@ public class EHBox2DCollider : EHBaseCollider2D
             if (!ContainOverlappingCollider(ColliderToPushOut))
             {
                 AddColliderToHitSet(ColliderToPushOut);
-                OnCollision2DEnter?.Invoke(HitData);
-                ColliderToPushOut.OnCollision2DEnter?.Invoke(OtherHitData);
+                OnCollision2DBegin?.Invoke(HitData);
+                ColliderToPushOut.OnCollision2DBegin?.Invoke(OtherHitData);
             }
 
             return true;
