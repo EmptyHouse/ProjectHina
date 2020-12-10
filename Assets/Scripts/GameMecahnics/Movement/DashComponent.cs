@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Dash component handles all the logic required for successfully performing a dash
+/// </summary>
 [RequireComponent(typeof(EHPhysics2D))]
 [RequireComponent(typeof(EHMovementComponent))]
 public class DashComponent : MonoBehaviour
@@ -38,7 +41,9 @@ public class DashComponent : MonoBehaviour
     }
     #endregion monobehaviour methods
 
-
+    /// <summary>
+    /// Peforms our character's dash if valid
+    /// </summary>
     public void AttemptDash()
     {
         if (!bIsPerformingDash)
@@ -47,6 +52,10 @@ public class DashComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Carries out the steps of our dash
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator BeginDash()
     {
         bIsPerformingDash = true;
@@ -56,6 +65,11 @@ public class DashComponent : MonoBehaviour
         yield return StartCoroutine(PerformDashCoolDown());
     }
 
+    /// <summary>
+    /// Pauses the entire game for a few seconds before performing the actual dash. Ideally this will give the player
+    /// a greater feeling of impact when performing the dash
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PerformDelayBeforeDash()
     {
         if (DelayBeforeStartDash <= 0) yield break;
@@ -70,6 +84,11 @@ public class DashComponent : MonoBehaviour
         EHTime.SetTimeScale(CachedTimeScale);
     }
 
+    /// <summary>
+    /// Coroutine that performs our character's dash based on the direction of their input and the dash
+    /// animation curve
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PerformDash()
     {
         Vector2 MovementInputAxis = MovementComponent.GetMovementInput();
@@ -96,6 +115,10 @@ public class DashComponent : MonoBehaviour
         Physics2D.GravityScale = CachedGravity;
     }
 
+    /// <summary>
+    /// Performed after our dash has completed. Adds a much stronger drag for our character's gravity so that they don't just zoom into the sky.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PerformDashCoolDown()
     {
         float TimeThatHasPassed = 0;
