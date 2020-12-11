@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class EHAttackComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    /// <summary>
+    /// The damage that we will apply to the DamageableComponent that we interact with
+    /// </summary>
+    public float DamageToApply;
 
-    // Update is called once per frame
-    void Update()
+    private EHGameplayCharacter CharacterOwner;
+    private HashSet<EHDamageableComponent> IntersectedDamageableComponents = new HashSet<EHDamageableComponent>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void OnHitboxIntersectEnemyHurtbox()
     {
-        
+
     }
 }
