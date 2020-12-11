@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all character that will be in our game. 
+/// </summary>
 public class EHCharacter : MonoBehaviour
 {
     /// <summary>

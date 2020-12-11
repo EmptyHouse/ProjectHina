@@ -5,88 +5,64 @@ using UnityEngine.Events;
 
 public class EHDamageableComponent : MonoBehaviour
 {
-    #region events
-    public UnityEvent<EHDamageableComponent> OnDied;
-    #endregion events
-
-    #region main variables
-    public float MaxHealth = 100;
-    private float CurrentHealth;
+    [Tooltip("The maximum health of our Damageable component")]
+    public int MaxHealth;
     /// <summary>
-    /// The owner of the 
+    /// The ccurrent health of our character component
     /// </summary>
-    public EHGameplayCharacter Owner { get; private set; }
+    private int CurrentHealth;
 
     /// <summary>
-    /// 
+    /// The owning character for our damageable component
     /// </summary>
-    private HashSet<EHDamageableComponent> ListOfOwnersWeHaveHit = new HashSet<EHDamageableComponent>();
-    #endregion main variables
+    private EHGameplayCharacter CharacterOwner;
+
 
     #region monobehaviour methods
     private void Awake()
     {
+        CurrentHealth = MaxHealth;
+    }
 
+    private void OnValidate()
+    {
+        if (MaxHealth < 0)
+        {
+            MaxHealth = 0;
+        }
     }
     #endregion monobehaviour methods
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="Owner"></param>
-    public void SetDamageableComponentOwner(EHGameplayCharacter Owner)
-    {
-        this.Owner = Owner;
-    }
 
     /// <summary>
-    /// 
+    /// This method will be called to apply damage to 
     /// </summary>
-    /// <param name="DamageComponentThatHitUs"></param>
-    /// <param name="DamageTaken"></param>
-    public void TakeDamage(EHDamageableComponent DamageComponentThatHitUs, float DamageTaken)
+    /// <param name="AttackComponentThatHurtUs"></param>
+    /// <param name="DamageToTake"></param>
+    public void TakeDamage(EHAttackComponent AttackComponentThatHurtUs, int DamageToTake)
     {
-        CurrentHealth = Mathf.Clamp(CurrentHealth - DamageTaken, 0, MaxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth - DamageToTake, 0, MaxHealth);
 
         if (CurrentHealth <= 0)
         {
-            OnDied?.Invoke(DamageComponentThatHitUs);
+            CharacterOwner.OnCharacterDied(AttackComponentThatHurtUs);
         }
     }
 
     /// <summary>
-    /// 
+    /// Call this method to add health to oour character
     /// </summary>
-    /// <param name="ReceiveHealing"></param>
-    public void ReceiveHealing(float ReceiveHealing)
+    /// <param name="HealthToRecieve"></param>
+    public void ReceiveHealth(int HealthToRecieve)
     {
-        CurrentHealth = Mathf.Clamp(CurrentHealth - ReceiveHealing, 0, MaxHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth + HealthToRecieve, 0, MaxHealth);
     }
 
     /// <summary>
-    /// 
+    /// This will assign the character that owns the damageable component that this is attached to
     /// </summary>
-    public void OnResetListOfUnitsThatHitUs()
+    /// <param name="CharacterOwner"></param>
+    public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)
     {
-        ListOfOwnersWeHaveHit.Clear();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="OutHitbox"></param>
-    /// <param name="OtherHitbox"></param>
-    public void OnHitboxIntersectedOurHurtbox(EHHitbox OutHitbox, EHHitbox OtherHitbox)
-    {
-
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="OurHitbox"></param>
-    /// <param name="OtherHitbox"></param>
-    public void OnHurtboxIntersectedOurHitbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)
-    {
-        ListOfOwnersWeHaveHit.Add(OtherHitbox.DamageableComponent);
+        this.CharacterOwner = CharacterOwner;
     }
 }
