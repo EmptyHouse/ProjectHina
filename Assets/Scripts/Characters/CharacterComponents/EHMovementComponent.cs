@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+/// <summary>
+/// Handles all the logic for our character's movement. This include movemet in the air as well as specific movement options while grounded
+/// </summary>
 [RequireComponent(typeof(EHPhysics2D))]
 [RequireComponent(typeof(EHBox2DCollider))]
 public class EHMovementComponent : MonoBehaviour
@@ -19,12 +23,14 @@ public class EHMovementComponent : MonoBehaviour
         CROUCH = 0x01,
         IN_AIR = 0x02,
     }
-
     #endregion enums
 
     #region const values
+    // Value required before we can register that our character should begin walking
     private const float JOYSTICK_WALK_THRESHOLD = .25f;
+    // Value reuired on our joystick before we register that our character is at running speed
     private const float JOYSTICK_RUN_THRESHOLD = .7f;
+    // Value required in the down position before we register that our character is crouching
     private const float JOYSTICK_CROUCH_THRESHOLD = .6f;
     #endregion const values
 
@@ -38,6 +44,9 @@ public class EHMovementComponent : MonoBehaviour
     /// The child transform of the character that this component attaches that contains the character's sprite renderer object
     /// </summary>
     private Transform CharacterSpriteTransform;
+    /// <summary>
+    /// The last local X Scale of our character. X Scale will be used for indicating whether or not we should change the direction of our character
+    /// </summary>
     private float CachedXScale;
 
     [Header("Walking")]
@@ -69,6 +78,7 @@ public class EHMovementComponent : MonoBehaviour
     public float TimeToReachApex = .5f;
     [Tooltip("The multiplier to gravity that we will apply when we are falling")]
     public float LowJumpMultiplier = 2f;
+    // The velocity at which we will perform our jump
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
@@ -80,9 +90,12 @@ public class EHMovementComponent : MonoBehaviour
     private EHBox2DCollider AssociatedCollider;
     private Vector2 CurrentMovementInput = Vector2.zero;
     private Vector2 PreviousMovementInput = Vector2.zero;
-    private float CurrentSpeed;
+
+    // The current movement type of our character
     private EMovementType CurrentMovementType;
+    // The number of double jumps remainging. This should reset every time we land
     private int RemainingDoubleJumps;
+    // Reference to the animator component
     private Animator CharacterAnimator;
 
 
@@ -221,6 +234,9 @@ public class EHMovementComponent : MonoBehaviour
     }
     #endregion input methods
 
+    /// <summary>
+    /// TO-DO why do we use CurrentSpeed? Look into this later
+    /// </summary>
     private void UpdateMovementVelocity()
     {
         float GoalSpeed = 0;
@@ -254,10 +270,15 @@ public class EHMovementComponent : MonoBehaviour
                 break;
         }
         GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
+
+        float CurrentSpeed = Physics2D.Velocity.x;
         CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
     }
 
+    /// <summary>
+    /// Updates the movmeent component based on the state
+    /// </summary>
     private void UpdateMovementBasedOnMovementType()
     {
         switch (CurrentMovementType)
@@ -314,6 +335,10 @@ public class EHMovementComponent : MonoBehaviour
         CharacterAnimator.SetInteger(ANIM_MOVEMENT_STATE, (int)CurrentMovementType);
     }
 
+    /// <summary>
+    /// Call this method when leaving a movement state
+    /// </summary>
+    /// <param name="MovementTypeToEnd"></param>
     private void EndMovementType(EMovementType MovementTypeToEnd)
     {
         switch (MovementTypeToEnd)
@@ -330,7 +355,10 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
-
+    /// <summary>
+    /// Checks to see if you have enough room to stand and then will change the state to stand if valid
+    /// </summary>
+    /// <returns></returns>
     private bool AttemptStand()
     {
         EHRect2D CastBox = new EHRect2D();
@@ -346,7 +374,9 @@ public class EHMovementComponent : MonoBehaviour
     }
 
     
-
+    /// <summary>
+    /// This will set the velocity of our character to perform a jump
+    /// </summary>
     private void Jump()
     {
         Physics2D.GravityScale = CachedGravityScale;
@@ -364,6 +394,9 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This method will be called when our character lands after leaving the IN_AIR state
+    /// </summary>
     public void OnLanded()
     {
         SetMovementType(EMovementType.STANDING);
