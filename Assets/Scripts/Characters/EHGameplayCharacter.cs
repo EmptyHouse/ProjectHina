@@ -18,7 +18,6 @@ public class EHGameplayCharacter : EHCharacter
     {
         base.Awake();
         DamageableComponent = GetComponent<EHDamageableComponent>();
-        DamageableComponent.OnDied += OnCharacterDied;
     }
 
     /// <summary>
