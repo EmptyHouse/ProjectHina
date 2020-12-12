@@ -31,25 +31,27 @@ public class EHAttackComponent : MonoBehaviour
 
     public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)
     {
-        this.CharacterOwner = CharacterOwner;
     }
 
     public void ClearAllIntersectedDamageableComponents()
     {
-        IntersectedDamageableComponents.Clear();
     }
 
     public virtual void DealDamageToDamageableComponent(EHDamageableComponent DamageableComponent)
     {
-        DamageableComponent.TakeDamage(this, DamageToApply);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    public virtual void OnHitboxIntersectEnemyHurtbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)
+    public virtual void OnHitboxBeginIntersectEnemyHurtbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)
     {
-        EHDamageableComponent OtherDamageableComponent = OtherHitbox.DamageableComponent;
+
+    }
+
+    public virtual void OnHitboxEndIntersectingEnemyHurtbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)
+    {
+
     }
 
     protected IEnumerator StopTimeWhenHit(float SecondsToStop)

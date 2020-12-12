@@ -4,41 +4,33 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class EHHitbox : MonoBehaviour
+public abstract class EHHitbox : MonoBehaviour, ITickableComponent
 {
+    #region enums
     public enum EHitboxType
     {
         HITBOX,
         HURTBOX,
     }
-
-    #region events
-    public UnityAction<EHHitbox, EHHitbox> OnHitboxOverlap;
-    public UnityAction<EHHitbox, EHHitbox> OnHitboxEndOverlap;
-
-    #endregion events
+    #endregion enums
 
     [SerializeField]
-    [Tooltip("The hitbox type that will be assigned to this hitbox component")]
+    [Tooltip("The hitbox type that will be assigned to this hitbox component. This should not be changed once the object is instantiated")]
     private EHitboxType HitboxType = EHitboxType.HITBOX;
 
     public bool ListenForCollisions = false;
 
     private HashSet<EHHitbox> IntersectingHitboxList = new HashSet<EHHitbox>();
-    public EHDamageableComponent DamageableComponent { get; private set; }
-    public EHAttackComponent AttackComponent { get; private set; }
+    public EHHitboxActorComponent HitboxActorComponent { get; private set; }
 
     #region monobehaviour methods
     protected virtual void Awake()
     {
-        switch(HitboxType)
+        HitboxActorComponent = GetComponentInParent<EHHitboxActorComponent>();
+
+        if (HitboxActorComponent == null)
         {
-            case EHitboxType.HITBOX:
-                AttackComponent = GetComponentInParent<EHAttackComponent>();
-                break;
-            case EHitboxType.HURTBOX:
-                DamageableComponent = GetComponentInParent<EHDamageableComponent>();
-                break;
+            Debug.LogWarning("There is HitboxActor component found in the parent of this hitbox. All interactions will be skipped.");
         }
     }
 
@@ -49,18 +41,13 @@ public abstract class EHHitbox : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        if (DamageableComponent)
-        {
-            DamageableComponent = null;
-        }
-
         if (BaseGameOverseer.Instance)
         {
             BaseGameOverseer.Instance.HitboxManager.RemoveHitboxFromManager(this);
         }
     }
 
-    protected virtual void Update()
+    public void Tick(float DeltaTime)
     {
         UpdateHitbox();
     }
@@ -82,17 +69,32 @@ public abstract class EHHitbox : MonoBehaviour
             HitboxEndOverlap(IntersectingHitboxArray[i]);
         }
     }
+    #endregion monobehaviour methods
 
+    /// <summary>
+    /// returns the shape of this hitbox
+    /// </summary>
+    /// <returns></returns>
     public virtual EHGeometry.ShapeType GetHitbxoShape() { return EHGeometry.ShapeType.None; }
 
+    /// <summary>
+    /// Returns the assigned hitbox type
+    /// </summary>
+    /// <returns></returns>
+    public virtual EHitboxType GetHitboxType() { return HitboxType; }
 
+    /// <summary>
+    /// Check if the hitbox that is passed in is currently overlapping this hitbox
+    /// </summary>
+    /// <param name="OtherHitbox"></param>
+    /// <returns></returns>
     public bool CheckForHitboxOverlap(EHHitbox OtherHitbox)
     {
         if (IsHitboxOverlapping(OtherHitbox))
         {
             if (!IntersectingHitboxList.Contains(OtherHitbox))
             {
-                HitboxOverlap(OtherHitbox);
+                HitboxBeginOverlap(OtherHitbox);
             }
             return true;
         }
@@ -105,25 +107,29 @@ public abstract class EHHitbox : MonoBehaviour
 
     protected abstract bool IsHitboxOverlapping(EHHitbox OtherHitbox);
 
-    private void HitboxOverlap(EHHitbox OtherHitbox)
+    /// <summary>
+    /// This method will be called upon this hitbox entering the hitbox that is passed in if they were not intersecting in the previous frame
+    /// </summary>
+    /// <param name="OtherHitbox"></param>
+    private void HitboxBeginOverlap(EHHitbox OtherHitbox)
     {
         IntersectingHitboxList.Add(OtherHitbox);
         OtherHitbox.IntersectingHitboxList.Add(this);
 
-        OnHitboxOverlap?.Invoke(this, OtherHitbox);
-        OtherHitbox.OnHitboxEndOverlap?.Invoke(OtherHitbox, this);
     }
 
+    /// <summary>
+    /// Method will be called if the hitbox that is passed in is not longer intersecting, if it was intersecting with this hitbox in the previous
+    /// frame
+    /// </summary>
+    /// <param name="OtherHitbox"></param>
     private void HitboxEndOverlap(EHHitbox OtherHitbox)
     {
         IntersectingHitboxList.Remove(OtherHitbox);
         OtherHitbox.IntersectingHitboxList.Remove(this);
 
-        OnHitboxEndOverlap?.Invoke(this, OtherHitbox);
-        OtherHitbox.OnHitboxEndOverlap?.Invoke(OtherHitbox, this);
     }
 
-    #endregion monobehaviour methods
     /// <summary>
     /// This is where we should update the hitboxes bounds
     /// </summary>
@@ -134,7 +140,10 @@ public abstract class EHHitbox : MonoBehaviour
     public readonly Color DEBUG_HURTBOX_COLOR = Color.cyan;
     public readonly Color DEBUG_INTERSECT_COLOR = new Color(.73f, .33f, .83f);
     
-    
+    /// <summary>
+    /// Returns the color that our debug hitbox should display.
+    /// </summary>
+    /// <returns></returns>
     protected Color DebugGetColor()
     {
         if (IntersectingHitboxList.Count > 0)

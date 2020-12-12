@@ -9,40 +9,52 @@ using UnityEngine;
 /// </summary>
 public class EHHitboxManager : ITickableComponent
 {
-    private Dictionary<EHDamageableComponent, HashSet<EHHitbox>> HitboxDictionary = new Dictionary<EHDamageableComponent, HashSet<EHHitbox>>();
-    private HashSet<EHDamageableComponent> AllValidDamageComponentSet = new HashSet<EHDamageableComponent>();
+    private Dictionary<EHHitboxActorComponent, HashSet<EHHitbox>> HitboxDictionary = new Dictionary<EHHitboxActorComponent, HashSet<EHHitbox>>();
+    private List<EHHitboxActorComponent> AllHitboxActorComponentsList = new List<EHHitboxActorComponent>();
 
     public void Tick(float DeltaTime)
     {
-        EHDamageableComponent[] DamageComponentArray = AllValidDamageComponentSet.ToArray();
-
-        for (int i = 0; i < DamageComponentArray.Length - 1; ++i)
+        foreach (HashSet<EHHitbox> HitboxSet in HitboxDictionary.Values)
         {
-            for (int j = i + 1; j < DamageComponentArray.Length; ++j)
+            foreach (EHHitbox Hitbox in HitboxSet)
             {
-                CheckForCollisions(DamageComponentArray[i], DamageComponentArray[j]);
+                if (Hitbox.gameObject.activeInHierarchy)
+                {
+                    Hitbox.Tick(DeltaTime);//Update all active hitboxes
+                }
+            }
+        }
+
+        for (int i = 0; i < AllHitboxActorComponentsList.Count - 1; ++i)
+        {
+            for (int j = i + 1; j < AllHitboxActorComponentsList.Count; ++j)
+            {
+                CheckForCollisions(AllHitboxActorComponentsList[i], AllHitboxActorComponentsList[j]);
             }
         }
     }
 
+    /// <summary>
+    /// Safely adds a hitbox to our hitbox manager
+    /// </summary>
+    /// <param name="HitboxToAdd"></param>
     public void AddHitboxToManager(EHHitbox HitboxToAdd)
     {
-        if (!HitboxToAdd || !HitboxToAdd.DamageableComponent)
+        if (HitboxToAdd == null || HitboxToAdd.HitboxActorComponent == null)
         {
-            Debug.LogError("The hitbox we are trying to add to our manager is invalid");
+            Debug.LogWarning("Attempted to add an invalid hitbox to the hitbox manager. Please make sure that there is a HitboxActorComponent in the parent object of our hitbox");
             return;
         }
 
-        if (!HitboxDictionary.ContainsKey(HitboxToAdd.DamageableComponent))
+        if (!HitboxDictionary.ContainsKey(HitboxToAdd.HitboxActorComponent))
         {
-            HitboxDictionary.Add(HitboxToAdd.DamageableComponent, new HashSet<EHHitbox>());
-            AllValidDamageComponentSet.Add(HitboxToAdd.DamageableComponent);
+            HitboxDictionary.Add(HitboxToAdd.HitboxActorComponent, new HashSet<EHHitbox>());
+            AllHitboxActorComponentsList.Add(HitboxToAdd.HitboxActorComponent);
         }
         
-        HashSet<EHHitbox> HitboxSet = HitboxDictionary[HitboxToAdd.DamageableComponent];
-        if (!HitboxSet.Add(HitboxToAdd))
+        if (!HitboxDictionary[HitboxToAdd.HitboxActorComponent].Add(HitboxToAdd))
         {
-            Debug.LogWarning("There was a problem adding our hitbox to our list");
+            Debug.LogWarning("You are attempting to add a hitbox that has already been added to the hitbox manager.");
         }
     }
 
@@ -53,30 +65,52 @@ public class EHHitboxManager : ITickableComponent
     /// <param name="HitboxToRemove"></param>
     public void RemoveHitboxFromManager(EHHitbox HitboxToRemove)
     {
-        if (HitboxToRemove == null || HitboxToRemove.DamageableComponent == null)
+        if (HitboxToRemove == null || HitboxToRemove.HitboxActorComponent == null)
         {
+            Debug.LogWarning("Attempted to remove an invalid hitbox from our manager. Please make sure that there is a HitboxActorComponent in the parent object of our Hitbox");
             return;
         }
 
-        if (!HitboxDictionary.ContainsKey(HitboxToRemove.DamageableComponent))
+        if (!HitboxDictionary.ContainsKey(HitboxToRemove.HitboxActorComponent))
         {
-            Debug.LogWarning("There is no associated Damageable Component found in our hitbox manager");
+            Debug.LogWarning("There was no HitboxActorComponent associated with this hitbox. Perhaps you have already removed it?");
             return;
         }
 
-        HashSet<EHHitbox> HitboxSet = HitboxDictionary[HitboxToRemove.DamageableComponent];
-        if (!HitboxSet.Remove(HitboxToRemove))
+        if (HitboxDictionary[HitboxToRemove.HitboxActorComponent].Remove(HitboxToRemove))
         {
-            Debug.LogWarning("There was a problem removing our hitbox from our list");
+            if (HitboxDictionary[HitboxToRemove.HitboxActorComponent].Count == 0)
+            {
+                HitboxDictionary.Remove(HitboxToRemove.HitboxActorComponent);
+            }
         }
-        if (HitboxSet.Count <= 0)
+        else
         {
-            HitboxDictionary.Remove(HitboxToRemove.DamageableComponent);
-            AllValidDamageComponentSet.Remove(HitboxToRemove.DamageableComponent);
+            Debug.LogWarning("The hitbox you are trying to remove was not found in the hitbox manager. Perhaps it was already removed?");
         }
     }
 
-    private void CheckForCollisions(EHDamageableComponent DComponent1, EHDamageableComponent DComponent2)
+    /// <summary>
+    /// Returns whether or not the hitbox passed in has been added to our Hitbox manager
+    /// </summary>
+    /// <param name="Hitbox"></param>
+    /// <returns></returns>
+    public bool ManagerContainsHitbox(EHHitbox Hitbox)
+    {
+        if (Hitbox == null || Hitbox.HitboxActorComponent == null)
+        {
+            return false;
+        }
+        
+        if (!HitboxDictionary.ContainsKey(Hitbox.HitboxActorComponent))
+        {
+            return false;
+        }
+
+        return HitboxDictionary[Hitbox.HitboxActorComponent].Contains(Hitbox);
+    }
+
+    private void CheckForCollisions(EHHitboxActorComponent DComponent1, EHHitboxActorComponent DComponent2)
     {
         foreach (EHHitbox Hitbox1 in HitboxDictionary[DComponent1])
         {
