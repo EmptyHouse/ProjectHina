@@ -25,12 +25,21 @@ public abstract class EHHitbox : MonoBehaviour
     public bool ListenForCollisions = false;
 
     private HashSet<EHHitbox> IntersectingHitboxList = new HashSet<EHHitbox>();
-    public EHDamageableComponent DamageableComponent { get; protected set; }
+    public EHDamageableComponent DamageableComponent { get; private set; }
+    public EHAttackComponent AttackComponent { get; private set; }
 
     #region monobehaviour methods
     protected virtual void Awake()
     {
-        DamageableComponent = GetComponentInParent<EHDamageableComponent>();
+        switch(HitboxType)
+        {
+            case EHitboxType.HITBOX:
+                AttackComponent = GetComponentInParent<EHAttackComponent>();
+                break;
+            case EHitboxType.HURTBOX:
+                DamageableComponent = GetComponentInParent<EHDamageableComponent>();
+                break;
+        }
     }
 
     protected virtual void Start()
