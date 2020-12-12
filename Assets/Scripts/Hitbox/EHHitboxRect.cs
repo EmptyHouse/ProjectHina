@@ -2,13 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Derives our hitbox component. This handles logic specifcially for Rect shaped hitboxes
+/// </summary>
 public class EHHitboxRect : EHHitbox
 {
+    /// <summary>
+    /// Offset position from the center of our transform component
+    /// </summary>
     public Vector2 HitboxOffset = Vector2.zero;
+
+    /// <summary>
+    /// Size of our hitbox. Keep in mind that the actual size can also be impacted by the local scale of our transform
+    /// </summary>
     public Vector2 HitboxSize = Vector2.one;
 
     /// <summary>
-    /// 
+    /// The geometry component that is associated with this hitbox
     /// </summary>
     private EHRect2D RectGeometry;
 
@@ -30,6 +40,7 @@ public class EHHitboxRect : EHHitbox
         RectGeometry.RectPosition = AdjustedPosition;
         RectGeometry.RectSize = AdjustedSize;
     }
+
 
     public override EHGeometry.ShapeType GetHitbxoShape()
     {
