@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EHDamageableComponent : MonoBehaviour
 {
     [Tooltip("The maximum health of our Damageable component")]
-    public int MaxHealth;
+    public int MaxHealth = 100;
     /// <summary>
     /// The ccurrent health of our character component
     /// </summary>

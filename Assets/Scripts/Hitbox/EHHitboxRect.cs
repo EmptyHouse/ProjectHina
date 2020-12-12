@@ -26,7 +26,7 @@ public class EHHitboxRect : EHHitbox
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
-        EHGeometry.DebugDrawRect(RectGeometry);
+        EHGeometry.DebugDrawRect(RectGeometry, DebugGetColor());
     }
     #endregion monobehaviour methods
 
