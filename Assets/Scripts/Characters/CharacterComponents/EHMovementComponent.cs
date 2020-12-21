@@ -195,7 +195,6 @@ public class EHMovementComponent : MonoBehaviour
     public void SetHorizontalInput(float HorizontalInput)
     {
         CurrentMovementInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
-        CharacterAnimator.SetFloat()
     }
 
     /// <summary>
