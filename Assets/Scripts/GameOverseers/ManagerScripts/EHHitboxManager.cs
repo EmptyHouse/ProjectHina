@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEditor.Experimental.GraphView;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -29,7 +26,7 @@ public class EHHitboxManager : ITickableComponent
         {
             for (int j = i + 1; j < AllHitboxActorComponentsList.Count; ++j)
             {
-                CheckForCollisions(AllHitboxActorComponentsList[i], AllHitboxActorComponentsList[j]);
+                CheckForHitboxOverlap(AllHitboxActorComponentsList[i], AllHitboxActorComponentsList[j]);
             }
         }
     }
@@ -110,7 +107,7 @@ public class EHHitboxManager : ITickableComponent
         return HitboxDictionary[Hitbox.HitboxActorComponent].Contains(Hitbox);
     }
 
-    private void CheckForCollisions(EHHitboxActorComponent DComponent1, EHHitboxActorComponent DComponent2)
+    private void CheckForHitboxOverlap(EHHitboxActorComponent DComponent1, EHHitboxActorComponent DComponent2)
     {
         foreach (EHHitbox Hitbox1 in HitboxDictionary[DComponent1])
         {

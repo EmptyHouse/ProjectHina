@@ -1,0 +1,772 @@
+fileFormatVersion: 2
+guid: 7ac09ca991cd0fc43ab13959c2e993ef
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6062619997070223206
+    second: Romona_Idle_00
+  - first:
+      213: -6023158409973284861
+    second: Romona_Idle_01
+  - first:
+      213: 7354604853078816887
+    second: Romona_Idle_02
+  - first:
+      213: -8897468352804712783
+    second: Romona_Idle_03
+  - first:
+      213: -9006947754060188674
+    second: Romona_Idle_04
+  - first:
+      213: 7151994172961035642
+    second: Romona_Idle_05
+  - first:
+      213: -4529602005212471267
+    second: RomonaWalk_00
+  - first:
+      213: 4269205543964294112
+    second: RomonaWalk_01
+  - first:
+      213: 3149661754428488125
+    second: RomonaWalk_02
+  - first:
+      213: 2451807048689250442
+    second: RomonaWalk_03
+  - first:
+      213: 1227774371601446239
+    second: RomonaWalk_04
+  - first:
+      213: -3611836808575034353
+    second: RomonaWalk_05
+  - first:
+      213: 1360998593717990917
+    second: RomonaRun_00
+  - first:
+      213: -9022422494402099344
+    second: RomonaRun_01
+  - first:
+      213: 4968651366991711770
+    second: RomonaRun_02
+  - first:
+      213: 8144115889177528960
+    second: RomonaRun_03
+  - first:
+      213: 4531986370488683227
+    second: RomonaRun_04
+  - first:
+      213: -2274940601932947007
+    second: RomonaRun_05
+  - first:
+      213: 7708895541014455968
+    second: RomonaRun_06
+  - first:
+      213: -930779896925491385
+    second: RomonaRun_07
+  - first:
+      213: 1487252132645405718
+    second: Romona_Attack02
+  - first:
+      213: -1039530344055243664
+    second: Romona_Attack03
+  - first:
+      213: 3504782324835850072
+    second: Romona_Attack04
+  - first:
+      213: 2712097321830147717
+    second: Romona_Attack05
+  - first:
+      213: 6528409204737687040
+    second: Romona_Attack06
+  - first:
+      213: -7384002960013825504
+    second: Romona_Attack07
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Romona_Idle_00
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 1779
+        width: 33
+        height: 66
+      alignment: 9
+      pivot: {x: 0.6363636, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 667ec8524c0c22450800000000000000
+      internalID: 6062619997070223206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Idle_01
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 1779
+        width: 30
+        height: 66
+      alignment: 9
+      pivot: {x: 0.6, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 300c2a39651796ca0800000000000000
+      internalID: -6023158409973284861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Idle_02
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 1779
+        width: 29
+        height: 65
+      alignment: 9
+      pivot: {x: 0.62068963, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7787023c52ec01660800000000000000
+      internalID: 7354604853078816887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Idle_03
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 1779
+        width: 31
+        height: 65
+      alignment: 9
+      pivot: {x: 0.6451613, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1be8bc68ca7d58480800000000000000
+      internalID: -8897468352804712783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Idle_04
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 1779
+        width: 31
+        height: 66
+      alignment: 9
+      pivot: {x: 0.61290324, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef37db01db4e00380800000000000000
+      internalID: -9006947754060188674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Idle_05
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 1779
+        width: 31
+        height: 68
+      alignment: 9
+      pivot: {x: 0.61290324, y: 0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a759103beccf04360800000000000000
+      internalID: 7151994172961035642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_00
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1681
+        width: 30
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5666667, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d10e961a9fe9321c0800000000000000
+      internalID: -4529602005212471267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_01
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 1681
+        width: 30
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ebbe11b2d34f3b30800000000000000
+      internalID: 4269205543964294112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_02
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 1681
+        width: 34
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db9f7539da8d5bb20800000000000000
+      internalID: 3149661754428488125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_03
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 1681
+        width: 32
+        height: 66
+      alignment: 9
+      pivot: {x: 0.46875, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a80fbe24581960220800000000000000
+      internalID: 2451807048689250442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_04
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 1681
+        width: 30
+        height: 67
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55f1a3394ee90110800000000000000
+      internalID: 1227774371601446239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaWalk_05
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 1681
+        width: 33
+        height: 67
+      alignment: 9
+      pivot: {x: 0.4848485, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0c54361f8d20edc0800000000000000
+      internalID: -3611836808575034353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_00
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 1681
+        width: 47
+        height: 63
+      alignment: 9
+      pivot: {x: 0.5106383, y: 0.031746034}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 506fd56920d33e210800000000000000
+      internalID: 1360998593717990917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_01
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 1681
+        width: 43
+        height: 66
+      alignment: 9
+      pivot: {x: 0.55813956, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0774baf4b8ae9c280800000000000000
+      internalID: -9022422494402099344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_02
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 1681
+        width: 47
+        height: 73
+      alignment: 9
+      pivot: {x: 0.59574467, y: 0.02739726}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1ecc4ed71234f440800000000000000
+      internalID: 4968651366991711770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_03
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 1681
+        width: 45
+        height: 67
+      alignment: 9
+      pivot: {x: 0.5777778, y: 0.029850746}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08a8a087046b50170800000000000000
+      internalID: 8144115889177528960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_04
+      rect:
+        serializedVersion: 2
+        x: 825
+        y: 1681
+        width: 46
+        height: 62
+      alignment: 9
+      pivot: {x: 0.54347825, y: 0.032258064}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdac3eba799d4ee30800000000000000
+      internalID: 4531986370488683227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_05
+      rect:
+        serializedVersion: 2
+        x: 872
+        y: 1681
+        width: 42
+        height: 65
+      alignment: 9
+      pivot: {x: 0.54761904, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c16ca06399cd60e0800000000000000
+      internalID: -2274940601932947007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_06
+      rect:
+        serializedVersion: 2
+        x: 917
+        y: 1680
+        width: 46
+        height: 66
+      alignment: 9
+      pivot: {x: 0.54347825, y: 0.030303031}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a662cca6af7bfa60800000000000000
+      internalID: 7708895541014455968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaRun_07
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 1680
+        width: 42
+        height: 65
+      alignment: 9
+      pivot: {x: 0.54761904, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74f6eaf7d943513f0800000000000000
+      internalID: -930779896925491385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack00
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 734
+        width: 58
+        height: 68
+      alignment: 9
+      pivot: {x: 0.3448276, y: 0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d676156d883b2520800000000000000
+      internalID: 2678296583339407058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack01
+      rect:
+        serializedVersion: 2
+        x: 748
+        y: 734
+        width: 37
+        height: 82
+      alignment: 9
+      pivot: {x: 0.45945948, y: 0.024390243}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24b92d36d99a4a610800000000000000
+      internalID: 1631615458464668482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack02
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 734
+        width: 57
+        height: 79
+      alignment: 9
+      pivot: {x: 0.57894737, y: 0.025316456}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61485c15fe7c3a410800000000000000
+      internalID: 1487252132645405718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack03
+      rect:
+        serializedVersion: 2
+        x: 847
+        y: 734
+        width: 55
+        height: 81
+      alignment: 9
+      pivot: {x: 0.49090907, y: 0.024691358}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07cf855e8a8d291f0800000000000000
+      internalID: -1039530344055243664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack04
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 734
+        width: 77
+        height: 82
+      alignment: 9
+      pivot: {x: 0.22077923, y: 0.024390243}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85798ee84fc73a030800000000000000
+      internalID: 3504782324835850072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack05
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 734
+        width: 70
+        height: 81
+      alignment: 9
+      pivot: {x: 0.18571429, y: 0.024691358}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58669f7152e43a520800000000000000
+      internalID: 2712097321830147717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack06
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 734
+        width: 68
+        height: 65
+      alignment: 9
+      pivot: {x: 0.19117647, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00eb7cc2591999a50800000000000000
+      internalID: 6528409204737687040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Attack07
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 734
+        width: 52
+        height: 65
+      alignment: 9
+      pivot: {x: 0.30769232, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02a61f31e60c68990800000000000000
+      internalID: -7384002960013825504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

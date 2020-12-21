@@ -26,7 +26,7 @@ public class EHHitboxRect : EHHitbox
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
-        EHGeometry.DebugDrawRect(RectGeometry, DebugGetColor());
+        EHGeometry.DebugDrawRect(RectGeometry, DebugGetColor(), true);
     }
     #endregion monobehaviour methods
 
@@ -40,7 +40,6 @@ public class EHHitboxRect : EHHitbox
         RectGeometry.RectPosition = AdjustedPosition;
         RectGeometry.RectSize = AdjustedSize;
     }
-
 
     public override EHGeometry.ShapeType GetHitbxoShape()
     {

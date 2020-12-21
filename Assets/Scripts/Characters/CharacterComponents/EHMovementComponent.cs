@@ -14,6 +14,11 @@ public class EHMovementComponent : MonoBehaviour
     private const string ANIM_MOVEMENT_STATE = "MovementState";
 
     private const string ENVIRONMENT_LAYER = "Environment";
+
+    private const string ANIM_HORIZONTAL_INPUT = "";
+
+    private const string ANIM_HORIZONTAL_VELOCITY = "";
+    private const string ANIM_VERTICAL_VELOCITY = "";
     #endregion const values
 
     #region enums
@@ -190,6 +195,7 @@ public class EHMovementComponent : MonoBehaviour
     public void SetHorizontalInput(float HorizontalInput)
     {
         CurrentMovementInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
+        CharacterAnimator.SetFloat()
     }
 
     /// <summary>

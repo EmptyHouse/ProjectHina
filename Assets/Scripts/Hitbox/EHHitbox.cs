@@ -18,9 +18,10 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     [Tooltip("The hitbox type that will be assigned to this hitbox component. This should not be changed once the object is instantiated")]
     private EHitboxType HitboxType = EHitboxType.HITBOX;
 
-    public bool ListenForCollisions = false;
-
-    private HashSet<EHHitbox> IntersectingHitboxList = new HashSet<EHHitbox>();
+    /// <summary>
+    /// Set of all currently intersecting hitboxes
+    /// </summary>
+    private HashSet<EHHitbox> IntersectingHitboxSet = new HashSet<EHHitbox>();
     public EHHitboxActorComponent HitboxActorComponent { get; private set; }
 
     #region monobehaviour methods
@@ -30,7 +31,7 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
 
         if (HitboxActorComponent == null)
         {
-            Debug.LogWarning("There is HitboxActor component found in the parent of this hitbox. All interactions will be skipped.");
+            Debug.LogWarning("There is no HitboxActor component found in the parent of this hitbox. All interactions will be skipped.");
         }
     }
 
@@ -63,7 +64,7 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
 
     protected virtual void OnDisable()
     {
-        EHHitbox[] IntersectingHitboxArray = IntersectingHitboxList.ToArray();
+        EHHitbox[] IntersectingHitboxArray = IntersectingHitboxSet.ToArray();
         for (int i = IntersectingHitboxArray.Length - 1; i >= 0; --i)
         {
             HitboxEndOverlap(IntersectingHitboxArray[i]);
@@ -92,13 +93,13 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     {
         if (IsHitboxOverlapping(OtherHitbox))
         {
-            if (!IntersectingHitboxList.Contains(OtherHitbox))
+            if (!IntersectingHitboxSet.Contains(OtherHitbox))
             {
                 HitboxBeginOverlap(OtherHitbox);
             }
             return true;
         }
-        if (IntersectingHitboxList.Contains(OtherHitbox))
+        if (IntersectingHitboxSet.Contains(OtherHitbox))
         {
             HitboxEndOverlap(OtherHitbox);
         }
@@ -113,8 +114,8 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     /// <param name="OtherHitbox"></param>
     private void HitboxBeginOverlap(EHHitbox OtherHitbox)
     {
-        IntersectingHitboxList.Add(OtherHitbox);
-        OtherHitbox.IntersectingHitboxList.Add(this);
+        IntersectingHitboxSet.Add(OtherHitbox);
+        OtherHitbox.IntersectingHitboxSet.Add(this);
 
     }
 
@@ -125,8 +126,8 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     /// <param name="OtherHitbox"></param>
     private void HitboxEndOverlap(EHHitbox OtherHitbox)
     {
-        IntersectingHitboxList.Remove(OtherHitbox);
-        OtherHitbox.IntersectingHitboxList.Remove(this);
+        IntersectingHitboxSet.Remove(OtherHitbox);
+        OtherHitbox.IntersectingHitboxSet.Remove(this);
 
     }
 
@@ -146,7 +147,7 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     /// <returns></returns>
     protected Color DebugGetColor()
     {
-        if (IntersectingHitboxList.Count > 0)
+        if (IntersectingHitboxSet.Count > 0)
         {
             return DEBUG_INTERSECT_COLOR;
         }
