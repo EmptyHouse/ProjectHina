@@ -195,6 +195,20 @@ public class EHMovementComponent : MonoBehaviour
     public void SetHorizontalInput(float HorizontalInput)
     {
         CurrentMovementInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
+
+        if (CurrentMovementInput.x < 0 && !GetIsFacingLeft())
+        {
+            SetIsFacingLeft(true);
+        }
+        else if (CurrentMovementInput.x > 0 && GetIsFacingLeft())
+        {
+            SetIsFacingLeft(false);
+        }
+
+        if (CharacterAnimator)
+        {
+            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, CurrentMovementInput.x);
+        }
     }
 
     /// <summary>

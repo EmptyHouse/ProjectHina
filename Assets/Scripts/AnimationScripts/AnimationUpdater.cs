@@ -15,7 +15,6 @@ public class AnimationUpdater : MonoBehaviour
     private void Awake()
     {
         Anim = GetComponent<Animator>();
-        Anim.enabled = false;
     }
 
     private void OnEnable()
