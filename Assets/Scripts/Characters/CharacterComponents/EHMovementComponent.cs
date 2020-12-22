@@ -15,10 +15,10 @@ public class EHMovementComponent : MonoBehaviour
 
     private const string ENVIRONMENT_LAYER = "Environment";
 
-    private const string ANIM_HORIZONTAL_INPUT = "";
+    private const string ANIM_HORIZONTAL_INPUT = "HorizontalInput";
 
-    private const string ANIM_HORIZONTAL_VELOCITY = "";
-    private const string ANIM_VERTICAL_VELOCITY = "";
+    private const string ANIM_HORIZONTAL_VELOCITY = "VelocityX";
+    private const string ANIM_VERTICAL_VELOCITY = "VelocityY";
     #endregion const values
 
     #region enums
@@ -207,7 +207,7 @@ public class EHMovementComponent : MonoBehaviour
 
         if (CharacterAnimator)
         {
-            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, CurrentMovementInput.x);
+            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, Mathf.Abs(CurrentMovementInput.x));
         }
     }
 

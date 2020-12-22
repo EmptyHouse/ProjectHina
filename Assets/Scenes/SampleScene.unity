@@ -199,7 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5866f085adb0e3a488a676bd8e04fe6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsTimeSlowed: 0
 --- !u!4 &115812704
 Transform:
   m_ObjectHideFlags: 0
@@ -1343,9 +1342,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392892, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392892, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: afc281def00050a40bce68fc6357daf8, type: 2}
+    - target: {fileID: 5197975866366392894, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975867184269768, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
