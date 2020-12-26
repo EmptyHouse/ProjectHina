@@ -12,13 +12,14 @@ public class EHMovementComponent : MonoBehaviour
 {
     #region const values
     private const string ANIM_MOVEMENT_STATE = "MovementState";
+    private const string ANIM_MOVEMENT_STATE_UPDATED = "MovementStateTrigger";
 
     private const string ENVIRONMENT_LAYER = "Environment";
 
     private const string ANIM_HORIZONTAL_INPUT = "HorizontalInput";
 
-    private const string ANIM_HORIZONTAL_VELOCITY = "VelocityX";
-    private const string ANIM_VERTICAL_VELOCITY = "VelocityY";
+    private const string ANIM_HORIZONTAL_VELOCITY = "HorizontalSpeed";
+    private const string ANIM_VERTICAL_VELOCITY = "VerticalSpeed";
     #endregion const values
 
     #region enums
@@ -103,6 +104,10 @@ public class EHMovementComponent : MonoBehaviour
     // Reference to the animator component
     private Animator CharacterAnimator;
 
+    #region animation values
+    public bool bIsAnimationControlled = false;
+    #endregion animation values
+
 
     #region monobehaviour methods
     protected virtual void Awake()
@@ -131,6 +136,8 @@ public class EHMovementComponent : MonoBehaviour
             SetMovementType(EMovementType.IN_AIR);
         }
         PreviousVelocity = Physics2D.Velocity;
+
+        EHDebug.DebugScreenMessage("Posture: " + CurrentMovementType);
     }
 
     protected virtual void OnDestroy()
@@ -293,6 +300,12 @@ public class EHMovementComponent : MonoBehaviour
         float CurrentSpeed = Physics2D.Velocity.x;
         CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
+
+        if (CharacterAnimator)
+        {
+            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_VELOCITY, Physics2D.Velocity.x);
+            CharacterAnimator.SetFloat(ANIM_VERTICAL_VELOCITY, Physics2D.Velocity.y);
+        }
     }
 
     /// <summary>
@@ -335,7 +348,7 @@ public class EHMovementComponent : MonoBehaviour
         {
             return;
         }
-
+        int PreviousMovementType = (int)CurrentMovementType;
         EndMovementType(CurrentMovementType);
         CurrentMovementType = NewMovementType;
 
@@ -352,6 +365,7 @@ public class EHMovementComponent : MonoBehaviour
                 break;
         }
         CharacterAnimator.SetInteger(ANIM_MOVEMENT_STATE, (int)CurrentMovementType);
+        CharacterAnimator.SetTrigger(ANIM_MOVEMENT_STATE_UPDATED);
     }
 
     /// <summary>

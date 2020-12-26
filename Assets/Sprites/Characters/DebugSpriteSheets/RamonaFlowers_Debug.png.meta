@@ -83,6 +83,27 @@ TextureImporter:
   - first:
       213: -1573269075530211767
     second: Romona_Blast00
+  - first:
+      213: 5416565827029545336
+    second: Romona_Jump00
+  - first:
+      213: 5509931074850748397
+    second: Romona_Jump01
+  - first:
+      213: -7094186321368293829
+    second: Romona_Jump02
+  - first:
+      213: 7477049630502976078
+    second: Romona_Jump03
+  - first:
+      213: 3174495318141941222
+    second: Romona_Jump04
+  - first:
+      213: -1533599258430409839
+    second: Romona_Jump05
+  - first:
+      213: 5850690226941665311
+    second: Romona_Jump06
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -766,7 +787,7 @@ TextureImporter:
         width: 43
         height: 67
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -787,7 +808,7 @@ TextureImporter:
         width: 88
         height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -808,7 +829,7 @@ TextureImporter:
         width: 89
         height: 80
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -829,7 +850,7 @@ TextureImporter:
         width: 65
         height: 78
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -850,7 +871,7 @@ TextureImporter:
         width: 65
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -871,7 +892,7 @@ TextureImporter:
         width: 74
         height: 71
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -892,7 +913,7 @@ TextureImporter:
         width: 77
         height: 68
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -913,7 +934,7 @@ TextureImporter:
         width: 86
         height: 77
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -934,7 +955,7 @@ TextureImporter:
         width: 88
         height: 79
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -955,7 +976,7 @@ TextureImporter:
         width: 90
         height: 86
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -976,7 +997,7 @@ TextureImporter:
         width: 50
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -997,7 +1018,7 @@ TextureImporter:
         width: 47
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1018,7 +1039,7 @@ TextureImporter:
         width: 42
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -1026,6 +1047,153 @@ TextureImporter:
       bones: []
       spriteID: 94e1ae08c10aa2ae0800000000000000
       internalID: -1573269075530211767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump00
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 1578
+        width: 36
+        height: 71
+      alignment: 9
+      pivot: {x: 0.6944445, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 871bd96ebe18b2b40800000000000000
+      internalID: 5416565827029545336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump01
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 1578
+        width: 41
+        height: 71
+      alignment: 9
+      pivot: {x: 0.70731705, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de77d55ae15377c40800000000000000
+      internalID: 5509931074850748397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump02
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 1578
+        width: 44
+        height: 71
+      alignment: 9
+      pivot: {x: 0.72727275, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3e586890236c8d90800000000000000
+      internalID: -7094186321368293829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump03
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 1578
+        width: 44
+        height: 69
+      alignment: 9
+      pivot: {x: 0.72727275, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4a781a1601d3c760800000000000000
+      internalID: 7477049630502976078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump04
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 1578
+        width: 47
+        height: 70
+      alignment: 9
+      pivot: {x: 0.63829786, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e5bdf23ca21e0c20800000000000000
+      internalID: 3174495318141941222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump05
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 1578
+        width: 47
+        height: 69
+      alignment: 9
+      pivot: {x: 0.5531915, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 193f37d899f87bae0800000000000000
+      internalID: -1533599258430409839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_Jump06
+      rect:
+        serializedVersion: 2
+        x: 327
+        y: 1578
+        width: 45
+        height: 69
+      alignment: 9
+      pivot: {x: 0.4888889, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1025bb53c3d13150800000000000000
+      internalID: 5850690226941665311
       vertices: []
       indices: 
       edges: []

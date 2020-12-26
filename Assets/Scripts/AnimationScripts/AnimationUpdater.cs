@@ -17,6 +17,11 @@ public class AnimationUpdater : MonoBehaviour
         Anim = GetComponent<Animator>();
     }
 
+    private void Update()
+    {
+        
+    }
+
     private void OnEnable()
     {
         Anim.enabled = false;
