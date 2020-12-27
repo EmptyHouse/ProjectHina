@@ -105,7 +105,7 @@ public class EHMovementComponent : MonoBehaviour
     private Animator CharacterAnimator;
 
     #region animation values
-    public bool bIsAnimationControlled = false;
+
     #endregion animation values
 
 
@@ -136,8 +136,6 @@ public class EHMovementComponent : MonoBehaviour
             SetMovementType(EMovementType.IN_AIR);
         }
         PreviousVelocity = Physics2D.Velocity;
-
-        EHDebug.DebugScreenMessage("Posture: " + CurrentMovementType);
     }
 
     protected virtual void OnDestroy()
@@ -295,6 +293,7 @@ public class EHMovementComponent : MonoBehaviour
                 }
                 break;
         }
+       
         GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
 
         float CurrentSpeed = Physics2D.Velocity.x;

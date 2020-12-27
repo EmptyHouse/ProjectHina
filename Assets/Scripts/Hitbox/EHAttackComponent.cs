@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class EHAttackComponent : MonoBehaviour
 {
+    public AttackDataTable AssociatedAttackTable;
+
     [Tooltip("The damage that we will apply to the DamageableComponent that we interact with")]
     public int DamageToApply = 5;
     [Tooltip("The knockback force that will be applied to a character that is hit")]
@@ -81,4 +83,13 @@ public class EHAttackComponent : MonoBehaviour
             TimeThatHasPassed += EHTime.RealDeltaTime;
         }
     }
+}
+
+[System.Serializable]
+public struct FAttackData
+{
+    public float AttackDamage;
+    public float HitStunTime;
+    public float HitFreezeTime;
+    public Vector2 LaunchForce;
 }
