@@ -7,20 +7,30 @@ using UnityEngine;
 /// </summary>
 public class EHAttackComponent : MonoBehaviour
 {
+    private const string ATTACK_ANIM = "Attack";
+
     public AttackDataTable AssociatedAttackTable;
 
-    [Tooltip("The damage that we will apply to the DamageableComponent that we interact with")]
-    public int DamageToApply = 5;
-    [Tooltip("The knockback force that will be applied to a character that is hit")]
-    public float KnockbackIntensity = 0;
-    [Tooltip("The direction that we will knock our character back ")]
-    public Vector2 KnockbackDirection;
-
-    [Header("Effects Upon Hit")]
-    [Tooltip("The amount of time to freeze after performing a hit")]
-    public float TimeFreezeOnHit = 0;
-    public float CameraShakeIntensity = 0;
-    public float CameraShakeDuration = 0;
+    /// <summary>
+    /// Damage that will be applied to damageable component that we hit
+    /// </summary>
+    public int DamageToApply { get; set; }
+    /// <summary>
+    /// The force that will be applied to the damageable component that we attack assuming it contains a physics object
+    /// </summary>
+    public Vector2 KnockbackForce { get; set; }
+    /// <summary>
+    /// The amount of time that we will freeze time when making contact with an object. NOTE: We may want to apply a different scaling when based on how much health a character has
+    /// </summary>
+    public float TimeFreezeOnHit { get; set; }
+    /// <summary>
+    /// The intensity of the camera shake when we make contact with a damageable component
+    /// </summary>
+    public float CameraShakeIntensity { get; set; }
+    /// <summary>
+    /// The time we will apply the camera shake. NOTE: TimeFreeze, CameraShake, and CameraShakeDuration may all eventually be tied together 
+    /// </summary>
+    public float CameraShakeDuration { get; set; }
 
     /// <summary>
     /// The owner of our Attack component. This will help in determining which object is appropiate to intersect with
@@ -34,11 +44,13 @@ public class EHAttackComponent : MonoBehaviour
     private HashSet<EHDamageableComponent> IntersectedDamageableComponents = new HashSet<EHDamageableComponent>();
 
     private EHPhysics2D Physics2D;
+    private Animator AssociatedAnimator;
 
     #region monobehaviour methods
     private void Awake()
     {
         Physics2D = GetComponent<EHPhysics2D>();
+        AssociatedAnimator = GetComponent<Animator>();
         SetCharacterOwner(GetComponent<EHGameplayCharacter>());
     }
     #endregion monobehaviour methods
@@ -82,6 +94,32 @@ public class EHAttackComponent : MonoBehaviour
             yield return null;
             TimeThatHasPassed += EHTime.RealDeltaTime;
         }
+    }
+
+    /// <summary>
+    /// Since the ability to perform an attack will primarily be animation driven this method will call a trigger 
+    /// on the animation controller
+    /// </summary>
+    /// <param name="AttackID"></param>
+    public void AttemptAttack(int AttackID)
+    {
+        if (!AssociatedAnimator)
+        {
+            Debug.LogWarning("Attempting to attack with a null animator. Be sure there is one assigned");
+        }
+        string AttackName = ATTACK_ANIM + AttackID.ToString("00");
+        AssociatedAnimator.SetTrigger(AttackName);
+    }
+
+    /// <summary>
+    /// Release the attack button. This will make it so that there is a buffer that is applied to the attack without having to keep the
+    /// active the entire time
+    /// </summary>
+    /// <param name="AttackID"></param>
+    public void ReleaseAttack(int AttackID)
+    {
+        string AttackName = ATTACK_ANIM + AttackID.ToString("00");
+        AssociatedAnimator.SetBool(AttackName, false);
     }
 }
 

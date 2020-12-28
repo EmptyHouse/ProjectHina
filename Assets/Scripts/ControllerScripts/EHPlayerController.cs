@@ -7,16 +7,19 @@ public class EHPlayerController : EHBaseController
     #region const variables
     private const string JUMP_COMMAND = "Jump";
     private const string DASH_COMMAND = "Dash";
+    private const string ATTACK_COMMAND = "Attack";
 
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
     #endregion const variables
 
+    private EHAttackComponent AttackComponent;
 
     #region monobehaivour methods
     protected override void Awake()
     {
         base.Awake();
+        AttackComponent = GetComponent<EHAttackComponent>();
     }
 
     
@@ -27,13 +30,28 @@ public class EHPlayerController : EHBaseController
     {
         EHMovementComponent MovementComponent = GetComponent<EHMovementComponent>();
         DashComponent DashComponent = GetComponent<DashComponent>();
+        EHAttackComponent AttackComponent = GetComponent<EHAttackComponent>();
 
-        BindActionToInput(JUMP_COMMAND, true, MovementComponent.AttemptJump);
-        BindActionToInput(JUMP_COMMAND, false, MovementComponent.EndJump);
-        BindActionToInput(DASH_COMMAND, true, DashComponent.AttemptDash);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, MovementComponent.AttemptJump);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Released, MovementComponent.EndJump);
+        BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Pressed, DashComponent.AttemptDash);
+        BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Pressed, Attack);
+        BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Buffer, AttackBufferEnded);
 
         BindActionToAxis(HORIZONTAL_AXIS, MovementComponent.SetHorizontalInput);
         BindActionToAxis(VERTICAL_AXIS, MovementComponent.SetVerticalInput);
     }
     #endregion override methods
+
+    #region input helper methods
+    private void Attack()
+    {
+        AttackComponent.AttemptAttack(0);
+    }
+
+    private void AttackBufferEnded()
+    {
+        AttackComponent.ReleaseAttack(0);
+    }
+    #endregion input helper methods
 }

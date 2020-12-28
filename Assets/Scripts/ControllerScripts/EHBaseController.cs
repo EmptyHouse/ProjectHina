@@ -9,6 +9,17 @@ using UnityEngine.Events;
 /// </summary>
 public abstract class EHBaseController : MonoBehaviour
 {
+    #region const values
+    private const float BUFFER_TIME = 12f * 1f / 60f;
+    #endregion const values
+
+    public enum ButtonInputType
+    {
+        Button_Pressed,
+        Button_Released,
+        Button_Buffer,
+    }
+
     [SerializeField]
     private ButtonInputNode[] ButtonInputNodes = new ButtonInputNode[1];
     [SerializeField]
@@ -23,6 +34,11 @@ public abstract class EHBaseController : MonoBehaviour
     /// Dictionary of all axis inputs with the string name of the axis being the key
     /// </summary>
     private Dictionary<string, AxisInputNode> AxisInputDictionary = new Dictionary<string, AxisInputNode>();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private Dictionary<string, float> ButtonBufferDictionary = new Dictionary<string, float>();
     // Indicates the index of the player controlling this controller. In the case of using joysticks we can offset using this value
     public byte PlayerIndex { get; private set; }
 
@@ -32,6 +48,7 @@ public abstract class EHBaseController : MonoBehaviour
         foreach (ButtonInputNode ButtonNode in ButtonInputNodes)
         {
             ButtonInputNodeDictionary.Add(ButtonNode.InputName, ButtonNode);
+            ButtonBufferDictionary.Add(ButtonNode.InputName, 0);
         }
 
         foreach (AxisInputNode AxisNode in AxisInputNodes)
@@ -62,6 +79,12 @@ public abstract class EHBaseController : MonoBehaviour
             if (ButtonNode.ButtonDown)
             {
                 ButtonNode.OnButtonPressed?.Invoke();
+
+                if (ButtonBufferDictionary[ButtonNode.InputName] <= 0)
+                {
+                    StartCoroutine(BeginButtonBuffer(ButtonNode.InputName));
+                }
+                ButtonBufferDictionary[ButtonNode.InputName] = BUFFER_TIME;
             }
             if (ButtonNode.ButtonReleased)
             {
@@ -80,9 +103,9 @@ public abstract class EHBaseController : MonoBehaviour
     /// This method will bind a button event to a function to be invoked whenever a button is pressed or released
     /// </summary>
     /// <param name="InputName"></param>
-    /// <param name="bButtonPressedInput"></param>
+    /// <param name="InputType"></param>
     /// <param name="ButtonAction"></param>
-    public void BindActionToInput(string InputName, bool bButtonPressedInput, UnityAction ButtonAction)
+    public void BindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction)
     {
         if (InputName == null || !ButtonInputNodeDictionary.ContainsKey(InputName))
         {
@@ -90,13 +113,17 @@ public abstract class EHBaseController : MonoBehaviour
             return;
         }
         ButtonInputNode ButtonInput = ButtonInputNodeDictionary[InputName];
-        if (bButtonPressedInput)
+        switch (InputType)
         {
-            ButtonInput.OnButtonPressed += ButtonAction;
-        }
-        else
-        {
-            ButtonInput.OnButtonReleased += ButtonAction;
+            case ButtonInputType.Button_Pressed:
+                ButtonInput.OnButtonPressed += ButtonAction;
+                break;
+            case ButtonInputType.Button_Released:
+                ButtonInput.OnButtonReleased += ButtonAction;
+                break;
+            case ButtonInputType.Button_Buffer:
+                ButtonInput.OnButtonBufferEnded += ButtonAction;
+                break;
         }
     }
 
@@ -104,9 +131,9 @@ public abstract class EHBaseController : MonoBehaviour
     /// Unbinds a function from a button event
     /// </summary>
     /// <param name="InputName"></param>
-    /// <param name="bButtonPressedInput"></param>
+    /// <param name="InputType"></param>
     /// <param name="ButtonAction"></param>
-    public void UnbindActionToInput(string InputName, bool bButtonPressedInput, UnityAction ButtonAction)
+    public void UnbindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction)
     {
         if (InputName == null || !ButtonInputNodeDictionary.ContainsKey(InputName))
         {
@@ -114,14 +141,20 @@ public abstract class EHBaseController : MonoBehaviour
             return;
         }
         ButtonInputNode ButtonInput = ButtonInputNodeDictionary[InputName];
-        if (bButtonPressedInput)
+
+        switch (InputType)
         {
-            ButtonInput.OnButtonPressed -= ButtonAction;
+            case ButtonInputType.Button_Pressed:
+                ButtonInput.OnButtonPressed -= ButtonAction;
+                break;
+            case ButtonInputType.Button_Released:
+                ButtonInput.OnButtonReleased -= ButtonAction;
+                break;
+            case ButtonInputType.Button_Buffer:
+                ButtonInput.OnButtonBufferEnded -= ButtonAction;
+                break;
         }
-        else
-        {
-            ButtonInput.OnButtonReleased -= ButtonAction;
-        }
+
     }
 
     /// <summary>
@@ -174,6 +207,7 @@ public abstract class EHBaseController : MonoBehaviour
 
         public UnityAction OnButtonPressed;
         public UnityAction OnButtonReleased;
+        public UnityAction OnButtonBufferEnded;
 
         public bool ButtonDown
         {
@@ -201,5 +235,17 @@ public abstract class EHBaseController : MonoBehaviour
         public string AxisName = "";
 
         public UnityAction<float> AxisAction;
+    }
+
+    private IEnumerator BeginButtonBuffer(string ButtonInput)
+    {
+        yield return null;
+        while(ButtonBufferDictionary[ButtonInput] > 0)
+        {
+            ButtonBufferDictionary[ButtonInput] -= EHTime.DeltaTime;
+            yield return null;
+        }
+        ButtonBufferDictionary[ButtonInput] = 0;
+        ButtonInputNodeDictionary[ButtonInput].OnButtonBufferEnded?.Invoke();
     }
 }
