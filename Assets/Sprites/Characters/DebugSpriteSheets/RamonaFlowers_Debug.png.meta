@@ -104,6 +104,24 @@ TextureImporter:
   - first:
       213: 5850690226941665311
     second: Romona_Jump06
+  - first:
+      213: -522391966642309404
+    second: Romona_JAttack00
+  - first:
+      213: -4797160893224491041
+    second: Romona_JAttack01
+  - first:
+      213: -3560363376880338204
+    second: Romona_JAttack02
+  - first:
+      213: -1490620954400385991
+    second: Romona_JAttack03
+  - first:
+      213: 8434855641140197509
+    second: Romona_JAttack04
+  - first:
+      213: -8328370478414491779
+    second: Romona_JAttack05
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1194,6 +1212,132 @@ TextureImporter:
       bones: []
       spriteID: f1025bb53c3d13150800000000000000
       internalID: 5850690226941665311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack00
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 559
+        width: 36
+        height: 66
+      alignment: 9
+      pivot: {x: 0.6111111, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e674ca264710c8f0800000000000000
+      internalID: -522391966642309404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack01
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 559
+        width: 37
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5945946, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd765f4859f0d6db0800000000000000
+      internalID: -4797160893224491041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack02
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 559
+        width: 65
+        height: 60
+      alignment: 9
+      pivot: {x: 0.26153848, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eabcb15f5c079ec0800000000000000
+      internalID: -3560363376880338204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack03
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 559
+        width: 60
+        height: 60
+      alignment: 9
+      pivot: {x: 0.28333336, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 934163eb320405be0800000000000000
+      internalID: -1490620954400385991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack04
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 559
+        width: 62
+        height: 59
+      alignment: 9
+      pivot: {x: 0.30645162, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5887cdd0480ae0570800000000000000
+      internalID: 8434855641140197509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Romona_JAttack05
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 559
+        width: 60
+        height: 59
+      alignment: 9
+      pivot: {x: 0.28333336, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f014cec2fab6c80800000000000000
+      internalID: -8328370478414491779
       vertices: []
       indices: 
       edges: []
