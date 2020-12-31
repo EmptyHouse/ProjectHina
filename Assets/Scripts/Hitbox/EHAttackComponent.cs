@@ -12,27 +12,6 @@ public class EHAttackComponent : MonoBehaviour
     public AttackDataTable AssociatedAttackTable;
 
     /// <summary>
-    /// Damage that will be applied to damageable component that we hit
-    /// </summary>
-    public int DamageToApply { get; set; }
-    /// <summary>
-    /// The force that will be applied to the damageable component that we attack assuming it contains a physics object
-    /// </summary>
-    public Vector2 KnockbackForce { get; set; }
-    /// <summary>
-    /// The amount of time that we will freeze time when making contact with an object. NOTE: We may want to apply a different scaling when based on how much health a character has
-    /// </summary>
-    public float TimeFreezeOnHit { get; set; }
-    /// <summary>
-    /// The intensity of the camera shake when we make contact with a damageable component
-    /// </summary>
-    public float CameraShakeIntensity { get; set; }
-    /// <summary>
-    /// The time we will apply the camera shake. NOTE: TimeFreeze, CameraShake, and CameraShakeDuration may all eventually be tied together 
-    /// </summary>
-    public float CameraShakeDuration { get; set; }
-
-    /// <summary>
     /// The owner of our Attack component. This will help in determining which object is appropiate to intersect with
     /// </summary>
     private EHGameplayCharacter CharacterOwner;
@@ -65,17 +44,15 @@ public class EHAttackComponent : MonoBehaviour
         IntersectedDamageableComponents.Clear();
     }
 
-    public virtual void DealDamageToDamageableComponent(EHDamageableComponent DamageableComponent)
-    {
-        DamageableComponent.TakeDamage(this, DamageToApply);
-    }
-
+    
     /// <summary>
     /// This method will be call
     /// </summary>
     public void OnInteractWithOtherDamageableComponent(EHDamageableComponent DamageableComponentWeHit)
     {
-        DealDamageToDamageableComponent(DamageableComponentWeHit);
+        Debug.Log(this.name + " Hit " + DamageableComponentWeHit.name);
+        int DamageToApply = 0;
+        DamageableComponentWeHit.TakeDamage(this, DamageToApply);
     }
 
     public virtual void OnHitboxEndIntersectingEnemyHurtbox(EHDamageableComponent DamageableComponentHit) { }
