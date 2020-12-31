@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MainCameraFollow : MonoBehaviour
-{
-    [Range(0f, 1f)]
+{ 
     public float CameraFollowSpeed = .5f;
 
-    private Vector2 CameraOffsetFromTarget;
+    [Tooltip("The area that we will cover before moving toward the target. Acts as a buffer so that we are not ALWAYS following the player")]
+    public Vector2 CameraCaptureRange;
+
+    private Vector3 CameraOffsetFromTarget;
     private Transform TargetTransform;
     private Camera CameraComponent;
 
@@ -15,6 +17,18 @@ public class MainCameraFollow : MonoBehaviour
     private void Awake()
     {
         CameraComponent = GetComponentInChildren<Camera>();
+        SetCameraFollowTarget(this.transform.parent);
+        CameraOffsetFromTarget = this.transform.position - TargetTransform.position;
+
+        this.transform.parent = null;
+    }
+
+    private void LateUpdate()
+    {
+        Vector3 TargetPosition = TargetTransform.position + CameraOffsetFromTarget;
+
+
+        this.transform.position = Vector3.Lerp(transform.position, TargetPosition, EHTime.DeltaTime * CameraFollowSpeed);
     }
     #endregion monobehaviour methods
 
