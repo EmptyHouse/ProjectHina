@@ -116,6 +116,8 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     {
         IntersectingHitboxSet.Add(OtherHitbox);
         OtherHitbox.IntersectingHitboxSet.Add(this);
+        HitboxActorComponent.OnHitboxBeginIntersectOtherHitbox(this, OtherHitbox);
+        OtherHitbox.HitboxActorComponent.OnHitboxBeginIntersectOtherHitbox(OtherHitbox, this);
 
     }
 

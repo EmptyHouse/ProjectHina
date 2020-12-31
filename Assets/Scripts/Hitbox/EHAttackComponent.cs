@@ -9,12 +9,13 @@ public class EHAttackComponent : MonoBehaviour
 {
     private const string ATTACK_ANIM = "Attack";
 
+    [Tooltip("The assigned DataTable that will contain all the information for each attack.")]
     public AttackDataTable AssociatedAttackTable;
 
     /// <summary>
     /// The owner of our Attack component. This will help in determining which object is appropiate to intersect with
     /// </summary>
-    private EHGameplayCharacter CharacterOwner;
+    public EHGameplayCharacter CharacterOwner { get; private set; }
 
     /// <summary>
     /// List of all the damageable components that we have interacted with. Anything in this list has already been registered as a hit. We will not apply damage to a component in this list
@@ -22,13 +23,14 @@ public class EHAttackComponent : MonoBehaviour
     /// </summary>
     private HashSet<EHDamageableComponent> IntersectedDamageableComponents = new HashSet<EHDamageableComponent>();
 
-    private EHPhysics2D Physics2D;
+    /// <summary>
+    /// 
+    /// </summary>
     private Animator AssociatedAnimator;
 
     #region monobehaviour methods
     private void Awake()
     {
-        Physics2D = GetComponent<EHPhysics2D>();
         AssociatedAnimator = GetComponent<Animator>();
         SetCharacterOwner(GetComponent<EHGameplayCharacter>());
     }
@@ -39,39 +41,32 @@ public class EHAttackComponent : MonoBehaviour
         this.CharacterOwner = CharacterOwner;
     }
 
-    public void ClearAllIntersectedDamageableComponents()
+    /// <summary>
+    /// This method should be called anytime a new hit should begin. if you are setting up a multihit move, this should be called between each hit in the animation
+    /// </summary>
+    public void OnClearAllIntersectedDamageableComponents()
     {
         IntersectedDamageableComponents.Clear();
     }
 
     
     /// <summary>
-    /// This method will be call
+    /// This method will be called when a hitbox component enters the hurtbox component of another damageable component
     /// </summary>
-    public void OnInteractWithOtherDamageableComponent(EHDamageableComponent DamageableComponentWeHit)
-    {
-        Debug.Log(this.name + " Hit " + DamageableComponentWeHit.name);
-        int DamageToApply = 0;
-        DamageableComponentWeHit.TakeDamage(this, DamageToApply);
-    }
-
-    public virtual void OnHitboxEndIntersectingEnemyHurtbox(EHDamageableComponent DamageableComponentHit) { }
-
-    protected IEnumerator StopTimeWhenHit(float SecondsToStop)
-    {
-        if (SecondsToStop <= 0)
+    public void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
+    { 
+        FAttackData AttackData;
+        if (AssociatedAttackTable.GetAttackDataFromAnimationClipHash(AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData))
         {
-            yield break;
+            DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
         }
-
-        float TimeThatHasPassed = 0;
-        
-        while (TimeThatHasPassed < SecondsToStop)
+        else
         {
-            yield return null;
-            TimeThatHasPassed += EHTime.RealDeltaTime;
+            Debug.LogWarning("This animation has not be set up in our attack Data table");
         }
     }
+
+    public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }
 
     /// <summary>
     /// Since the ability to perform an attack will primarily be animation driven this method will call a trigger 
@@ -98,12 +93,30 @@ public class EHAttackComponent : MonoBehaviour
         string AttackName = ATTACK_ANIM + AttackID.ToString("00");
         AssociatedAnimator.SetBool(AttackName, false);
     }
+
+    /// <summary>
+    /// Coroutine that will pause time when an attack is made. This is to give a more satisfying feel to the hit ideally
+    /// </summary>
+    /// <param name="SecondsToPauseGameWhenHitConnected"></param>
+    /// <returns></returns>
+    private IEnumerator StopTimeWhenHitCoroutine(float SecondsToPauseGameWhenHitConnected)
+    {
+        float OriginalTimeScale = EHTime.TimeScale;
+        EHTime.SetTimeScale(0);
+        float TimeThatHasPassed = 0;
+        while (TimeThatHasPassed >= SecondsToPauseGameWhenHitConnected)
+        {
+            TimeThatHasPassed += EHTime.RealDeltaTime;
+            yield return null;
+        }
+        EHTime.SetTimeScale(OriginalTimeScale);
+    }
 }
 
 [System.Serializable]
 public struct FAttackData
 {
-    public float AttackDamage;
+    public int AttackDamage;
     public float HitStunTime;
     public float HitFreezeTime;
     public Vector2 LaunchForce;

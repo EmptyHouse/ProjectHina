@@ -16,8 +16,8 @@ MonoBehaviour:
   DataElements:
   - AttackName: Attack_01
     AttackDataAnimationClip: {fileID: 7400000, guid: 59d367cef1e98d4448e1d02e6ef60612, type: 2}
-    AttackData:
+    AttackDataList:
     - AttackDamage: 2
       HitStunTime: 0.5
-      HitFreezeTime: 0.2
-      LaunchForce: {x: 1, y: 0}
+      HitFreezeTime: 0.3
+      LaunchForce: {x: 2, y: 0}

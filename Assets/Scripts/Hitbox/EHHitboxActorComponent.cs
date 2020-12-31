@@ -42,7 +42,7 @@ public class EHHitboxActorComponent : MonoBehaviour
         {
             if (OtherHitbox.GetHitboxType() == EHHitbox.EHitboxType.HURTBOX)
             {
-                //TO-DO: Add event when hitbox event ends
+                
             }
         }
     }
@@ -54,17 +54,23 @@ public class EHHitboxActorComponent : MonoBehaviour
     /// <param name="OtherHurtbox"></param>
     private void OurHitboxIntersectOtherHurtbox(EHHitbox OurHitbox, EHHitbox OtherHurtbox)
     {
+        if (OurHitbox == null || OtherHurtbox == null)
+        {
+            return; 
+        }
+
         EHDamageableComponent OtherDamageableComponent = OtherHurtbox.HitboxActorComponent.DamageableComponent;
         if (OtherDamageableComponent == null)
         {
             Debug.LogWarning("There is no Damageable component associated with the hurtbox we are intersecting");
+            return;
         }
         if (AttackComponent == null)
         {
             Debug.LogWarning("There is no Attack component associated with our intersecting Hitbox");
+            return;
         }
-
-        //TO-DO: AttackComponent.OnHitboxBeginIntersectEnemyHurtbox()
+        AttackComponent.OnDamageableComponentIntersectionBegin(OtherDamageableComponent);
     }
 
     private void OurHitboxEndintersectOtherHurtbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)

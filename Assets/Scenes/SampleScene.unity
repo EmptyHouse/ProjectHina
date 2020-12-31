@@ -1293,10 +1293,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2126490684, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
-      propertyPath: CameraFollowSpeed
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392886, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
@@ -1344,10 +1340,6 @@ PrefabInstance:
     - target: {fileID: 5197975866366392888, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5197975867515113633, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
