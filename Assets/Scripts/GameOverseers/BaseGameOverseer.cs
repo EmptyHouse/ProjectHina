@@ -45,8 +45,8 @@ public class BaseGameOverseer : MonoBehaviour
 
     protected virtual void LateUpdate()
     {
-        HitboxManager.Tick(EHTime.DeltaTime);
         PhysicsManager.Tick(EHTime.DeltaTime);
+        HitboxManager.Tick(EHTime.DeltaTime);
     }
     #endregion monobehaviour methods
 
