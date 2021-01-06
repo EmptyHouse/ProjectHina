@@ -1293,6 +1293,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1567151779786566076, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: CharacterName
+      value: Romona
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392886, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter

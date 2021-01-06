@@ -15,7 +15,6 @@ public class AttackDataTable : BaseDataTable<FAttackDataNode>
         foreach (FAttackDataNode AttackNode in DataCollection)
         {
             DataTableDictioanry.Add(AttackNode.AttackDataAnimationClip.name, AttackNode);
-            Debug.Log("Aniamtion Clip: " + Animator.StringToHash(AttackNode.AttackDataAnimationClip.name));
             AnimationHashToRowName.Add(Animator.StringToHash(AttackNode.AttackDataAnimationClip.name), AttackNode.AttackDataAnimationClip.name);
         }
     }

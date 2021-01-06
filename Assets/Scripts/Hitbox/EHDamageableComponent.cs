@@ -5,6 +5,21 @@ using UnityEngine.Events;
 
 public class EHDamageableComponent : MonoBehaviour
 {
+    #region enum 
+    public enum EDamageType
+    {
+        DAMAGE,
+        HEALING,
+        DEATH,
+    }
+    #endregion enum
+
+    /// <summary>
+    /// This delegate will be called whenevver our character's health falls below 0.
+    /// </summary>
+    public UnityAction<FDamageData> OnCharacterHealthChanged;
+
+
     [Tooltip("The maximum health of our Damageable component")]
     public int MaxHealth = 100;
     /// <summary>
@@ -12,25 +27,17 @@ public class EHDamageableComponent : MonoBehaviour
     /// </summary>
     private int CurrentHealth;
 
-    /// <summary>
-    /// The owning character for our damageable component
-    /// </summary>
-    private EHGameplayCharacter CharacterOwner;
-
-    private EHPhysics2D Physics2D;
-
     #region monobehaviour methods
     private void Awake()
     {
         CurrentHealth = MaxHealth;
-        Physics2D = GetComponent<EHPhysics2D>();
     }
 
     private void OnValidate()
     {
-        if (MaxHealth < 0)
+        if (MaxHealth < 1)
         {
-            MaxHealth = 0;
+            MaxHealth = 1;//Health must be at least one. If they take any hit, they will die
         }
     }
     #endregion monobehaviour methods
@@ -42,12 +49,21 @@ public class EHDamageableComponent : MonoBehaviour
     /// <param name="DamageToTake"></param>
     public void TakeDamage(EHAttackComponent AttackComponentThatHurtUs, int DamageToTake)
     {
+        FDamageData DamageData = new FDamageData();
+        DamageData.AttackSource = AttackComponentThatHurtUs;
+        DamageData.DamageAmount = DamageToTake;
+        int PreviousHealth = CurrentHealth;
         CurrentHealth = Mathf.Clamp(CurrentHealth - DamageToTake, 0, MaxHealth);
 
-        if (CurrentHealth <= 0)
+        if (CurrentHealth <= 0 && PreviousHealth > 0)
         {
-            CharacterOwner.OnCharacterDied(AttackComponentThatHurtUs);
+            DamageData.DamageType = EDamageType.DEATH;
         }
+        else
+        {
+            DamageData.DamageType = EDamageType.DAMAGE;
+        }
+        OnCharacterHealthChanged?.Invoke(DamageData);
     }
 
     /// <summary>
@@ -58,26 +74,20 @@ public class EHDamageableComponent : MonoBehaviour
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth + HealthToRecieve, 0, MaxHealth);
     }
+}
 
+public struct FDamageData
+{
     /// <summary>
-    /// This will assign the character that owns the damageable component that this is attached to
+    /// The type of damage that we received
     /// </summary>
-    /// <param name="CharacterOwner"></param>
-    public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)
-    {
-        this.CharacterOwner = CharacterOwner;
-    }
-
+    public EHDamageableComponent.EDamageType DamageType;
     /// <summary>
-    /// 
+    /// The amount of damage that was received
     /// </summary>
-    /// <param name="Force"></param>
-    /// <param name="Direction"></param>
-    public void ApplyKnockback(float Force, Vector2 Direction)
-    {
-        if (Physics2D != null)
-        {
-            Physics2D.Velocity = Direction * Force;
-        }
-    }
+    public int DamageAmount;
+    /// <summary>
+    /// The source that caused our damage. This value can be null
+    /// </summary>
+    public EHAttackComponent AttackSource;
 }

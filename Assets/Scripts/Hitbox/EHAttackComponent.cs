@@ -33,6 +33,7 @@ public class EHAttackComponent : MonoBehaviour
     {
         AssociatedAnimator = GetComponent<Animator>();
         SetCharacterOwner(GetComponent<EHGameplayCharacter>());
+        BaseGameOverseer.Instance.DataTableManager.AddAttackDataTable(AssociatedAttackTable);
     }
     #endregion monobehaviour methods
 
@@ -56,13 +57,14 @@ public class EHAttackComponent : MonoBehaviour
     public void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
     { 
         FAttackData AttackData;
-        if (AssociatedAttackTable.GetAttackDataFromAnimationClipHash(AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData))
+        if (BaseGameOverseer.Instance.DataTableManager.GetAttackDataFromAttackDataTable(AssociatedAttackTable, AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData)
+            && !IntersectedDamageableComponents.Contains(DamageableComponentWeHit))
         {
             DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
         }
         else
         {
-            Debug.LogWarning("This animation has not be set up in our attack Data table");
+            Debug.LogWarning("This animation has not be set up in our attack Data table: " + AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString());
         }
     }
 

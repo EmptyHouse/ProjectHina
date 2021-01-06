@@ -36,6 +36,11 @@ public class BaseGameOverseer : MonoBehaviour
     /// </summary>
     public EHHitboxManager HitboxManager { get; } = new EHHitboxManager();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public DataTableManager DataTableManager { get; } = new DataTableManager();
+
     #region monobehaviour methods
     protected virtual void Awake()
     {

@@ -13,7 +13,7 @@ public abstract class BaseDataTable<T> : ScriptableObject
     #region monobeahviour methods
     private void Awake()
     {
-        Debug.Log("I am Begin called on awake");
+
         InitializeTable(DataElements);
     }
     #endregion monobehaviour methods
