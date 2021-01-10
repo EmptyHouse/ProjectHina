@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &115812702
@@ -292,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 3.99}
 --- !u!1 &338789319
@@ -339,6 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 2.5}
 --- !u!1 &712118198
@@ -387,6 +390,67 @@ MonoBehaviour:
   HitboxType: 1
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
+--- !u!1 &765452364
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 765452366}
+  - component: {fileID: 765452365}
+  - component: {fileID: 765452367}
+  m_Layer: 10
+  m_Name: TriggerTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &765452365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765452364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e730862882e3d9b479e96682a635a71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bIsCharacterCollider: 1
+  ColliderType: 1
+  bIsTrigger: 1
+  ColliderOffset: {x: 0, y: 0}
+  ColliderSize: {x: 5, y: 10}
+--- !u!4 &765452366
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765452364}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.38823, y: 0.54, z: -19.50164}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765452367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765452364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b618cefed2545cb4a9a592ebca71a14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &935228994
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 50, y: 2.5}
 --- !u!1 &1102556953
@@ -616,6 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 1
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &1265223428
@@ -663,6 +729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 2.5}
 --- !u!1 &1416426298
@@ -802,6 +869,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 1
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &1752609975
@@ -925,6 +993,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &1855633190
@@ -972,6 +1041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 9.5}
 --- !u!1 &1878141485
@@ -1019,6 +1089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 0
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 2.5}
 --- !u!1 &1923448030
@@ -1066,6 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 0
   ColliderType: 1
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 2.5, y: 1}
 --- !u!1 &2010965989
@@ -1358,6 +1430,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DebugIdleBot
       objectReference: {fileID: 0}
+    - target: {fileID: 5444862123059223851, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5444862123059223852, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1402,5 +1478,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5444862123864165390, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5444862124041068254, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
+--- !u!1 &5444862123835924754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5444862123059223851, guid: ef346d62f2a5a1947b84258eab75e18d, type: 3}
+  m_PrefabInstance: {fileID: 5444862123835924753}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5444862123835924755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444862123835924754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbd6c86c4c06304aac0b90069259feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterName: Debug Bot

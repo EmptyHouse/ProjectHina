@@ -173,13 +173,22 @@ public class EHBox2DCollider : EHBaseCollider2D
         return false;
     }
 
-
-    protected override bool ValidateColliderOverlapping(EHBaseCollider2D OtherCollider)
+    protected override bool SweepColliderOverlap(EHBaseCollider2D OtherCollider)
     {
         switch (OtherCollider.GetColliderShape())
         {
             case EHGeometry.ShapeType.Rect2D:
                 return IsOverlappingRect2DSweep(((EHBox2DCollider)OtherCollider).RectGeometry);
+        }
+        return false;
+    }
+
+    protected override bool IsColliderOverlapping(EHBaseCollider2D OtherCollider)
+    {
+        switch (OtherCollider.GetColliderShape())
+        {
+            case EHGeometry.ShapeType.Rect2D:
+                return IsOverlappingRect2D(((EHBox2DCollider)OtherCollider).RectGeometry);
         }
         return false;
     }

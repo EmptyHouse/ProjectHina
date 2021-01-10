@@ -66,7 +66,7 @@ public class EHPhysics2D : MonoBehaviour, ITickableComponent
         this.transform.position += new Vector3(Velocity.x, Velocity.y) * DeltaTime;
     }
 
-    private void OnEHCollisionStay(EHBaseCollider2D.FHitData HitData)
+    private void OnEHCollisionStay(FHitData HitData)
     {
         if (HitData.HitDirection.y != 0 && Mathf.Sign(HitData.HitDirection.y) != Mathf.Sign(Velocity.y))
         {

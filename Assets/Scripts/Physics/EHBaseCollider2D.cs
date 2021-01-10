@@ -11,9 +11,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         STATIC,
         MOVEABLE,
         PHYSICS,
-        TRIGGER,
     }
     #endregion enums
+
+    #region collider events
     /// <summary>
     /// Delegate that is called every frame that we are in contace with another collider
     /// </summary>
@@ -29,11 +30,27 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public UnityAction<FHitData> OnCollision2DEnd;
+
+    /// <summary>
+    /// Delegate that will be called when a trigger has been entered. Only one of the two interacting colliders needs to be a trigger for this to be called
+    /// </summary>
+    [HideInInspector]
+    public UnityAction<FTriggerData> OnTrigger2DEnter;
+    /// <summary>
+    /// Delegate that is called when a trigger has exited. Only one of the intersecting triggers needs to be a trigger to be called
+    /// </summary>
+    [HideInInspector]
+    public UnityAction<FTriggerData> OnTrigger2DExit;
+    #endregion collider events
+
     [Tooltip("Toggles whether or not we treat this as a character collider. Meaning that that origin point is at the base of the collider instead of the center")]
     public bool bIsCharacterCollider;
     [Tooltip("The type of our collider. This will determine how we update our collider as well as certain interactions we will have with other colliders")]
     public EColliderType ColliderType = EColliderType.STATIC;
     private HashSet<EHBaseCollider2D> OverlappingColliders = new HashSet<EHBaseCollider2D>();
+    [Tooltip("Mark this true if we want to treat this collider as a trigger box insteat of a solid collision")]
+    [SerializeField]
+    private bool bIsTrigger = false;
 
     #region monobehaviour methods
     protected virtual void Awake()
@@ -49,12 +66,31 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         List<EHBaseCollider2D> ColliderIterator = new List<EHBaseCollider2D>(OverlappingColliders);
         foreach (EHBaseCollider2D OtherCollider in ColliderIterator)
         {
-            RemoveColliderFromHitSet(OtherCollider);
+            if (bIsTrigger)
+            {
+
+            }
+            else
+            {
+                RemoveColliderFromHitSet(OtherCollider);
+            }
+        }
+    }
+
+    protected virtual void OnValidate()
+    {
+        if (bIsTrigger)
+        {
+            if (ColliderType == EColliderType.PHYSICS)
+            {
+                ColliderType = EColliderType.MOVEABLE;
+                Debug.LogWarning("A trigger collider cannot be a physics type collider. To save on calculations, please set the collider to static if it is to be a stationary trigger");
+            }
         }
     }
 
@@ -117,7 +153,14 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// </summary>
     /// <param name="OtherCollider"></param>
     /// <returns></returns>
-    protected abstract bool ValidateColliderOverlapping(EHBaseCollider2D OtherCollider);
+    protected abstract bool SweepColliderOverlap(EHBaseCollider2D OtherCollider);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="OtherCollider"></param>
+    /// <returns></returns>
+    protected abstract bool IsColliderOverlapping(EHBaseCollider2D OtherCollider);
 
     #endregion abstract methods
     /// <summary>
@@ -128,7 +171,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// <returns></returns>
     public bool IsPhysicsColliderOverlapping(EHBaseCollider2D OtherCollider)
     {
-        if (ValidateColliderOverlapping(OtherCollider))
+        if (SweepColliderOverlap(OtherCollider))
         {
             return true;
         }
@@ -202,6 +245,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     #region debug
     public Color GetDebugColor()
     {
+        if (bIsTrigger)
+        {
+            return new Color(.914f, .961f, .256f);
+        }
         switch (ColliderType)
         {
             case EColliderType.STATIC:
@@ -210,23 +257,11 @@ public abstract class EHBaseCollider2D : MonoBehaviour
                 return new Color(.258f, .96f, .761f);
             case EColliderType.PHYSICS:
                 return new Color(.761f, .256f, .96f);
-            case EColliderType.TRIGGER:
-                return new Color(.914f, .961f, .256f);
         }
         return Color.green;
     }
     #endregion debug
-    /// <summary>
-    /// Struct that contains information about the collision that was experienced. This will only be sent
-    /// when the OnCollisionBegin() delegate is called
-    /// </summary>
-    public struct FHitData
-    {
-        public Vector2 HitDirection;
-        public float HitForce;
-        public EHBaseCollider2D OwningCollider;
-        public EHBaseCollider2D OtherCollider;
-    }
+   
 
     /// <summary>
     /// Returns whether the Rect2D that is passed in intersects with this collider
@@ -248,4 +283,101 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public abstract EHBounds2D GetBounds();
+
+    #region trigger methods
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Collider2D"></param>
+    public void IsTriggerOverlappingCollider(EHBaseCollider2D Collider2D)
+    {
+        if (IsColliderOverlapping(Collider2D))
+        {
+            if (!ContainOverlappingCollider(Collider2D))
+            {
+                OnTriggerOverlapBegin(Collider2D);
+            }
+        }
+        else if (ContainOverlappingCollider(Collider2D))
+        {
+            OnTriggerOverlapEnd(Collider2D);
+        }
+    }
+
+    private void OnTriggerOverlapBegin(EHBaseCollider2D Collider2D)
+    {
+        OverlappingColliders.Add(Collider2D);
+        Collider2D.OverlappingColliders.Add(this);
+        FTriggerData TriggerData = new FTriggerData();
+
+        TriggerData.OwningCollider = this;
+        TriggerData.OtherCollider = Collider2D;
+        OnTrigger2DEnter?.Invoke(TriggerData);
+
+        TriggerData.OwningCollider = Collider2D;
+        TriggerData.OtherCollider = this;
+        Collider2D.OnTrigger2DEnter?.Invoke(TriggerData);
+    }
+
+    private void OnTriggerOverlapEnd(EHBaseCollider2D Collider2D)
+    {
+        OverlappingColliders.Remove(Collider2D);
+        Collider2D.OverlappingColliders.Remove(this);
+        FTriggerData TriggerData = new FTriggerData();
+
+        TriggerData.OwningCollider = this;
+        TriggerData.OtherCollider = Collider2D;
+        OnTrigger2DExit?.Invoke(TriggerData);
+
+        TriggerData.OwningCollider = Collider2D;
+        TriggerData.OtherCollider = this;
+        Collider2D.OnTrigger2DExit?.Invoke(TriggerData);
+    }
+
+    /// <summary>
+    /// Safely sets whether or not our collider is a trigger collider
+    /// </summary>
+    /// <param name="bIsTrigger"></param>
+    public void SetIsTriggerCollider(bool bIsTrigger)
+    {
+        if (this.bIsTrigger == bIsTrigger)
+        {
+            return;
+        }
+
+        BaseGameOverseer.Instance.PhysicsManager.RemoveCollisionComponent(this);
+        this.bIsTrigger = bIsTrigger;
+        BaseGameOverseer.Instance.PhysicsManager.AddCollisionComponent(this);
+    }
+
+    /// <summary>
+    /// Returns whether or not this collider is labled as a trigger collider.
+    /// </summary>
+    /// <returns></returns>
+    public bool GetIsTriggerCollider()
+    {
+        return bIsTrigger;
+    }
+    #endregion trigger methods
+}
+
+/// <summary>
+/// Struct that contains information about the collision that was experienced. This will only be sent
+/// when the OnCollisionBegin() delegate is called
+/// </summary>
+public struct FHitData
+{
+    public Vector2 HitDirection;
+    public float HitForce;
+    public EHBaseCollider2D OwningCollider;
+    public EHBaseCollider2D OtherCollider;
+}
+
+/// <summary>
+/// Data that contains information for our trigger overlap event
+/// </summary>
+public struct FTriggerData
+{
+    public EHBaseCollider2D OwningCollider;
+    public EHBaseCollider2D OtherCollider;
 }

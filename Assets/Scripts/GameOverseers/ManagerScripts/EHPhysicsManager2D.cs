@@ -4,9 +4,23 @@ using UnityEngine;
 
 public class EHPhysicsManager2D : ITickableComponent
 {
+    /// <summary>
+    /// 
+    /// </summary>
     private static EHPhysicsManager2D CachedInstance;
+    /// <summary>
+    /// Set containing all physics components that our found in our game
+    /// </summary>
     private HashSet<EHPhysics2D> PhysicsComponentSet = new HashSet<EHPhysics2D>();
+    /// <summary>
+    /// Dictionary containing all physical colliders in our game
+    /// </summary>
     private Dictionary<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderComponentDictionary = new Dictionary<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>>();
+
+    /// <summary>
+    /// Hash set containing all trigger boxes in our scene
+    /// </summary>
+    private HashSet<EHBaseCollider2D> TriggerColliderSet = new HashSet<EHBaseCollider2D>();
 
     public EHPhysicsManager2D()
     {
@@ -36,6 +50,22 @@ public class EHPhysicsManager2D : ITickableComponent
 
     public void AddCollisionComponent(EHBaseCollider2D ColliderComponent)
     {
+        if (ColliderComponent == null)
+        {
+            Debug.LogWarning("A null collider was passed in to our physics manager. It has not been added...");
+            return;
+        }
+
+        if (ColliderComponent.GetIsTriggerCollider())
+        {
+            if (!TriggerColliderSet.Add(ColliderComponent))
+            {
+                Debug.LogWarning("The trigger component that was passed in has already been added to our physics manager...");
+            }
+
+            return;
+        }
+
         if (!ColliderComponentDictionary.ContainsKey(ColliderComponent.ColliderType))
         {
             Debug.LogWarning("Collider type was not added to dictionary. Please remember to add it in the Physics Manager Constructor");
@@ -51,6 +81,22 @@ public class EHPhysicsManager2D : ITickableComponent
 
     public void RemoveCollisionComponent(EHBaseCollider2D ColliderComponent)
     {
+        if (ColliderComponent == null)
+        {
+            Debug.LogWarning("A null collider was passed into our physics manager");
+            return;
+        }
+
+        if (ColliderComponent.GetIsTriggerCollider())
+        {
+            if (!TriggerColliderSet.Remove(ColliderComponent))
+            {
+                Debug.LogWarning("The trigger you are attempting to remove was not found in our physics manager. Perhaps you have already removed it?");
+            }
+
+            return;
+        }
+
         if (!ColliderComponentDictionary.ContainsKey(ColliderComponent.ColliderType))
         {
             Debug.LogWarning("Collider type was not added to dictionary. Please remember to add it in the Physics Manager Constructor");
@@ -88,8 +134,13 @@ public class EHPhysicsManager2D : ITickableComponent
         {
             if (PhysicsCollider.gameObject.activeInHierarchy) PhysicsCollider.UpdateColliderBounds(true);
         }
+        foreach (EHBaseCollider2D TriggerCollider in TriggerColliderSet)
+        {
+            TriggerCollider.UpdateColliderBounds(false);
+        }
 
         CheckPhysicsCollidersAgainstCategory();
+        CheckTriggerIntersections();
     }
 
     /// <summary>
@@ -108,7 +159,7 @@ public class EHPhysicsManager2D : ITickableComponent
                 {
                     if (Static.gameObject.activeInHierarchy)
                     {
-                        if (PhysicsCollider.IsPhysicsColliderOverlapping(Static))
+                        if (PhysicsCollider.IsPhysicsColliderOverlapping(Static) && !Physics2D.GetIgnoreLayerCollision(PhysicsCollider.gameObject.layer, Static.gameObject.layer))
                         {
                             CollisionNodeHeap.Push(new CollisionNode(PhysicsCollider.GetShortestDistanceFromPreviousPosition(Static), Static));
                         }
@@ -117,7 +168,7 @@ public class EHPhysicsManager2D : ITickableComponent
 
                 foreach (EHBaseCollider2D Moveable in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVEABLE])
                 {
-                    if (Moveable.gameObject.activeInHierarchy)
+                    if (Moveable.gameObject.activeInHierarchy && !Physics2D.GetIgnoreLayerCollision(PhysicsCollider.gameObject.layer, Moveable.gameObject.layer))
                     {
                         if (PhysicsCollider.IsPhysicsColliderOverlapping(Moveable))
                         {
@@ -128,7 +179,8 @@ public class EHPhysicsManager2D : ITickableComponent
 
                 while (!CollisionNodeHeap.IsEmpty())
                 {
-                    if (CollisionNodeHeap.Pop().Collider.PushOutCollider(PhysicsCollider))
+                    EHBaseCollider2D IntersectedCollider = CollisionNodeHeap.Pop().Collider;
+                    if (IntersectedCollider.PushOutCollider(PhysicsCollider))
                     {
                         PhysicsCollider.UpdateColliderBounds(false);
                     }
@@ -136,6 +188,29 @@ public class EHPhysicsManager2D : ITickableComponent
             }
         }
         CollisionNodeHeap.Clear();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void CheckTriggerIntersections()
+    {
+        foreach (EHBaseCollider2D TriggerCollider in TriggerColliderSet)
+        {
+            if (TriggerCollider.gameObject.activeInHierarchy)
+            {
+                foreach (EHBaseCollider2D PhysicsCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.PHYSICS])
+                {
+                    if (PhysicsCollider.gameObject.activeInHierarchy)
+                    {
+                        if (!Physics2D.GetIgnoreLayerCollision(PhysicsCollider.gameObject.layer, TriggerCollider.gameObject.layer))
+                        { 
+                            TriggerCollider.IsTriggerOverlappingCollider(PhysicsCollider);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private struct CollisionNode : System.IComparable
@@ -160,7 +235,15 @@ public class EHPhysicsManager2D : ITickableComponent
         }
     }
 
-
+    /// <summary>
+    /// Runs a box cast for every collider that is in our scene.
+    /// 
+    /// NOTE: Keep in mind this will ignore colliders that are labled triggers
+    /// </summary>
+    /// <param name="BoxToCast"></param>
+    /// <param name="HitCollider"></param>
+    /// <param name="LayerMask"></param>
+    /// <returns></returns>
     public static bool BoxCast2D(ref EHRect2D BoxToCast, out EHBaseCollider2D HitCollider, int LayerMask = 0)
     {
         if (CachedInstance == null)
@@ -220,6 +303,12 @@ public class EHPhysicsManager2D : ITickableComponent
     /// <returns></returns>
     public static bool BoxCastAll2D(ref EHRect2D BoxToCast, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D[] HitColliderList, int LayerMask)
     {
+        if (CachedInstance == null)
+        {
+            Debug.LogWarning("The game overseer has not been initialized");
+            HitColliderList = null;
+            return false;
+        }
         List<EHBaseCollider2D> BaseColliderList = new List<EHBaseCollider2D>();
         foreach (EHBaseCollider2D Collider2D in CachedInstance.ColliderComponentDictionary[ColliderType])
         {

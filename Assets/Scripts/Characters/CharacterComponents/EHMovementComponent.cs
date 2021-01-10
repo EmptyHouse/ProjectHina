@@ -439,7 +439,7 @@ public class EHMovementComponent : MonoBehaviour
     /// Event that is called when we begin a new collision
     /// </summary>
     /// <param name="HitData"></param>
-    public void OnEHCollisionEnter(EHBaseCollider2D.FHitData HitData)
+    public void OnEHCollisionEnter(FHitData HitData)
     {
         if (HitData.HitDirection.y > 0 && CurrentMovementType == EMovementType.IN_AIR)
         {
