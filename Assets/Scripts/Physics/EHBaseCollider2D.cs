@@ -304,6 +304,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Call this method when a trigger overlap has ended
+    /// </summary>
+    /// <param name="Collider2D"></param>
     private void OnTriggerOverlapBegin(EHBaseCollider2D Collider2D)
     {
         OverlappingColliders.Add(Collider2D);
@@ -319,6 +323,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
         Collider2D.OnTrigger2DEnter?.Invoke(TriggerData);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Collider2D"></param>
     private void OnTriggerOverlapEnd(EHBaseCollider2D Collider2D)
     {
         OverlappingColliders.Remove(Collider2D);

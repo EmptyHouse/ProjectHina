@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbd6c86c4c06304aac0b90069259feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterName: 
+  CharacterName: Romona
 --- !u!114 &5197975866366392889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,8 +368,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 1
   ColliderType: 2
+  bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
-  ColliderSize: {x: 0.7, y: 1.2}
+  ColliderSize: {x: 0.28, y: 0.68}
 --- !u!114 &5197975866366392890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,7 +604,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 6062619997070223206, guid: 7ac09ca991cd0fc43ab13959c2e993ef, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 292679675ede9f040bae3bc230d5b591, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
