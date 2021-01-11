@@ -324,7 +324,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Call this method a trigger overlap 
     /// </summary>
     /// <param name="Collider2D"></param>
     private void OnTriggerOverlapEnd(EHBaseCollider2D Collider2D)
