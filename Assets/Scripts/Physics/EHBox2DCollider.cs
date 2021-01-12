@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class EHBox2DCollider : EHBaseCollider2D
 {
+    public enum ECollisionDirection : byte
+    {
+        UP = 0x01,
+        DOWN = 0x02,
+        LEFT = 0x04,
+        RIGHT = 0x08,
+    }
+
     #region main variables
     public Vector2 ColliderOffset;
     public Vector2 ColliderSize = Vector2.one;
@@ -12,6 +20,7 @@ public class EHBox2DCollider : EHBaseCollider2D
     private EHRect2D PreviousRectGeometry = new EHRect2D();
     private EHRect2D PhysicsSweepGeometry = new EHRect2D();
     public Vector2 DefaultColliderSize { get; private set; }
+    protected byte CollisionMask = 0x0f;
     private readonly Vector2 BUFFER = Vector2.one * 0.02f;
     #endregion main variables
 
@@ -97,22 +106,22 @@ public class EHBox2DCollider : EHBaseCollider2D
 
 
 
-            if (ThisPreviousBounds.MaxBounds.y < OtherPreviousBounds.MinBounds.y && RightUpOffset.y > 0)
+            if (ThisPreviousBounds.MaxBounds.y < OtherPreviousBounds.MinBounds.y && RightUpOffset.y > 0 && (CollisionMask & (byte)ECollisionDirection.UP) != 0)
             {
                 ColliderToPushOut.transform.position += Vector3.up * RightUpOffset.y;
                 HitData.HitDirection = Vector2.down;
             }
-            else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x && RightUpOffset.x > 0)
+            else if (ThisPreviousBounds.MaxBounds.x < OtherPreviousBounds.MinBounds.x && RightUpOffset.x > 0 && (CollisionMask & (byte)ECollisionDirection.RIGHT) != 0)
             {
                 ColliderToPushOut.transform.position += Vector3.right * RightUpOffset.x;
                 HitData.HitDirection = Vector2.left;
             }
-            else if (ThisPreviousBounds.MinBounds.x > OtherPreviousBounds.MaxBounds.x && LeftBottomOffset.x < 0)
+            else if (ThisPreviousBounds.MinBounds.x > OtherPreviousBounds.MaxBounds.x && LeftBottomOffset.x < 0 && (CollisionMask & (byte)ECollisionDirection.LEFT) != 0)
             {
                 ColliderToPushOut.transform.position += Vector3.right * LeftBottomOffset.x;
                 HitData.HitDirection = Vector2.right;
             }
-            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y && LeftBottomOffset.y < 0)
+            else if (ThisPreviousBounds.MinBounds.y > OtherPreviousBounds.MaxBounds.y && LeftBottomOffset.y < 0 && (CollisionMask & (byte)ECollisionDirection.DOWN) != 0)
             {
                 ColliderToPushOut.transform.position += Vector3.up * LeftBottomOffset.y;
                 HitData.HitDirection = Vector2.up;

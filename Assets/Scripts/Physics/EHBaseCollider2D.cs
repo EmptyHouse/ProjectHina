@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public abstract class EHBaseCollider2D : MonoBehaviour
 {
     #region enums
-    public enum EColliderType
+    public enum EColliderType : byte
     {
         STATIC,
         MOVEABLE,

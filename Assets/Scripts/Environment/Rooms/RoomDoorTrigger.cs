@@ -6,7 +6,16 @@ using EHUtilities;
 [RequireComponent(typeof(EHBaseCollider2D))]
 public class RoomDoorTrigger : MonoBehaviour
 {
-    private SceneField RoomToEnter;
+    [SerializeField]
+    [Tooltip("A reference to the connected door that the player will spawn next to upon entering this door")]
+    private DoorData ConnectedDoor;
+    [SerializeField]
+    [Tooltip("Upon entering this door, this is the position that the character will spawn into")]
+    private SpawnPoint AssociatedSpawnPoint = null;
+    [SerializeField]
+    private bool bCharacterEntersLeft = false;
+    [SerializeField]
+    private float SpawnPointOffset = 0;
 
     #region monobehaviour methods
     private void Awake()
@@ -18,20 +27,30 @@ public class RoomDoorTrigger : MonoBehaviour
         }
 
         TriggerCollider.OnTrigger2DEnter += OnPlayerEnterRoom;
-        TriggerCollider.OnTrigger2DExit += OnPlayerLeftRoom;
     }
 
     private void OnDestroy()
     {
         EHBaseCollider2D TriggerCollider = GetComponent<EHBaseCollider2D>();
         TriggerCollider.OnTrigger2DEnter -= OnPlayerEnterRoom;
-        TriggerCollider.OnTrigger2DExit -= OnPlayerLeftRoom;
+    }
+
+    private void OnValidate()
+    {
+        if (AssociatedSpawnPoint)
+        {
+            AssociatedSpawnPoint.transform.position = transform.position + (bCharacterEntersLeft ? Vector3.right : Vector3.left) * SpawnPointOffset;
+            if (AssociatedSpawnPoint.bIsCharacterSpawnedLeft == bCharacterEntersLeft)
+            {
+                AssociatedSpawnPoint.bIsCharacterSpawnedLeft = !bCharacterEntersLeft;
+            }
+        }
     }
     #endregion monobehaviour methods
 
     #region trigger events
     /// <summary>
-    /// 
+    /// This will transition to another door if a player character has entered
     /// </summary>
     /// <param name="TriggerData"></param>
     private void OnPlayerEnterRoom(FTriggerData TriggerData)
@@ -41,20 +60,16 @@ public class RoomDoorTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             Debug.Log("Player Has exited");
-        }
-    }
-
-    private void OnPlayerLeftRoom(FTriggerData TriggerData)
-    {
-        Debug.Log("Something exited: " + TriggerData.OtherCollider.name);
-        EHPlayerCharacter PlayerCharacter = TriggerData.OtherCollider.GetComponent<EHPlayerCharacter>();
-        if (PlayerCharacter != null)
-        {
-            Debug.Log("A Player Exited");
+            StartCoroutine(StartRoomTransition(PlayerCharacter));
         }
     }
     #endregion trigger events
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="PlayerCharacter"></param>
+    /// <returns></returns>
     private IEnumerator StartRoomTransition(EHPlayerCharacter PlayerCharacter)
     {
         yield break;
