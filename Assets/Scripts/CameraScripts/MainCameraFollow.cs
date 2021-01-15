@@ -23,6 +23,11 @@ public class MainCameraFollow : MonoBehaviour
         this.transform.parent = null;
     }
 
+    private void Start()
+    {
+        BaseGameOverseer.Instance.MainGameCamera = this;
+    }
+
     private void LateUpdate()
     {
         Vector3 TargetPosition = TargetTransform.position + CameraOffsetFromTarget;

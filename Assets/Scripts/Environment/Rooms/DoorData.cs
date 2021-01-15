@@ -27,4 +27,9 @@ public class DoorData : ScriptableObject
     {
         return ConnectedDoor;
     }
+
+    public Vector3 GetDoorPosition()
+    {
+
+    }
 }

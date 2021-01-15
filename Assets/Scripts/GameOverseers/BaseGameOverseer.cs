@@ -35,12 +35,18 @@ public class BaseGameOverseer : MonoBehaviour
     /// Reference to our Hitbox Manager object
     /// </summary>
     public EHHitboxManager HitboxManager { get; } = new EHHitboxManager();
-
     /// <summary>
     /// 
     /// </summary>
     public DataTableManager DataTableManager { get; } = new DataTableManager();
 
+    public RoomActor CurrentlyLoadedRoom { get; set; }
+
+    public EHGameHUD GameHUD { get; set; }
+
+    #region game component references
+    public MainCameraFollow MainGameCamera { get; set; }
+    #endregion game component references
     #region monobehaviour methods
     protected virtual void Awake()
     {
@@ -138,6 +144,16 @@ public class BaseGameOverseer : MonoBehaviour
         public DateTime TimeOfSave;
         public float TimePlayingGame;
         public int NumberOfDeaths;
+
+        public SaveGameData()
+        {
+            SaveGameVersion = SAVE_VERSION;
+        }
+
+        public bool IsSaveOutOfDate()
+        {
+            return SaveGameVersion == SAVE_VERSION;
+        }
     }
     #endregion saving/loading
 

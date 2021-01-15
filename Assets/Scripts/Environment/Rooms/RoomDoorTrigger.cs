@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EHUtilities;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(EHBaseCollider2D))]
 public class RoomDoorTrigger : MonoBehaviour
@@ -60,18 +60,10 @@ public class RoomDoorTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             Debug.Log("Player Has exited");
-            StartCoroutine(StartRoomTransition(PlayerCharacter));
+            BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, );
         }
     }
     #endregion trigger events
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="PlayerCharacter"></param>
-    /// <returns></returns>
-    private IEnumerator StartRoomTransition(EHPlayerCharacter PlayerCharacter)
-    {
-        yield break;
-    }
+    
 }
