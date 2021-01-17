@@ -30,6 +30,6 @@ public class DoorData : ScriptableObject
 
     public Vector3 GetDoorPosition()
     {
-
+        return Vector3.zero;
     }
 }

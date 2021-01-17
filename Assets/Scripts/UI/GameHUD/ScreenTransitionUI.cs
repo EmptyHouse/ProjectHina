@@ -61,7 +61,7 @@ public class ScreenTransitionUI : MonoBehaviour
             yield return null;
         }
 
-        PlayerCharacter.transform.position = DoorToLoad.
+        //PlayerCharacter.transform.position = DoorToLoad.
         TimeThatHasPassed = 0;
         while (TimeThatHasPassed < TransitionTimeSeconds)
         {

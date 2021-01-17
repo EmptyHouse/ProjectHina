@@ -60,7 +60,7 @@ public class RoomDoorTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             Debug.Log("Player Has exited");
-            BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, );
+            //BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, );
         }
     }
     #endregion trigger events
