@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7f0f724c8549064cad439146d23b5b4, type: 3}
-  m_Name: Room2
+  m_Script: {fileID: 11500000, guid: 56533148093e08f4083e8d189914c70f, type: 3}
+  m_Name: Room2_DoorA
   m_EditorClassIdentifier: 
-  RoomScene:
-    sceneAsset: {fileID: 102900000, guid: 949f470ffd06e39409f7023085a54a79, type: 3}
-    sceneName: Scenes/TestMaps/RoomTest2
-  bIsRoomDiscovered: 0
-  ConnnectedDoors: []
+  ConnectedRoom: {fileID: 11400000, guid: 7a7810bb8eeec324eb2abc55b39b2ce8, type: 2}
+  ConnectedDoor: {fileID: 11400000, guid: 3504492f2766d254d9c7386a80b6a61e, type: 2}

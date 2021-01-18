@@ -21,6 +21,7 @@ public class EHGameplayCharacter : EHCharacter
     public EHAttackComponent AttackComponent { get; private set; }
     public EHHitboxActorComponent HitboxComponent { get; private set; }
     public EHMovementComponent MovementComponent { get; private set; }
+    public EHBox2DCollider CharacterCollider { get; private set; }
 
 
     protected override void Awake()
@@ -30,6 +31,7 @@ public class EHGameplayCharacter : EHCharacter
         AttackComponent = GetComponent<EHAttackComponent>();
         HitboxComponent = GetComponent<EHHitboxActorComponent>();
         MovementComponent = GetComponent<EHMovementComponent>();
+        CharacterCollider = GetComponent<EHBox2DCollider>();
 
         if (DamageableComponent)
         {
@@ -48,5 +50,11 @@ public class EHGameplayCharacter : EHCharacter
 
         Debug.Log(this.name + " Has Died");
         CharacterAnim.SetTrigger(ANIM_CHARACTER_DIED);
+    }
+
+    public void SpawnCharacterToPosition(Vector3 NewPosition, bool bIgnoreSweep = true)
+    {
+        this.transform.position = NewPosition;
+        CharacterCollider.UpdateColliderBounds(bIgnoreSweep);//this is to avoid 
     }
 }

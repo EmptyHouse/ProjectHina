@@ -46,4 +46,9 @@ public class MainCameraFollow : MonoBehaviour
     {
         this.CameraOffsetFromTarget = CameraOffsetFromTarget;
     }
+
+    public void FocusCameraImmediate()
+    {
+        this.transform.position = TargetTransform.position + CameraOffsetFromTarget;
+    }
 }

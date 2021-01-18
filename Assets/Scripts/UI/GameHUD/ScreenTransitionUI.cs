@@ -69,20 +69,19 @@ public class ScreenTransitionUI : MonoBehaviour
             TimeThatHasPassed += EHTime.RealDeltaTime;
             Image_BlackScreen.color = new Color(0, 0, 0, TimeThatHasPassed / TransitionTimeSeconds);
         }
+        Image_BlackScreen.color = Color.black;
 
         RoomActor CurrentlyLoadedRoom = BaseGameOverseer.Instance.CurrentlyLoadedRoom;
         if (CurrentlyLoadedRoom.GetAssociatedRoomData() != DoorToLoad.GetDoorRoom())
         {
             if (CurrentlyLoadedRoom && CurrentlyLoadedRoom.GetAssociatedRoomData())
             {
-                SceneManager.UnloadSceneAsync(CurrentlyLoadedRoom.GetAssociatedRoomData().RoomScene);
+                print(CurrentlyLoadedRoom.GetAssociatedRoomData().RoomScene);
+                yield return SceneManager.UnloadSceneAsync(CurrentlyLoadedRoom.GetAssociatedRoomData().RoomScene);
             }
-            AsyncOperation SceneOperation = SceneManager.LoadSceneAsync(DoorToLoad.GetDoorRoom().RoomScene, LoadSceneMode.Additive);
-            while (!SceneOperation.isDone)
-            {
-                yield return null;
-            }
+            yield return SceneManager.LoadSceneAsync(DoorToLoad.GetDoorRoom().RoomScene, LoadSceneMode.Additive);
         }
+        yield return new WaitForSecondsRealtime(0.5f);
 
         DoorActor DoorToSpawnFrom = BaseGameOverseer.Instance.CurrentlyLoadedRoom.GetRoomDoorTriggerFromDoorData(DoorToLoad);
         Vector3 CharacterSpawnPosition = Vector3.zero;
@@ -94,9 +93,14 @@ public class ScreenTransitionUI : MonoBehaviour
         {
             CharacterSpawnPosition = DoorToSpawnFrom.GetSpawnPosition();
         }
-        PlayerCharacter.transform.position = CharacterSpawnPosition;
+
+
+        PlayerCharacter.SpawnCharacterToPosition(CharacterSpawnPosition);
+        BaseGameOverseer.Instance.MainGameCamera.FocusCameraImmediate();
+        PlayerCharacter.GetComponent<EHPlayerController>().enabled = true;
         TimeThatHasPassed = 0;
-        while (TimeThatHasPassed < TransitionTimeSeconds)
+        bIsExecutingSceneTransition = false;
+        while (TimeThatHasPassed < TransitionTimeSeconds && !bIsExecutingSceneTransition)
         {
             yield return null;
             TimeThatHasPassed += EHTime.RealDeltaTime;
@@ -104,7 +108,7 @@ public class ScreenTransitionUI : MonoBehaviour
         }
 
         Image_BlackScreen.color = Color.clear;
-        PlayerCharacter.GetComponent<EHPlayerController>().enabled = true;
-        bIsExecutingSceneTransition = false;
+        
+        
     }
 }

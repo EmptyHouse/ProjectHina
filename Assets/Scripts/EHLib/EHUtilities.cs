@@ -26,6 +26,11 @@ namespace EHUtilities
         {
             return sceneField.SceneName;
         }
+
+        public override string ToString()
+        {
+            return SceneName;
+        }
     }
 
 #if UNITY_EDITOR
