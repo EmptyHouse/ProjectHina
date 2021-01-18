@@ -61,7 +61,6 @@ public class BaseGameOverseer : MonoBehaviour
     }
     #endregion monobehaviour methods
 
-
     #region saving/loading
     private string SAVE_GAME_PATH { get { return Application.persistentDataPath + "/SaveGame.dat"; } }
     private string BACKUP_SAVE_PATH { get { return Application.persistentDataPath + "backup_SaveGame.dat"; } }

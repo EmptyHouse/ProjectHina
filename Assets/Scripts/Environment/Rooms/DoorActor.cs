@@ -4,11 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(EHBaseCollider2D))]
-public class RoomDoorTrigger : MonoBehaviour
+public class DoorActor : MonoBehaviour
 {
     [SerializeField]
-    [Tooltip("A reference to the connected door that the player will spawn next to upon entering this door")]
-    private DoorData ConnectedDoor;
+    private DoorData AssociatedDoorData;
     [SerializeField]
     [Tooltip("Upon entering this door, this is the position that the character will spawn into")]
     private SpawnPoint AssociatedSpawnPoint = null;
@@ -29,10 +28,19 @@ public class RoomDoorTrigger : MonoBehaviour
         TriggerCollider.OnTrigger2DEnter += OnPlayerEnterRoom;
     }
 
+    private void Start()
+    {
+        BaseGameOverseer.Instance.CurrentlyLoadedRoom.AddDoorActor(this);
+    }
+
     private void OnDestroy()
     {
         EHBaseCollider2D TriggerCollider = GetComponent<EHBaseCollider2D>();
         TriggerCollider.OnTrigger2DEnter -= OnPlayerEnterRoom;
+        if (BaseGameOverseer.Instance)
+        {
+            BaseGameOverseer.Instance.CurrentlyLoadedRoom.RemoveDoorActor(this);
+        }
     }
 
     private void OnValidate()
@@ -45,8 +53,25 @@ public class RoomDoorTrigger : MonoBehaviour
                 AssociatedSpawnPoint.bIsCharacterSpawnedLeft = !bCharacterEntersLeft;
             }
         }
+
+        if (AssociatedDoorData != null && this.name != AssociatedDoorData.name)
+        {
+            this.name = AssociatedDoorData.name;
+        }
     }
     #endregion monobehaviour methods
+
+    public DoorData GetAssociatedDoorData() { return AssociatedDoorData; }
+    
+    public Vector3 GetSpawnPosition()
+    {
+        if (AssociatedSpawnPoint == null)
+        {
+            Debug.LogError("There was no spawn point assigned to our door actor");
+            return Vector3.zero;
+        }
+        return AssociatedSpawnPoint.transform.position;
+    }
 
     #region trigger events
     /// <summary>
@@ -60,7 +85,7 @@ public class RoomDoorTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             Debug.Log("Player Has exited");
-            //BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, );
+            BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, AssociatedDoorData.GetConnectedDoorData());
         }
     }
     #endregion trigger events

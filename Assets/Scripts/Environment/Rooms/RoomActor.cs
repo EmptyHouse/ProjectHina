@@ -9,7 +9,7 @@ public class RoomActor : MonoBehaviour
 {
     [SerializeField]
     private RoomData AssociatedRoomData = null;
-    private List<RoomDoorTrigger> DoorTriggers = new List<RoomDoorTrigger>();
+    private HashSet<DoorActor> DoorTriggers = new HashSet<DoorActor>();
 
     #region monobehaviour methods
     private void Awake()
@@ -20,14 +20,49 @@ public class RoomActor : MonoBehaviour
 
     public RoomData GetAssociatedRoomData() { return AssociatedRoomData; }
     
-    public RoomDoorTrigger GetRoomDoorTriggerFromDoorData(DoorData Door)
+    public DoorActor GetRoomDoorTriggerFromDoorData(DoorData Door)
     {
-        foreach (RoomDoorTrigger Room in DoorTriggers)
+        foreach (DoorActor DoorActor in DoorTriggers)
         {
-            //TO-DO Search for doors and select the correct actor to spawn from
+            if (DoorActor.GetAssociatedDoorData() == Door)
+            {
+                return DoorActor;
+            }
         }
         return null;
     }
 
-    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Door"></param>
+    public void AddDoorActor(DoorActor Door)
+    {
+        if (Door == null)
+        {
+            Debug.LogWarning("A null door actor was passedin into our RoomActor...");
+            return;
+        }
+        if (!DoorTriggers.Add(Door))
+        {
+            Debug.LogWarning("This doo was already added to our room actor container");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Door"></param>
+    public void RemoveDoorActor(DoorActor Door)
+    {
+        if (Door == null)
+        {
+            Debug.LogWarning("A null door actor was passed into our RoomActor...");
+            return;
+        }
+        if (!DoorTriggers.Remove(Door))
+        {
+            Debug.LogWarning("The door that was passed in was not found in our room actor container");
+        }
+    }
 }
