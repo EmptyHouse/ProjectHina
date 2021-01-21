@@ -14,13 +14,33 @@ public abstract class BaseSelectionNode : MonoBehaviour
     }
     #endregion enums
 
-    protected const KeyCode SUBMIT_BUTTON = KeyCode.Space;
+    protected readonly KeyCode[] SUBMIT_BUTTON = new KeyCode[]
+    {
+        KeyCode.Space, KeyCode.Return,
+    };
     protected const KeyCode CANCEL_BUTTON = KeyCode.Escape;
+
+    protected bool bIsSubmitPressed
+    {
+        get
+        {
+            foreach (KeyCode SubmitKeycode in SUBMIT_BUTTON) { if (Input.GetKeyDown(SubmitKeycode)) return true; }
+            return false;
+        }
+    }
+
+    protected bool bIsSubmitReleased
+    {
+        get
+        {
+            foreach (KeyCode SubmitKeycode in SUBMIT_BUTTON) { if (Input.GetKeyUp(SubmitKeycode)) return true; }
+            return false;
+        }
+    }
 
     private bool IsSelectionNodeActive = false;
 
     #region monobehaviour methods
-
     private void Update()
     {
         if (IsSelectionNodeActive)

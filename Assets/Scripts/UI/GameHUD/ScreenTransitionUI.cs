@@ -94,7 +94,6 @@ public class ScreenTransitionUI : MonoBehaviour
             CharacterSpawnPosition = DoorToSpawnFrom.GetSpawnPosition();
         }
 
-
         PlayerCharacter.SpawnCharacterToPosition(CharacterSpawnPosition);
         BaseGameOverseer.Instance.MainGameCamera.FocusCameraImmediate();
         PlayerCharacter.GetComponent<EHPlayerController>().enabled = true;
