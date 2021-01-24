@@ -7,9 +7,13 @@ using UnityEngine;
 /// </summary>
 public class EHPlayerCharacter : EHGameplayCharacter
 {
+    public EHPlayerController PlayerController { get { return playerController; } }
+    private EHPlayerController playerController;
+
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this.gameObject);
+        playerController = (EHPlayerController)CharacterController;
     }
 }

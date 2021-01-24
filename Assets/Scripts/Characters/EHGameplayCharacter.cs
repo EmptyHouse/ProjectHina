@@ -22,6 +22,7 @@ public class EHGameplayCharacter : EHCharacter
     public EHHitboxActorComponent HitboxComponent { get; private set; }
     public EHMovementComponent MovementComponent { get; private set; }
     public EHBox2DCollider CharacterCollider { get; private set; }
+    public EHBaseController CharacterController { get; private set; }
 
 
     protected override void Awake()
@@ -32,6 +33,7 @@ public class EHGameplayCharacter : EHCharacter
         HitboxComponent = GetComponent<EHHitboxActorComponent>();
         MovementComponent = GetComponent<EHMovementComponent>();
         CharacterCollider = GetComponent<EHBox2DCollider>();
+        CharacterController = GetComponent<EHBaseController>();
 
         if (DamageableComponent)
         {

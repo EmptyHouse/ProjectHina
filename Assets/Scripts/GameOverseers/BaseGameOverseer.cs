@@ -52,6 +52,7 @@ public class BaseGameOverseer : MonoBehaviour
     protected virtual void Awake()
     {
         instance = this;
+        GameHUD = (EHGameHUD)EHHUD.Instance;
         Application.targetFrameRate = 60;
     }
 

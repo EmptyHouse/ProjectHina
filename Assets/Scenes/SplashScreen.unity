@@ -135,6 +135,8 @@ GameObject:
   - component: {fileID: 47209703}
   - component: {fileID: 47209702}
   - component: {fileID: 47209701}
+  - component: {fileID: 47209706}
+  - component: {fileID: 47209705}
   m_Layer: 5
   m_Name: SplashScreenHUD
   m_TagString: Untagged
@@ -225,6 +227,41 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &47209705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47209700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32e16e71cea25441ac4b58031e97b6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DefaultUIToOpen: {fileID: 301156975}
+--- !u!114 &47209706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47209700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e55daedeec07b645a27ea355b8c9649, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonInputNodes:
+  - InputName: Submit
+    MainKey: 32
+    AlternateKey: 330
+  - InputName: Cancel
+    MainKey: 27
+    AlternateKey: 331
+  AxisInputNodes:
+  - AxisName: Horizontal
+  - AxisName: Vertical
 --- !u!1 &301156973
 GameObject:
   m_ObjectHideFlags: 0

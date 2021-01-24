@@ -44,20 +44,6 @@ public class ButtonSelectionNode : BaseSelectionNode
     #region override methods
     protected override void UpdateSelectedNode()
     {
-        if (UIPlayerController.GetSubmitButtonDown())
-        {
-            OnButtonPressedAction?.Invoke();
-            ButtonIsHeld = true;
-        }
-        if (UIPlayerController.GetSubmitButtonUp())
-        {
-            OnButtonReleasedAction?.Invoke();
-            if (ButtonIsHeld)
-            {
-                OnButtonClickedAction?.Invoke();
-            }
-            ButtonIsHeld = false;
-        }
     }
 
     public void BindActionToButton(EButtonActionType ActionType, UnityAction ButtonAction)
@@ -98,6 +84,12 @@ public class ButtonSelectionNode : BaseSelectionNode
         base.NodeWasSelected();
         ButtonIsHeld = false;
         ButtonBGImage.color = SelectedColor;
+        UIPlayerController UIController = EHHUD.Instance.UIController;
+        if (UIController != null)
+        {
+            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Pressed, OnSubmitPressed);
+            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Released, OnSubmitReleased);
+        }
     }
 
     public override void NodeWasDeselected()
@@ -105,8 +97,30 @@ public class ButtonSelectionNode : BaseSelectionNode
         base.NodeWasDeselected();
         ButtonIsHeld = false;
         ButtonBGImage.color = DefaultColor;
+        UIPlayerController UIController = EHHUD.Instance.UIController;
+        if (UIController)
+        {
+            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Pressed, OnSubmitPressed);
+            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Released, OnSubmitReleased);
+        }
     }
     #endregion override methods
+
+    private void OnSubmitPressed()
+    {
+        OnButtonPressedAction?.Invoke();
+        ButtonIsHeld = true;
+    }
+
+    private void OnSubmitReleased()
+    {
+        OnButtonReleasedAction?.Invoke();
+        if (ButtonIsHeld)
+        {
+            OnButtonClickedAction?.Invoke();
+        }
+        ButtonIsHeld = false;
+    }
 
 
 }

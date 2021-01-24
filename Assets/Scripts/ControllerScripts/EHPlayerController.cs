@@ -5,9 +5,9 @@ using UnityEngine;
 public class EHPlayerController : EHBaseController
 {
     #region const variables
-    private const string JUMP_COMMAND = "Jump";
-    private const string DASH_COMMAND = "Dash";
-    private const string ATTACK_COMMAND = "Attack";
+    public const string JUMP_COMMAND = "Jump";
+    public const string DASH_COMMAND = "Dash";
+    public const string ATTACK_COMMAND = "Attack";
 
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";

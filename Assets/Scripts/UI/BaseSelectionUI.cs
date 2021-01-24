@@ -9,6 +9,9 @@ public class BaseSelectionUI : MonoBehaviour
     private int CurrentSelectionIndex;
     private BaseSelectionNode[] SelectionNodeList;
     private bool bIsAutoScrolling;
+
+    private Vector2 JoystickInput;
+    private Vector2 PreviousJoystickInput;
     #region monobehaviour methods
     protected virtual void Awake()
     {
@@ -16,16 +19,27 @@ public class BaseSelectionUI : MonoBehaviour
         if (SelectionNodeList.Length > 0)
         {
             CurrentSelectionIndex = 0;
-            SelectionNodeList[0].NodeWasSelected();
         }
     }
 
     private void Update()
     {
-        if (!bIsAutoScrolling && Mathf.Abs(UIPlayerController.GetVerticalInput()) > JOYSTICK_THRESHOLD)
+        if (!bIsAutoScrolling && Mathf.Abs(JoystickInput.y) > JOYSTICK_THRESHOLD)
         {
-            StartCoroutine(ScrollCoroutine(UIPlayerController.GetVerticalInput()));
+            StartCoroutine(ScrollCoroutine(JoystickInput.y));
         }
+    }
+
+    private void SetVerticalInput(float VerticalInput)
+    {
+        PreviousJoystickInput.y = JoystickInput.y;
+        JoystickInput.y = VerticalInput;
+    }
+
+    private void SetHorizontalInput(float HorizontalInput)
+    {
+        PreviousJoystickInput.x = JoystickInput.x;
+        JoystickInput.x = HorizontalInput;
     }
     #endregion monobehaviour methods
 
@@ -34,16 +48,37 @@ public class BaseSelectionUI : MonoBehaviour
         this.gameObject.SetActive(true);
         if (ResetToDefaultSelection)
         {
-            if (SelectionNodeList.Length > 0)
-            {
-                SelectSelectionNode(0);
-            }
+            CurrentSelectionIndex = 0;
         }
+        BindUIInput();
+        SelectionNodeList[CurrentSelectionIndex].NodeWasSelected();
     }
 
     public virtual void CloseSelectionWindow()
     {
         this.gameObject.SetActive(false);
+        UnbindUIInput();
+        SelectionNodeList[CurrentSelectionIndex].NodeWasDeselected();
+    }
+
+    protected virtual void BindUIInput()
+    {
+        UIPlayerController UIController = EHHUD.Instance.UIController;
+        if (UIController)
+        {
+            UIController.BindActionToAxis(UIPlayerController.HORIZONTAL_AXIS, SetHorizontalInput);
+            UIController.BindActionToAxis(UIPlayerController.VERTICAL_AXIS, SetVerticalInput);
+        }
+    }
+
+    protected virtual void UnbindUIInput()
+    {
+        UIPlayerController UIController = EHHUD.Instance.UIController;
+        if (UIController)
+        {
+            UIController.UnbindActionToAxis(UIPlayerController.HORIZONTAL_AXIS, SetHorizontalInput);
+            UIController.UnbindActionToAxis(UIPlayerController.VERTICAL_AXIS, SetVerticalInput);
+        }
     }
 
     protected void SelectSelectionNode(int NewSelectionNodeIndex)
@@ -69,14 +104,14 @@ public class BaseSelectionUI : MonoBehaviour
         {
             yield return null;
             TimeThatHasPassed += EHTime.RealDeltaTime;
-            if (Sign * UIPlayerController.GetVerticalInput() < JOYSTICK_THRESHOLD)
+            if (Sign * JoystickInput.y < JOYSTICK_THRESHOLD)
             {
                 bIsAutoScrolling = false;
                 yield break;
             }
         }
 
-        while (Sign * UIPlayerController.GetVerticalInput() > JOYSTICK_THRESHOLD)
+        while (Sign * JoystickInput.y > JOYSTICK_THRESHOLD)
         {
             yield return null;
             TimeThatHasPassed += EHTime.RealDeltaTime;
@@ -87,5 +122,14 @@ public class BaseSelectionUI : MonoBehaviour
             }
         }
         bIsAutoScrolling = false;
+    }
+
+    private bool IsSelectionIndexValid(int SelectionIndex)
+    {
+        if (SelectionIndex < 0 || SelectionIndex >= SelectionNodeList.Length)
+        {
+            return false;
+        }
+        return true;
     }
 }
