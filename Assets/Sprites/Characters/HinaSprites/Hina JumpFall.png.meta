@@ -1,7 +1,16 @@
 fileFormatVersion: 2
 guid: 548f79a6eff38b7449718a6f105e211d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2494848912075115448
+    second: HinaRise_00
+  - first:
+      213: -5843099350519498469
+    second: HinaFall_00
+  - first:
+      213: -3351143837863320133
+    second: HinaFall_01
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -32,7 +41,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -41,12 +50,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -68,7 +77,19 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -77,7 +98,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: HinaRise_00
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 1
+        width: 26
+        height: 39
+      alignment: 9
+      pivot: {x: 0.53846157, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8443e7bf124806dd0800000000000000
+      internalID: -2494848912075115448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HinaFall_00
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 3
+        width: 25
+        height: 37
+      alignment: 9
+      pivot: {x: 0.48, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1938f8491429eea0800000000000000
+      internalID: -5843099350519498469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HinaFall_01
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 2
+        width: 22
+        height: 35
+      alignment: 9
+      pivot: {x: 0.45454547, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5eae04f685e71d0800000000000000
+      internalID: -3351143837863320133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
