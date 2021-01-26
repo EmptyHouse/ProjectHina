@@ -68,6 +68,43 @@ public struct EHRect2D
         return true;
     }
 
+    public bool DoesLineIntersect(Vector2 Point1, Vector2 Point2)
+    {
+        Vector2 Min = MinBounds;
+        Vector2 Max = MaxBounds;
+        if ((Point1.x <= Min.x  && Point2.x <= Min.x) || (Point1.y <= Min.y && Point2.y <= Min.y) ||
+            (Point1.x >= Max.x && Point2.x >= Max.x) || (Point1.y <= Min.y && Point2.y <= Min.y))
+        {
+            return false;
+        }
+
+        float m = (Point2.y - Point1.y) / (Point2.x - Point1.x);
+
+        float y = m * (Min.x - Point1.x) + Point1.y;
+        if (y > Min.y && y < Max.y)
+        {
+            return true;
+        }
+        y = m * (Max.x - Point1.x) + Point1.y;
+        if (y > Min.y && y < Max.y)
+        {
+            return true;
+        }
+
+        float x = (Min.y - Point1.y) / m + Point1.x;
+        if (x > Min.x && x < Max.x)
+        {
+            return true;
+        }
+        x = (Max.y - Point1.y) / m + Point1.x;
+        if (x > Min.x && x < Max.x)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     public float GetShortestDistance(EHRect2D OtherRect)
     {
         bool Left = OtherRect.MaxBounds.x < MinBounds.x;
@@ -144,5 +181,14 @@ public struct EHCircle2D
         Bounds.MaxBounds = MaxBounds;
         return Bounds;
     }
+}
+
+/// <summary>
+/// 
+/// </summary>
+public struct EHLine
+{
+    public Vector2 Point1;
+    public Vector2 Point2;
 }
 

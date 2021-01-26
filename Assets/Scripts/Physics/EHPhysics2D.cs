@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
-[RequireComponent(typeof(EHBaseCollider2D))]
 public class EHPhysics2D : MonoBehaviour, ITickableComponent
 {
     #region enums
@@ -66,6 +65,10 @@ public class EHPhysics2D : MonoBehaviour, ITickableComponent
         this.transform.position += new Vector3(Velocity.x, Velocity.y) * DeltaTime;
     }
 
+    /// <summary>
+    /// This methods will be called every time we intersect with a collider to indicate wither or not we are currently in the air or not. 
+    /// </summary>
+    /// <param name="HitData"></param>
     private void OnEHCollisionStay(FHitData HitData)
     {
         if (HitData.HitDirection.y != 0 && Mathf.Sign(HitData.HitDirection.y) != Mathf.Sign(Velocity.y))

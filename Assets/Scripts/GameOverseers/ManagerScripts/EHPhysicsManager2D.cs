@@ -235,6 +235,42 @@ public class EHPhysicsManager2D : ITickableComponent
         }
     }
 
+    public static bool RayTrace2D(Vector2 RayDirection, float RayLength, out EHBaseCollider2D HitCollider, int LayerMask = 0)
+    {
+        if (CachedInstance == null)
+        {
+            Debug.LogWarning("Game Overseer has not been initialized");
+            HitCollider = null;
+            return false;
+        }
+
+        foreach (KeyValuePair<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderSet in CachedInstance.ColliderComponentDictionary)
+        {
+            if (RayTrace2D(RayDirection, RayLength, ColliderSet.Key, out HitCollider, LayerMask))
+            {
+                return true;
+            }
+        }
+
+        HitCollider = null;
+        return false;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="RayDirection"></param>
+    /// <param name="RayLenght"></param>
+    /// <param name="ColliderType"></param>
+    /// <param name="HitCollider"></param>
+    /// <param name="LayerMask"></param>
+    /// <returns></returns>
+    public static bool RayTrace2D(Vector2 RayDirection, float RayLenght, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D HitCollider, int LayerMask)
+    {
+        HitCollider = null;
+        return false;
+    }
+
     /// <summary>
     /// Runs a box cast for every collider that is in our scene.
     /// 
