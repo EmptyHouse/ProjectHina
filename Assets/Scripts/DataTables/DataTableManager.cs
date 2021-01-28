@@ -12,6 +12,11 @@ public class DataTableManager
     /// <param name="AttackTable"></param>
     public void AddAttackDataTable(AttackDataTable AttackTable)
     {
+        if (AttackTable == null)
+        {
+            Debug.LogWarning("Null Attack Table was passed in");
+            return;
+        }
         if (!AttackDataTableDictionary.ContainsKey(AttackTable.name))
         {
             AttackDataTableDictionary.Add(AttackTable.name, GameObject.Instantiate<AttackDataTable>(AttackTable));

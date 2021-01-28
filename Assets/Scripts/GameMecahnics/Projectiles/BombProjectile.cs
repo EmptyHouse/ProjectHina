@@ -13,7 +13,7 @@ public class BombProjectile : EHBaseProjectile
     protected override void Awake()
     {
         base.Awake();
-        BombRadius = GetComponent<SpriteRenderer>().bounds.size.x / 2f;
+        BombRadius = GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2f;
     }
 
     private void Update()
