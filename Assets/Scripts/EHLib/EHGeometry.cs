@@ -68,39 +68,60 @@ public struct EHRect2D
         return true;
     }
 
-    public bool DoesLineIntersect(Vector2 Point1, Vector2 Point2)
+    /// <summary>
+    /// Checks if the line intersect with tht rect geometry and returns the intersection collision closest to point1
+    /// </summary>
+    /// <param name="OriginPoint"></param>
+    /// <param name="EndPoint"></param>
+    /// <param name="IntersectPoint"></param>
+    /// <returns></returns>
+    public bool DoesLineIntersect(Vector2 OriginPoint, Vector2 EndPoint, out Vector2 IntersectPoint)
     {
         Vector2 Min = MinBounds;
         Vector2 Max = MaxBounds;
-        if ((Point1.x <= Min.x  && Point2.x <= Min.x) || (Point1.y <= Min.y && Point2.y <= Min.y) ||
-            (Point1.x >= Max.x && Point2.x >= Max.x) || (Point1.y <= Min.y && Point2.y <= Min.y))
+        if ((OriginPoint.x <= Min.x  && EndPoint.x <= Min.x) || (OriginPoint.y <= Min.y && EndPoint.y <= Min.y) ||
+            (OriginPoint.x >= Max.x && EndPoint.x >= Max.x) || (OriginPoint.y <= Min.y && EndPoint.y <= Min.y))
         {
+            IntersectPoint = default;
             return false;
         }
 
-        float m = (Point2.y - Point1.y) / (Point2.x - Point1.x);
-
-        float y = m * (Min.x - Point1.x) + Point1.y;
-        if (y > Min.y && y < Max.y)
+        // Condition where our line begins inside the box bounds
+        if (OriginPoint.x > Min.x && OriginPoint.x < Max.x && OriginPoint.y > Min.y && OriginPoint.y < Max.y)
         {
-            return true;
-        }
-        y = m * (Max.x - Point1.x) + Point1.y;
-        if (y > Min.y && y < Max.y)
-        {
+            IntersectPoint = OriginPoint;
             return true;
         }
 
-        float x = (Min.y - Point1.y) / m + Point1.x;
-        if (x > Min.x && x < Max.x)
+        float m = (EndPoint.y - OriginPoint.y) / (EndPoint.x - OriginPoint.x);
+
+        float y = m * (Min.x - OriginPoint.x) + OriginPoint.y;
+        if (y > Min.y && y < Max.y)
         {
+            IntersectPoint = new Vector2(Min.x, y);
             return true;
         }
-        x = (Max.y - Point1.y) / m + Point1.x;
-        if (x > Min.x && x < Max.x)
+        y = m * (Max.x - OriginPoint.x) + OriginPoint.y;
+        if (y > Min.y && y < Max.y)
         {
+            IntersectPoint = new Vector2(Max.x, y);
             return true;
         }
+
+        float x = (Min.y - OriginPoint.y) / m + OriginPoint.x;
+        if (x > Min.x && x < Max.x)
+        {
+            IntersectPoint = new Vector2(x, Min.y);
+            return true;
+        }
+        x = (Max.y - OriginPoint.y) / m + OriginPoint.x;
+        if (x > Min.x && x < Max.x)
+        {
+            IntersectPoint = new Vector2(x, Max.y);
+            return true;
+        }
+
+        IntersectPoint = default;
         return false;
     }
 

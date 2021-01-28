@@ -168,6 +168,19 @@ public class EHBox2DCollider : EHBaseCollider2D
         return -1;
     }
 
+    public override bool IsRayTraceOverlapping(ref EHRayTraceParams Ray, out EHRayTraceHit RayHit)
+    {
+        if (RectGeometry.DoesLineIntersect(Ray.RayOrigin, Ray.RayOrigin + Ray.RayDirection * Ray.RayLength, out Vector2 IntersectPoint))
+        {
+            RayHit = new EHRayTraceHit();
+            RayHit.HitPoint = IntersectPoint;
+            RayHit.HitCollider = this;
+            return true;
+        }
+        RayHit = default;
+        return false;
+    }
+
     public override bool IsOverlappingRect2D(EHRect2D Rect)
     {
         return RectGeometry.IsOverlappingRect(Rect);

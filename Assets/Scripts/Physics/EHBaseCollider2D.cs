@@ -279,6 +279,13 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public abstract bool IsOverlappingRect2DSweep(EHRect2D Rect);
 
     /// <summary>
+    /// Checks to see if the ray that is passed in is overlapping the collider
+    /// </summary>
+    /// <param name="Ray"></param>
+    /// <returns></returns>
+    public abstract bool IsRayTraceOverlapping(ref EHRayTraceParams Ray, out EHRayTraceHit RayHit);
+
+    /// <summary>
     /// Returns the bounds of the collider. This is to reduce the required calculations needed for complex shapes
     /// </summary>
     /// <returns></returns>

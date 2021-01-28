@@ -26,9 +26,14 @@ public class BombProjectile : EHBaseProjectile
     /// </summary>
     private void CheckIntersectWithOtherCollider()
     {
+        const float BombAngle = 180f;
+        float AngleIncrement = BombAngle / (RayTraceCount - 1);
+        float CurrentAngle = 0;
+        Vector2 InitialMovementDirection = Physics.Velocity;
+        Vector2 CastLength = Physics.Velocity / EHTime.DeltaTime;
+
         for (int i = 0; i < RayTraceCount; ++i)
         {
-            
         }
     }
 

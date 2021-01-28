@@ -235,40 +235,62 @@ public class EHPhysicsManager2D : ITickableComponent
         }
     }
 
-    public static bool RayTrace2D(Vector2 RayDirection, float RayLength, out EHBaseCollider2D HitCollider, int LayerMask = 0)
+    public static bool RayTrace2D(ref EHRayTraceParams Params, out EHRayTraceHit RayHit, int LayerMask = 0)
     {
         if (CachedInstance == null)
         {
             Debug.LogWarning("Game Overseer has not been initialized");
-            HitCollider = null;
+            RayHit = default;
             return false;
         }
+        RayHit = default;
+        EHRayTraceHit TempRayTraceHit;
+        float ClosestDistance = -1;
+        bool bMadeCollision = false;
 
         foreach (KeyValuePair<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderSet in CachedInstance.ColliderComponentDictionary)
         {
-            if (RayTrace2D(RayDirection, RayLength, ColliderSet.Key, out HitCollider, LayerMask))
+            if (RayTrace2D(ref Params, ColliderSet.Key, out TempRayTraceHit, LayerMask))
             {
-                return true;
+                float CollisionDistance = Vector2.Distance(Params.RayOrigin, TempRayTraceHit.HitPoint);
+                if (!bMadeCollision || ClosestDistance > CollisionDistance)
+                {
+                    ClosestDistance = CollisionDistance;
+                    RayHit = TempRayTraceHit;
+                    bMadeCollision = true;
+                }
+            }
+        }
+        return bMadeCollision;
+    }
+
+    public static bool RayTrace2D(ref EHRayTraceParams Params, EHBaseCollider2D.EColliderType ColliderType, out EHRayTraceHit RayHit, int LayerMask)
+    {
+        if (!CachedInstance.ColliderComponentDictionary.ContainsKey(ColliderType))
+        {
+            RayHit = default;
+            return false;
+        }
+
+        bool bCollisionMade = false;
+        float ClosestDistance = -1;
+        RayHit = default;
+        EHRayTraceHit TempRayHit;
+        foreach (EHBaseCollider2D Collider in CachedInstance.ColliderComponentDictionary[ColliderType])
+        {
+            if (Collider.IsRayTraceOverlapping(ref Params, out TempRayHit))
+            {
+                float CollisionDistance = Vector2.Distance(Params.RayOrigin, TempRayHit.HitPoint);
+                if (!bCollisionMade || ClosestDistance > CollisionDistance)
+                {
+                    ClosestDistance = CollisionDistance;
+                    RayHit = TempRayHit;
+                    bCollisionMade = true;
+                }
             }
         }
 
-        HitCollider = null;
-        return false;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="RayDirection"></param>
-    /// <param name="RayLenght"></param>
-    /// <param name="ColliderType"></param>
-    /// <param name="HitCollider"></param>
-    /// <param name="LayerMask"></param>
-    /// <returns></returns>
-    public static bool RayTrace2D(Vector2 RayDirection, float RayLenght, EHBaseCollider2D.EColliderType ColliderType, out EHBaseCollider2D HitCollider, int LayerMask)
-    {
-        HitCollider = null;
-        return false;
+        return bCollisionMade;
     }
 
     /// <summary>
@@ -365,4 +387,27 @@ public class EHPhysicsManager2D : ITickableComponent
 
         return false;
     }
+}
+
+public struct EHRayTraceParams
+{
+    // Ray Origin Position
+    public Vector2 RayOrigin;
+    // Direction of ray. Whatever value is placed here will be normalized
+    public Vector2 RayDirection { get { return RayDirection; } set { rayDirection = value.normalized; } }
+    private Vector2 rayDirection;
+    // The length of the ray
+    public float RayLength;
+}
+
+public struct EHRayTraceHit
+{
+    public EHBaseCollider2D HitCollider;
+    /// <summary>
+    /// The point where we intersected with our collider. This will be the closest point to the origin position of
+    /// the ray trace hit
+    /// </summary>
+    public Vector2 HitPoint;
+    //TO-DO This is not in yet, but maybe something I want to ad in the future
+    public Vector2 HitNormal;
 }
