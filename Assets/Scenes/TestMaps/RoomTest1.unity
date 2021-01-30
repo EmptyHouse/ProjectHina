@@ -350,6 +350,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10625f31f9c184b40be68e7b8c00a163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RoomBoundsMin: {x: -35, y: -2}
+  RoomBoundsMax: {x: 35, y: 13}
   AssociatedRoomData: {fileID: 11400000, guid: 4140f7313c9a36f4894f40a9ee5c06ab, type: 2}
 --- !u!4 &462028354
 Transform:

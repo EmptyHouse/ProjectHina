@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Be sure to include this into every room with the associated RoomData uasset
 /// </summary>
 public class RoomActor : MonoBehaviour
 {
+    [SerializeField] 
+    private Vector2 RoomBoundsMin = Vector2.one * 10;
+    [SerializeField]
+    private Vector2 RoomBoundsMax = Vector2.one * -10;
+    
+
     [SerializeField]
     private RoomData AssociatedRoomData = null;
     private HashSet<DoorActor> DoorTriggers = new HashSet<DoorActor>();
@@ -16,6 +25,21 @@ public class RoomActor : MonoBehaviour
     {
         BaseGameOverseer.Instance.CurrentlyLoadedRoom = this;
     }
+
+    private void OnValidate()
+    {
+        if (RoomBoundsMin.x > RoomBoundsMax.x) { RoomBoundsMin.x = RoomBoundsMax.x;}
+        if (RoomBoundsMin.y > RoomBoundsMax.y) {RoomBoundsMin.y = RoomBoundsMax.y;}
+    }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        Rect BoundsRect = new Rect(RoomBoundsMin.x, RoomBoundsMin.y, RoomBoundsMax.x - RoomBoundsMin.x, RoomBoundsMax.y- RoomBoundsMin.y);
+        Handles.DrawSolidRectangleWithOutline(BoundsRect, Color.clear, Color.white);
+    }
+#endif
+
     #endregion monobeahviour methods
 
     public RoomData GetAssociatedRoomData() { return AssociatedRoomData; }
@@ -64,5 +88,16 @@ public class RoomActor : MonoBehaviour
         {
             Debug.LogWarning("The door that was passed in was not found in our room actor container");
         }
+    }
+
+    public Vector2 GetMinRoomBounds()
+    {
+        return RoomBoundsMin;
+    }
+
+    // 
+    public Vector2 GetMaxRoomBounds()
+    {
+        return RoomBoundsMax;
     }
 }
