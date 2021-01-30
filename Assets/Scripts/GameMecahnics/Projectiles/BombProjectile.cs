@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Base class for all bomb type projectiles
+/// </summary>
 public class BombProjectile : EHBaseProjectile
 {
+    private const string EXPLODE_ANIM = "Explode";
+
     #region main variables
     [SerializeField]
     protected float BombRadius;
@@ -28,18 +33,29 @@ public class BombProjectile : EHBaseProjectile
     {
         const float BombAngle = 180f;
         float AngleIncrement = BombAngle / (RayTraceCount - 1);
-        float CurrentAngle = 0;
-        Vector2 InitialMovementDirection = Physics.Velocity;
-        Vector2 CastLength = Physics.Velocity / EHTime.DeltaTime;
+        Vector2 InitialMovementDirection = Physics.Velocity * EHTime.DeltaTime;
+        Vector2 BombTransformPosition = this.transform.position;
+        float CurrentAngle = Mathf.Atan2(InitialMovementDirection.y, InitialMovementDirection.x) * Mathf.Rad2Deg - 90;
 
+        EHRayTraceParams RayParams = default;
+        EHRayTraceHit RayHit;
         for (int i = 0; i < RayTraceCount; ++i)
         {
+            RayParams.RayOrigin = BombTransformPosition + new Vector2(Mathf.Cos(CurrentAngle * Mathf.Deg2Rad) * BombRadius, Mathf.Sin(CurrentAngle * Mathf.Deg2Rad)) * BombRadius;
+            RayParams.RayDirection = InitialMovementDirection;
+            RayParams.RayLength = InitialMovementDirection.magnitude;
+            if (EHPhysicsManager2D.RayTrace2D(ref RayParams, out RayHit, 0, true))
+            {
+                Explode();
+                return;
+            }
+            CurrentAngle += AngleIncrement;
         }
     }
 
-    public override void LaunchProjectile(Vector2 DirectionToLaunch, float SpeedOfLaunch)
+    public override void LaunchProjectile(Vector2 VelocityOfLaunch)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     /// <summary>
@@ -47,6 +63,7 @@ public class BombProjectile : EHBaseProjectile
     /// </summary>
     public void Explode()
     {
-        Destroy(this.gameObject);
+        Physics.enabled = false;
+        ProjectileAnim.SetTrigger(EXPLODE_ANIM);
     }
 }

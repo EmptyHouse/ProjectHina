@@ -46,6 +46,8 @@ public class BaseGameOverseer : MonoBehaviour
 
     #region game component references
     public MainCameraFollow MainGameCamera { get; set; }
+
+    public EHPlayerController PlayerController { get; set; }
     #endregion game component references
 
     #region monobehaviour methods

@@ -49,4 +49,18 @@ public static class EHDebug
 
         }
     }
+    
+    public static void RayTraceDrawLine(EHRayTraceParams RayParams)
+    {
+        RayTraceDrawLine(RayParams, Color.red);
+    }
+
+    /// <summary>
+    /// Draws a debug line 
+    /// </summary>
+    /// <param name="RayParams"></param>
+    public static void RayTraceDrawLine(EHRayTraceParams RayParams, Color LineColor)
+    {
+        Debug.DrawLine(RayParams.RayOrigin, RayParams.RayOrigin + RayParams.RayDirection * RayParams.RayLength, LineColor);
+    }
 }

@@ -16,9 +16,9 @@ public class EHBox2DCollider : EHBaseCollider2D
     public Vector2 ColliderOffset;
     public Vector2 ColliderSize = Vector2.one;
 
-    private EHRect2D RectGeometry = new EHRect2D();
-    private EHRect2D PreviousRectGeometry = new EHRect2D();
-    private EHRect2D PhysicsSweepGeometry = new EHRect2D();
+    protected EHRect2D RectGeometry = new EHRect2D();
+    protected EHRect2D PreviousRectGeometry = new EHRect2D();
+    protected EHRect2D PhysicsSweepGeometry = new EHRect2D();
     public Vector2 DefaultColliderSize { get; private set; }
     protected byte CollisionMask = 0x0f;
     private readonly Vector2 BUFFER = Vector2.one * 0.02f;

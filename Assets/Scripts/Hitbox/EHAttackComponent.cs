@@ -12,6 +12,9 @@ public class EHAttackComponent : MonoBehaviour
     [Tooltip("The assigned DataTable that will contain all the information for each attack.")]
     public AttackDataTable AssociatedAttackTable;
 
+    [Tooltip("If there is not attack data found for our character, we will default values in this struct. Good if you have an object or character that only has one attack")]
+    public FAttackData DefaultAttackData;
+
     /// <summary>
     /// The owner of our Attack component. This will help in determining which object is appropiate to intersect with
     /// </summary>
@@ -33,7 +36,10 @@ public class EHAttackComponent : MonoBehaviour
     {
         AssociatedAnimator = GetComponent<Animator>();
         SetCharacterOwner(GetComponent<EHGameplayCharacter>());
-        BaseGameOverseer.Instance.DataTableManager.AddAttackDataTable(AssociatedAttackTable);
+        if (AssociatedAttackTable != null)
+        {
+            BaseGameOverseer.Instance.DataTableManager.AddAttackDataTable(AssociatedAttackTable);
+        }
     }
     #endregion monobehaviour methods
 
@@ -57,15 +63,21 @@ public class EHAttackComponent : MonoBehaviour
     public void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
     { 
         FAttackData AttackData;
-        if (BaseGameOverseer.Instance.DataTableManager.GetAttackDataFromAttackDataTable(AssociatedAttackTable, AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData)
+        if (AssociatedAttackTable == null)
+        {
+            AttackData = DefaultAttackData;
+        }
+        else if (BaseGameOverseer.Instance.DataTableManager.GetAttackDataFromAttackDataTable(AssociatedAttackTable, AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData)
             && !IntersectedDamageableComponents.Contains(DamageableComponentWeHit))
         {
-            DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
         }
         else
         {
             Debug.LogWarning("This animation has not be set up in our attack Data table: " + AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString());
+            AttackData = DefaultAttackData;
         }
+        DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
+
     }
 
     public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }

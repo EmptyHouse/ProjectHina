@@ -32,5 +32,9 @@ public abstract class EHBaseProjectile : MonoBehaviour
     }
     #endregion monobehaviour methods
 
-    public abstract void LaunchProjectile(Vector2 DirectionToLaunch, float SpeedOfLaunch);
+    public abstract void LaunchProjectile(Vector2 VelocityOfLaucnh);
+    public virtual void CleanUpProjectile()
+    {
+        Destroy(this.gameObject);
+    }
 }

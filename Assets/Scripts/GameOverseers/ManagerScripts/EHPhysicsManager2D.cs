@@ -119,7 +119,7 @@ public class EHPhysicsManager2D : ITickableComponent
     {
         foreach (EHPhysics2D PhysicsComponent in PhysicsComponentSet)
         {
-            PhysicsComponent.Tick(DeltaTime);
+            if (PhysicsComponent.gameObject.activeInHierarchy && PhysicsComponent.enabled) PhysicsComponent.Tick(DeltaTime);
         }
 
         foreach (EHBaseCollider2D MoveableCollider in ColliderComponentDictionary[EHBaseCollider2D.EColliderType.MOVEABLE])
@@ -235,7 +235,7 @@ public class EHPhysicsManager2D : ITickableComponent
         }
     }
 
-    public static bool RayTrace2D(ref EHRayTraceParams Params, out EHRayTraceHit RayHit, int LayerMask = 0)
+    public static bool RayTrace2D(ref EHRayTraceParams Params, out EHRayTraceHit RayHit, int LayerMask = 0, bool DebugDraw = false)
     {
         if (CachedInstance == null)
         {
@@ -250,7 +250,7 @@ public class EHPhysicsManager2D : ITickableComponent
 
         foreach (KeyValuePair<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderSet in CachedInstance.ColliderComponentDictionary)
         {
-            if (RayTrace2D(ref Params, ColliderSet.Key, out TempRayTraceHit, LayerMask))
+            if (RayTrace2D(ref Params, ColliderSet.Key, out TempRayTraceHit, LayerMask, DebugDraw))
             {
                 float CollisionDistance = Vector2.Distance(Params.RayOrigin, TempRayTraceHit.HitPoint);
                 if (!bMadeCollision || ClosestDistance > CollisionDistance)
@@ -264,7 +264,7 @@ public class EHPhysicsManager2D : ITickableComponent
         return bMadeCollision;
     }
 
-    public static bool RayTrace2D(ref EHRayTraceParams Params, EHBaseCollider2D.EColliderType ColliderType, out EHRayTraceHit RayHit, int LayerMask)
+    public static bool RayTrace2D(ref EHRayTraceParams Params, EHBaseCollider2D.EColliderType ColliderType, out EHRayTraceHit RayHit, int LayerMask = 0, bool DebugDraw = false)
     {
         if (!CachedInstance.ColliderComponentDictionary.ContainsKey(ColliderType))
         {
@@ -289,6 +289,13 @@ public class EHPhysicsManager2D : ITickableComponent
                 }
             }
         }
+
+#if UNITY_EDITOR
+        if (DebugDraw)
+        {
+            EHDebug.RayTraceDrawLine(Params, bCollisionMade ? Color.red : Color.yellow);
+        }
+#endif
 
         return bCollisionMade;
     }
@@ -394,7 +401,7 @@ public struct EHRayTraceParams
     // Ray Origin Position
     public Vector2 RayOrigin;
     // Direction of ray. Whatever value is placed here will be normalized
-    public Vector2 RayDirection { get { return RayDirection; } set { rayDirection = value.normalized; } }
+    public Vector2 RayDirection { get { return rayDirection; } set { rayDirection = value.normalized; } }
     private Vector2 rayDirection;
     // The length of the ray
     public float RayLength;

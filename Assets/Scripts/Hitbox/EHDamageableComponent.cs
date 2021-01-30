@@ -25,12 +25,12 @@ public class EHDamageableComponent : MonoBehaviour
     /// <summary>
     /// The ccurrent health of our character component
     /// </summary>
-    private int CurrentHealth;
+    public int Health { get; private set; }
 
     #region monobehaviour methods
     private void Awake()
     {
-        CurrentHealth = MaxHealth;
+        Health = MaxHealth;
     }
 
     private void OnValidate()
@@ -52,10 +52,10 @@ public class EHDamageableComponent : MonoBehaviour
         FDamageData DamageData = new FDamageData();
         DamageData.AttackSource = AttackComponentThatHurtUs;
         DamageData.DamageAmount = DamageToTake;
-        int PreviousHealth = CurrentHealth;
-        CurrentHealth = Mathf.Clamp(CurrentHealth - DamageToTake, 0, MaxHealth);
+        int PreviousHealth = Health;
+        Health = Mathf.Clamp(Health - DamageToTake, 0, MaxHealth);
 
-        if (CurrentHealth <= 0 && PreviousHealth > 0)
+        if (Health <= 0 && PreviousHealth > 0)
         {
             DamageData.DamageType = EDamageType.DEATH;
         }
@@ -72,7 +72,7 @@ public class EHDamageableComponent : MonoBehaviour
     /// <param name="HealthToRecieve"></param>
     public void ReceiveHealth(int HealthToRecieve)
     {
-        CurrentHealth = Mathf.Clamp(CurrentHealth + HealthToRecieve, 0, MaxHealth);
+        Health = Mathf.Clamp(Health + HealthToRecieve, 0, MaxHealth);
     }
 }
 

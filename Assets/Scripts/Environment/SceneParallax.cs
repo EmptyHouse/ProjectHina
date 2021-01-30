@@ -17,6 +17,18 @@ public class SceneParallax : MonoBehaviour
         }
     }
 
+    private void OnValidate()
+    {
+        int i = 0;
+        foreach (ParallaxNode BGNode in BackgroundLayers)
+        {
+            if (BGNode.SpriteRenderer)
+            {
+                BGNode.SpriteRenderer.sortingOrder = --i;
+            }
+        }
+    }
+
 
     private void LateUpdate()
     {

@@ -80,7 +80,7 @@ public struct EHRect2D
         Vector2 Min = MinBounds;
         Vector2 Max = MaxBounds;
         if ((OriginPoint.x <= Min.x  && EndPoint.x <= Min.x) || (OriginPoint.y <= Min.y && EndPoint.y <= Min.y) ||
-            (OriginPoint.x >= Max.x && EndPoint.x >= Max.x) || (OriginPoint.y <= Min.y && EndPoint.y <= Min.y))
+            (OriginPoint.x >= Max.x && EndPoint.x >= Max.x) || (OriginPoint.y >= Max.y && EndPoint.y >= Max.y))
         {
             IntersectPoint = default;
             return false;
