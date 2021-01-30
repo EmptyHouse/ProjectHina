@@ -62,13 +62,18 @@ public class EHAttackComponent : MonoBehaviour
     /// </summary>
     public void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
     { 
+        if (IntersectedDamageableComponents.Contains(DamageableComponentWeHit))
+        {
+            // Skip if we have already hit this component before resetting...
+            return;
+        }
+
         FAttackData AttackData;
         if (AssociatedAttackTable == null)
         {
             AttackData = DefaultAttackData;
         }
-        else if (BaseGameOverseer.Instance.DataTableManager.GetAttackDataFromAttackDataTable(AssociatedAttackTable, AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData)
-            && !IntersectedDamageableComponents.Contains(DamageableComponentWeHit))
+        else if (BaseGameOverseer.Instance.DataTableManager.GetAttackDataFromAttackDataTable(AssociatedAttackTable, AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash, out AttackData))
         {
         }
         else
@@ -76,6 +81,7 @@ public class EHAttackComponent : MonoBehaviour
             Debug.LogWarning("This animation has not be set up in our attack Data table: " + AssociatedAnimator.GetCurrentAnimatorStateInfo(0).shortNameHash.ToString());
             AttackData = DefaultAttackData;
         }
+        IntersectedDamageableComponents.Add(DamageableComponentWeHit);
         DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
 
     }

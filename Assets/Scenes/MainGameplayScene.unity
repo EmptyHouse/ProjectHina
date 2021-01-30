@@ -130,6 +130,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392886, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
@@ -529,10 +541,6 @@ PrefabInstance:
     - target: {fileID: 2536065014837835307, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
       propertyPath: m_Name
       value: Bomb
-      objectReference: {fileID: 0}
-    - target: {fileID: 2536065014837835311, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
-      propertyPath: DefaultAttackData.AttackDamage
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}

@@ -32,7 +32,6 @@ public class EHDamageableComponent : MonoBehaviour
     {
         Health = MaxHealth;
     }
-
     private void OnValidate()
     {
         if (MaxHealth < 1)
@@ -63,7 +62,6 @@ public class EHDamageableComponent : MonoBehaviour
         {
             DamageData.DamageType = EDamageType.DAMAGE;
         }
-        print ("I made it here");
         OnCharacterHealthChanged?.Invoke(DamageData);
     }
 
