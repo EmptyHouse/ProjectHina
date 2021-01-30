@@ -6,17 +6,22 @@ using UnityEngine;
 public class HealthUI : MonoBehaviour
 {
     [SerializeField]
-    private Image HealthBarUIPrefab;
-    public RectTransform DefaultHealthContainer;
+    private Image HealthBarSegmentPrefab;
+    [SerializeField]
+    private RectTransform DefaultHealthContainer;
+    [SerializeField]
     private float MarginSpacing = 10f;
 
     private int CachedMaxHealth;
     private int CachedCurrentHealth;
-    private List<Image> HealthBarImages;
+    private List<Image> HealthBarImages = new List<Image>();
 
     private void Awake()
     {
-        
+        foreach (Image HealthBarSegment in DefaultHealthContainer.GetComponentsInChildren<Image>())
+        {
+            HealthBarImages.Add(HealthBarSegment);
+        }
     }
 
     private void Start()
@@ -47,7 +52,7 @@ public class HealthUI : MonoBehaviour
             
             for (int i = 0; i < CachedMaxHealth - OriginalLength; ++i)
             {
-                Image NewHealthImage = Instantiate<Image>(HealthBarUIPrefab);
+                Image NewHealthImage = Instantiate<Image>(HealthBarSegmentPrefab);
                 NewHealthImage.transform.SetParent(DefaultHealthContainer);
                 NewHealthImage.transform.localPosition = new Vector3(HealthBarImages.Count * MarginSpacing, 0, 0);
                 HealthBarImages.Add(NewHealthImage);

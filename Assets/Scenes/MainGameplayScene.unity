@@ -237,41 +237,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
---- !u!1 &1128682263
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1128682264}
-  m_Layer: 5
-  m_Name: HealthUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1128682264
+--- !u!224 &1000367867 stripped
 RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 397468205547328734, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+  m_PrefabInstance: {fileID: 1079227210298778645}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128682263}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1079227210298778646}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1268003691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -379,6 +349,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 397468205547328734, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 175
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: MarginSpacing
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: HealthBarUIPrefab
+      value: 
+      objectReference: {fileID: 2366916058060884432, guid: b0bb84c024efd5a43aff7bc233983e21, type: 3}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: DefaultHealthContainer
+      value: 
+      objectReference: {fileID: 1000367867}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: HealthBarSegmentPrefab
+      value: 
+      objectReference: {fileID: 2366916058060884432, guid: b0bb84c024efd5a43aff7bc233983e21, type: 3}
     - target: {fileID: 1079227211909940962, guid: aa4575925d8a34444be398575a6539d0, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -467,17 +457,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainGameHUD
       objectReference: {fileID: 0}
-    - target: {fileID: 1325579536883085049, guid: aa4575925d8a34444be398575a6539d0, type: 3}
-      propertyPath: ButtonInputNodes.Array.data[0].InputName
-      value: Submit
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa4575925d8a34444be398575a6539d0, type: 3}
---- !u!224 &1079227210298778646 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1079227211695099495, guid: aa4575925d8a34444be398575a6539d0, type: 3}
-  m_PrefabInstance: {fileID: 1079227210298778645}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2536065014715724611
 PrefabInstance:
   m_ObjectHideFlags: 0

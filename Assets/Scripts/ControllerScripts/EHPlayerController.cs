@@ -20,6 +20,7 @@ public class EHPlayerController : EHBaseController
     {
         base.Awake();
         AttackComponent = GetComponent<EHAttackComponent>();
+        BaseGameOverseer.Instance.PlayerController = this;
     }
 
     
