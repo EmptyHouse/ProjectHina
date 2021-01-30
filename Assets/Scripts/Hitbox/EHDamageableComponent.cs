@@ -63,6 +63,7 @@ public class EHDamageableComponent : MonoBehaviour
         {
             DamageData.DamageType = EDamageType.DAMAGE;
         }
+        print ("I made it here");
         OnCharacterHealthChanged?.Invoke(DamageData);
     }
 

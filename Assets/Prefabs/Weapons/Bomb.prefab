@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AssociatedAttackTable: {fileID: 0}
   DefaultAttackData:
-    AttackDamage: 10
+    AttackDamage: 1
     HitStunTime: 0
     HitFreezeTime: 0
     LaunchForce: {x: 0, y: 0}

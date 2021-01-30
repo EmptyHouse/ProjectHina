@@ -358,6 +358,22 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: DisabledColor.a
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: DisabledColor.b
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: DisabledColor.g
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: DisabledColor.r
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211385222924, guid: aa4575925d8a34444be398575a6539d0, type: 3}
       propertyPath: HealthBarUIPrefab
       value: 
       objectReference: {fileID: 2366916058060884432, guid: b0bb84c024efd5a43aff7bc233983e21, type: 3}
@@ -513,6 +529,10 @@ PrefabInstance:
     - target: {fileID: 2536065014837835307, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
       propertyPath: m_Name
       value: Bomb
+      objectReference: {fileID: 0}
+    - target: {fileID: 2536065014837835311, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
+      propertyPath: DefaultAttackData.AttackDamage
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}

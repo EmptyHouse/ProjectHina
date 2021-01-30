@@ -11,10 +11,14 @@ public class HealthUI : MonoBehaviour
     private RectTransform DefaultHealthContainer;
     [SerializeField]
     private float MarginSpacing = 10f;
+    // We will probably move this to somewhere else in the future
+    [SerializeField]
+    private Color DisabledColor;
 
     private int CachedMaxHealth;
     private int CachedCurrentHealth;
     private List<Image> HealthBarImages = new List<Image>();
+    private EHPlayerCharacter CachedPlayerCharacter;
 
     private void Awake()
     {
@@ -26,12 +30,12 @@ public class HealthUI : MonoBehaviour
 
     private void Start()
     {
-        EHPlayerCharacter PlayerCharacter = BaseGameOverseer.Instance.PlayerController.GetComponent<EHPlayerCharacter>();
-        if (PlayerCharacter)
+        CachedPlayerCharacter = BaseGameOverseer.Instance.PlayerController.GetComponent<EHPlayerCharacter>();
+        if (CachedPlayerCharacter)
         {
-            PlayerCharacter.DamageableComponent.OnCharacterHealthChanged += OnHealthUpdated;
-            CachedMaxHealth = PlayerCharacter.DamageableComponent.MaxHealth;
-            CachedCurrentHealth = PlayerCharacter.DamageableComponent.Health;
+            CachedPlayerCharacter.DamageableComponent.OnCharacterHealthChanged += OnHealthUpdated;
+            CachedMaxHealth = CachedPlayerCharacter.DamageableComponent.MaxHealth;
+            CachedCurrentHealth = CachedPlayerCharacter.DamageableComponent.Health;
             SpawnHealthBarsBasedOnMaxHealth();
             SetHealthUI();
         }
@@ -40,7 +44,19 @@ public class HealthUI : MonoBehaviour
     #region event methods
     public void OnHealthUpdated(FDamageData DamageData)
     {
-
+        int i = 0;
+        foreach (Image HealthSegment in HealthBarImages)
+        {
+            if (CachedPlayerCharacter && CachedPlayerCharacter.DamageableComponent.Health > i)
+            {
+                HealthSegment.color = Color.white;
+            }
+            else 
+            {
+                HealthSegment.color = DisabledColor;
+            }
+            ++i;
+        }
     }
     #endregion event methods
 
