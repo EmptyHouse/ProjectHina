@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using System.Threading;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Overseer for all gameplay related events. All overseers related to gameplay should have to derive from this class. Make sure it
@@ -48,6 +49,8 @@ public class BaseGameOverseer : MonoBehaviour
     public MainCameraFollow MainGameCamera { get; set; }
 
     public EHPlayerController PlayerController { get; set; }
+
+    public EHUtilities.SceneField DefaultScene;
     #endregion game component references
 
     #region monobehaviour methods
@@ -56,6 +59,10 @@ public class BaseGameOverseer : MonoBehaviour
         instance = this;
         GameHUD = (EHGameHUD)EHHUD.Instance;
         Application.targetFrameRate = 60;
+        if (CurrentlyLoadedRoom == null)
+        {
+            SceneManager.LoadScene(DefaultScene.SceneName, LoadSceneMode.Additive);
+        }
     }
 
     protected virtual void LateUpdate()

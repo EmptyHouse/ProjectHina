@@ -340,6 +340,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5866f085adb0e3a488a676bd8e04fe6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DefaultScene:
+    sceneAsset: {fileID: 102900000, guid: 932957dd142b72f4c81cf1164aa8b53e, type: 3}
+    sceneName: Scenes/TestMaps/RoomTest1
 --- !u!4 &1298246664
 Transform:
   m_ObjectHideFlags: 0
@@ -484,6 +487,10 @@ PrefabInstance:
     - target: {fileID: 1079227211909940966, guid: aa4575925d8a34444be398575a6539d0, type: 3}
       propertyPath: m_Name
       value: MainGameHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 1079227211909940966, guid: aa4575925d8a34444be398575a6539d0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa4575925d8a34444be398575a6539d0, type: 3}

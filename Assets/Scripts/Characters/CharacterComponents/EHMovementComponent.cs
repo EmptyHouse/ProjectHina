@@ -85,6 +85,8 @@ public class EHMovementComponent : MonoBehaviour
     [Tooltip("The multiplier to gravity that we will apply when we are falling")]
     public float LowJumpMultiplier = 2f;
     // The velocity at which we will perform our jump
+    [HideInInspector]
+    [SerializeField]
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
