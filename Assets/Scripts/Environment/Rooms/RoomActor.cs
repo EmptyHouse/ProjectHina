@@ -23,7 +23,14 @@ public class RoomActor : MonoBehaviour
     #region monobehaviour methods
     private void Awake()
     {
-        BaseGameOverseer.Instance.CurrentlyLoadedRoom = this;
+        if (BaseGameOverseer.Instance != null)
+        {
+            BaseGameOverseer.Instance.CurrentlyLoadedRoom = this;
+        }
+        else
+        {
+            Debug.Log("There is no GameOverseer in the room. More than likely you have not added the main game scene to the hierachry");
+        }
     }
 
     private void OnValidate()

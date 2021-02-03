@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56533148093e08f4083e8d189914c70f, type: 3}
-  m_Name: Room1_DoorB
+  m_Name: Room2_DoorB
   m_EditorClassIdentifier: 
-  ConnectedRoom: {fileID: 11400000, guid: 4140f7313c9a36f4894f40a9ee5c06ab, type: 2}
-  ConnectedDoor: {fileID: 11400000, guid: 815a5149a78be2b4ab61866f99f52a6f, type: 2}
+  ConnectedRoom: {fileID: 11400000, guid: 7a7810bb8eeec324eb2abc55b39b2ce8, type: 2}
+  ConnectedDoor: {fileID: 11400000, guid: 8808c11780c324d42836f219e777e6e7, type: 2}

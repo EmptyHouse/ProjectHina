@@ -30,7 +30,14 @@ public class DoorActor : MonoBehaviour
 
     private void Start()
     {
-        BaseGameOverseer.Instance.CurrentlyLoadedRoom.AddDoorActor(this);
+        if (BaseGameOverseer.Instance != null)
+        {
+            BaseGameOverseer.Instance.CurrentlyLoadedRoom.AddDoorActor(this);
+        }
+        else
+        {
+            Debug.LogWarning("There is no Game Overseer in the scene. This is likely due to no having the main gameplay scene loaded in");
+        }
     }
 
     private void OnDestroy()

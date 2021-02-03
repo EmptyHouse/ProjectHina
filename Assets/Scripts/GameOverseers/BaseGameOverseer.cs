@@ -59,9 +59,14 @@ public class BaseGameOverseer : MonoBehaviour
         instance = this;
         GameHUD = (EHGameHUD)EHHUD.Instance;
         Application.targetFrameRate = 60;
-        if (CurrentlyLoadedRoom == null)
+    }
+
+    protected virtual void Start()
+    {
+        if (CurrentlyLoadedRoom == null && !GameObject.FindObjectOfType<RoomActor>())
         {
             SceneManager.LoadScene(DefaultScene.SceneName, LoadSceneMode.Additive);
+            Debug.LogError("No Environment scene was loaded. Loading Default Scene...");
         }
     }
 

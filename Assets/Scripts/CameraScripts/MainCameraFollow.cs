@@ -61,8 +61,8 @@ public class MainCameraFollow : MonoBehaviour
         Vector2 MinBounds, MaxBounds;
         float OrthoSize = CameraComponent.orthographicSize;
         Vector2 CameraSize = new Vector2(OrthoSize * Screen.width / Screen.height, OrthoSize);
-        MinBounds = new Vector2(transform.position.x, transform.position.y) - Vector2.one * CameraSize / 2f;
-        MaxBounds = MinBounds + CameraSize;
+        MinBounds = new Vector2(transform.position.x, transform.position.y) - CameraSize;
+        MaxBounds = MinBounds + CameraSize * 2;
         Vector2 RoomMin = BaseGameOverseer.Instance.CurrentlyLoadedRoom.GetMinRoomBounds();
         Vector2 RoomMax = BaseGameOverseer.Instance.CurrentlyLoadedRoom.GetMaxRoomBounds();
         ////////////////////////////////////////////////////////////////////////////////////
