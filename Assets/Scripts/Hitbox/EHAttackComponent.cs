@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// The attack component can apply damage to DamageableComponents.
@@ -8,6 +9,8 @@ using UnityEngine;
 public class EHAttackComponent : MonoBehaviour
 {
     private const string ATTACK_ANIM = "Attack";
+
+    public UnityAction<FAttackData> OnAttackCharacterDel;
 
     [Tooltip("The assigned DataTable that will contain all the information for each attack.")]
     public AttackDataTable AssociatedAttackTable;
@@ -60,7 +63,7 @@ public class EHAttackComponent : MonoBehaviour
     /// <summary>
     /// This method will be called when a hitbox component enters the hurtbox component of another damageable component
     /// </summary>
-    public void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
+    public virtual void OnDamageableComponentIntersectionBegin(EHDamageableComponent DamageableComponentWeHit)
     { 
         if (IntersectedDamageableComponents.Contains(DamageableComponentWeHit))
         {
@@ -84,6 +87,10 @@ public class EHAttackComponent : MonoBehaviour
         IntersectedDamageableComponents.Add(DamageableComponentWeHit);
         DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
 
+        if (BaseGameOverseer.Instance.MainGameCamera && BaseGameOverseer.Instance.MainGameCamera.CameraShake)
+        {
+            BaseGameOverseer.Instance.MainGameCamera.CameraShake.BeginCameraShake(AttackData.CameraShakeDuration, AttackData.CameraShakeIntensity);
+        }
     }
 
     public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }
@@ -139,5 +146,7 @@ public struct FAttackData
     public int AttackDamage;
     public float HitStunTime;
     public float HitFreezeTime;
+    public float CameraShakeDuration;
+    public float CameraShakeIntensity;
     public Vector2 LaunchForce;
 }

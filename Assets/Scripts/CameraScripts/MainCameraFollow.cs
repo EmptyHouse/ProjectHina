@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainCameraFollow : MonoBehaviour
 { 
     public float CameraFollowSpeed = .5f;
-
+    public CameraShakeComponent CameraShake { get; private set; }
     [Tooltip("The area that we will cover before moving toward the target. Acts as a buffer so that we are not ALWAYS following the player")]
     public Vector2 CameraCaptureRange;
 
@@ -21,6 +21,7 @@ public class MainCameraFollow : MonoBehaviour
         CameraOffsetFromTarget = this.transform.position - TargetTransform.position;
 
         this.transform.parent = null;
+        CameraShake = GetComponent<CameraShakeComponent>();
     }
 
     private void Start()
