@@ -17,11 +17,12 @@ public class MainCameraFollow : MonoBehaviour
     private void Awake()
     {
         CameraComponent = GetComponentInChildren<Camera>();
+        CameraShake = GetComponentInChildren<CameraShakeComponent>();
+
         SetCameraFollowTarget(this.transform.parent);
         CameraOffsetFromTarget = this.transform.position - TargetTransform.position;
 
         this.transform.parent = null;
-        CameraShake = GetComponent<CameraShakeComponent>();
     }
 
     private void Start()
@@ -51,6 +52,15 @@ public class MainCameraFollow : MonoBehaviour
     public void FocusCameraImmediate()
     {
         this.transform.position = TargetTransform.position + CameraOffsetFromTarget;
+    }
+
+    /// <summary>
+    /// This should be called whenever a new room in our game is loaded
+    /// </summary>
+    /// <param name="RoomThatWasLoaded"></param>
+    public void OnRoomLoaded(RoomActor RoomThatWasLoaded)
+    {
+
     }
 
     /// <summary>

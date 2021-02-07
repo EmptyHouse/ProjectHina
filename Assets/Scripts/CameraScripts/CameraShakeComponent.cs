@@ -13,6 +13,7 @@ public class CameraShakeComponent : MonoBehaviour
 
     public void BeginCameraShake(float TimeForCameraShake, float CameraIntensity)
     {
+        print("Time: " + TimeForCameraShake + "  Intensity: " + CameraIntensity);
         this.TimeRemainingForCameraShake = TimeForCameraShake;
         this.CameraShakeIntensity = CameraIntensity;
         StartCoroutine(BeginCameraShakeCoroutine());
