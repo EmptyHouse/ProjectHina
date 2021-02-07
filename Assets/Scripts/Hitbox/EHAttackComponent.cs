@@ -91,6 +91,7 @@ public class EHAttackComponent : MonoBehaviour
         {
             BaseGameOverseer.Instance.MainGameCamera.CameraShake.BeginCameraShake(AttackData.CameraShakeDuration, AttackData.CameraShakeIntensity);
         }
+        StartCoroutine(StopTimeWhenHitCoroutine(AttackData.HitFreezeTime, DamageableComponentWeHit, AttackData));
     }
 
     public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }
@@ -126,20 +127,26 @@ public class EHAttackComponent : MonoBehaviour
     /// </summary>
     /// <param name="SecondsToPauseGameWhenHitConnected"></param>
     /// <returns></returns>
-    private IEnumerator StopTimeWhenHitCoroutine(float SecondsToPauseGameWhenHitConnected)
+    private IEnumerator StopTimeWhenHitCoroutine(float SecondsToPauseGameWhenHitConnected, EHDamageableComponent DamageComponentThatWeHit, FAttackData AttackData)
     {
         float OriginalTimeScale = EHTime.TimeScale;
         EHTime.SetTimeScale(0);
         float TimeThatHasPassed = 0;
-        while (TimeThatHasPassed >= SecondsToPauseGameWhenHitConnected)
+        while (TimeThatHasPassed < SecondsToPauseGameWhenHitConnected)
         {
             TimeThatHasPassed += EHTime.RealDeltaTime;
             yield return null;
         }
         EHTime.SetTimeScale(OriginalTimeScale);
+        float ScaleX = Mathf.Sign(DamageComponentThatWeHit.transform.position.x - transform.position.x);
+        if (ScaleX == 0) ScaleX = 1;
+        DamageComponentThatWeHit.ApplyKnockback(AttackData.HitStunTime, new Vector2(ScaleX, 1) * AttackData.LaunchForce);
     }
 }
 
+/// <summary>
+/// Information that relates to an attack that will do damage to a damageable component
+/// </summary>
 [System.Serializable]
 public struct FAttackData
 {

@@ -79,6 +79,7 @@ public class EHHitboxManager : ITickableComponent
             if (HitboxDictionary[HitboxToRemove.HitboxActorComponent].Count == 0)
             {
                 HitboxDictionary.Remove(HitboxToRemove.HitboxActorComponent);
+                AllHitboxActorComponentsList.Remove(HitboxToRemove.HitboxActorComponent);
             }
         }
         else

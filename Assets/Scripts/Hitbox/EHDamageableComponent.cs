@@ -14,10 +14,14 @@ public class EHDamageableComponent : MonoBehaviour
     }
     #endregion enum
 
+    private readonly AnimationCurve HitStunDropOff = AnimationCurve.EaseInOut(0, 1, 1, 0);
+
     /// <summary>
     /// This delegate will be called whenevver our character's health falls below 0.
     /// </summary>
     public UnityAction<FDamageData> OnCharacterHealthChanged;
+    public UnityAction OnHitStunStart;
+    public UnityAction OnHitStunEnd;
 
 
     [Tooltip("The maximum health of our Damageable component")]
@@ -27,10 +31,13 @@ public class EHDamageableComponent : MonoBehaviour
     /// </summary>
     public int Health { get; private set; }
 
+    public EHPhysics2D Physics2D { get; private set; }
+
     #region monobehaviour methods
     private void Awake()
     {
         Health = MaxHealth;
+        Physics2D = GetComponent<EHPhysics2D>();
     }
     private void OnValidate()
     {
@@ -72,6 +79,26 @@ public class EHDamageableComponent : MonoBehaviour
     public void ReceiveHealth(int HealthToRecieve)
     {
         Health = Mathf.Clamp(Health + HealthToRecieve, 0, MaxHealth);
+    }
+
+    public void ApplyKnockback(float HitStunTime, Vector2 KnockbackDirection)
+    {
+        StartCoroutine(KnockBackCoroutine(HitStunTime, KnockbackDirection));
+    }
+
+    private IEnumerator KnockBackCoroutine(float HitStunTime, Vector2 KnockbackForce)
+    {
+        OnHitStunStart?.Invoke();
+        float TimeThatHasPassed = 0;
+
+        while (TimeThatHasPassed < HitStunTime)
+        {
+            TimeThatHasPassed += EHTime.DeltaTime;
+            Physics2D.Velocity = HitStunDropOff.Evaluate(TimeThatHasPassed) * KnockbackForce;
+            yield return null;
+        }
+        Physics2D.Velocity = Vector2.zero;
+        OnHitStunEnd?.Invoke();  
     }
 }
 

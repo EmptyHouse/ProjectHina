@@ -38,8 +38,19 @@ public class EHGameplayCharacter : EHCharacter
         if (DamageableComponent)
         {
             DamageableComponent.OnCharacterHealthChanged += OnCharacterDied;
+            DamageableComponent.OnHitStunStart += OnHitStunStart;
+            DamageableComponent.OnHitStunEnd += OnHitStunEnd;
         }
-        
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (DamageableComponent)
+        {
+            DamageableComponent.OnCharacterHealthChanged -= OnCharacterDied;
+            DamageableComponent.OnHitStunStart -= OnHitStunStart;
+            DamageableComponent.OnHitStunEnd -= OnHitStunEnd;
+        }
     }
 
     /// <summary>
@@ -58,5 +69,15 @@ public class EHGameplayCharacter : EHCharacter
     {
         this.transform.position = NewPosition;
         CharacterCollider.UpdateColliderBounds(bIgnoreSweep);//this is to avoid 
+    }
+
+    private void OnHitStunStart()
+    {
+        MovementComponent.enabled = false;
+    }
+
+    private void OnHitStunEnd()
+    {
+        MovementComponent.enabled = true;
     }
 }
