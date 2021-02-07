@@ -45,7 +45,7 @@ public class DataTableManager
     /// <param name="AttackData"></param>
     /// <param name="MultiHitIndex"></param>
     /// <returns></returns>
-    public bool GetAttackDataFromAttackDataTable(AttackDataTable AttackTable, int AttackHash, out FAttackData AttackData, int MultiHitIndex = 0)
+    public bool GetAttackDataFromAttackDataTable(AttackDataTable AttackTable, int AttackHash, out FAttackData AttackData)
     {
         AttackDataTable InstancedAttackTable = GetAttackDataTable(AttackTable);
         if (InstancedAttackTable == null)
@@ -54,6 +54,6 @@ public class DataTableManager
             return false;
         }
 
-        return InstancedAttackTable.GetAttackDataFromAnimationClipHash(AttackHash, out AttackData, MultiHitIndex);
+        return InstancedAttackTable.GetAttackDataFromAnimationClipHash(AttackHash, out AttackData);
     }
 }

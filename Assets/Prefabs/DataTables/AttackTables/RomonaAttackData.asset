@@ -16,8 +16,8 @@ MonoBehaviour:
   DataElements:
   - AttackName: Attack_01
     AttackDataAnimationClip: {fileID: 7400000, guid: 59d367cef1e98d4448e1d02e6ef60612, type: 2}
-    AttackDataList:
-    - AttackDamage: 2
+    AttackData:
+      AttackDamage: 2
       HitStunTime: 0.5
       HitFreezeTime: 0.3
       CameraShakeDuration: 0.06
@@ -25,10 +25,10 @@ MonoBehaviour:
       LaunchForce: {x: 2, y: 0}
   - AttackName: Jump_Air
     AttackDataAnimationClip: {fileID: 7400000, guid: fa7b8e291bcbf8f4ab5898bf377ba6cd, type: 2}
-    AttackDataList:
-    - AttackDamage: 2
+    AttackData:
+      AttackDamage: 2
       HitStunTime: 0.5
-      HitFreezeTime: 0.3
+      HitFreezeTime: 0.5
       CameraShakeDuration: 0.05
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 2, y: 0}

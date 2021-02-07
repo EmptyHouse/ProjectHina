@@ -24,7 +24,7 @@ public class AttackDataTable : BaseDataTable<FAttackDataNode>
     /// </summary>
     /// <param name="AnimationClipHash"></param>
     /// <returns></returns>
-    public bool GetAttackDataFromAnimationClipHash(int AnimationClipHash, out FAttackData AttackData, int MultiHitAttackIndex = 0)
+    public bool GetAttackDataFromAnimationClipHash(int AnimationClipHash, out FAttackData AttackData)
     {
         if (!AnimationHashToRowName.ContainsKey(AnimationClipHash))
         {
@@ -34,13 +34,7 @@ public class AttackDataTable : BaseDataTable<FAttackDataNode>
         }
         string AttackDataName = AnimationHashToRowName[AnimationClipHash];
         FAttackDataNode AttackNode = DataTableDictioanry[AttackDataName];
-        if (AttackNode.AttackDataList.Length <= MultiHitAttackIndex)
-        {
-            Debug.LogWarning("There is no hit data associated with index " + MultiHitAttackIndex + ".");
-            AttackData = default;
-            return false;
-        }
-        AttackData = DataTableDictioanry[AttackDataName].AttackDataList[MultiHitAttackIndex];
+        AttackData = DataTableDictioanry[AttackDataName].AttackData;
         return true;
     }
 }
@@ -53,5 +47,5 @@ public struct FAttackDataNode
 {
     public string AttackName;
     public AnimationClip AttackDataAnimationClip;
-    public FAttackData[] AttackDataList;
+    public FAttackData AttackData;
 }
