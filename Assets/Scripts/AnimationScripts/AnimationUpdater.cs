@@ -38,8 +38,11 @@ public class AnimationUpdater : MonoBehaviour
     {
         while (true)
         {
-            Anim.Update(EHTime.DeltaTime);
-            yield return null;
+            if (EHTime.TimeScale != 0)
+            {
+                Anim.Update(EHTime.DeltaTime);
+            }
+            yield return new WaitForEndOfFrame(); ;
         }
     }
 }

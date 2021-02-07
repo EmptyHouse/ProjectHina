@@ -267,6 +267,7 @@ public class EHMovementComponent : MonoBehaviour
     {
         float GoalSpeed = 0;
         float Acceleration = 0;
+        float CurrentSpeed = Physics2D.Velocity.x;
         switch (CurrentMovementType)
         {
             case EMovementType.STANDING:
@@ -293,12 +294,15 @@ public class EHMovementComponent : MonoBehaviour
                 {
                     GoalSpeed = AirSpeed;
                 }
+                else
+                {
+                    GoalSpeed = CurrentSpeed;
+                }
                 break;
         }
        
         GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
 
-        float CurrentSpeed = Physics2D.Velocity.x;
         CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
 
