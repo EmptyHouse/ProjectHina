@@ -86,7 +86,7 @@ public class EHMovementComponent : MonoBehaviour
 
     //Animation Controlled variables
     [HideInInspector]
-    public bool bIsBeingAnimationControlled = false;
+    public bool bIsAnimationControlled = false;
     [HideInInspector]
     public Vector2 AnimatedGoalVelocity = Vector2.zero;
 
@@ -309,12 +309,17 @@ public class EHMovementComponent : MonoBehaviour
                 }
                 break;
         }
-       
-        GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
+       if (bIsAnimationControlled)
+        {
+            GoalSpeed = AnimatedGoalVelocity.x * Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x);
+        }
+        else
+        {
+            GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
+        }
 
         CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
         Physics2D.Velocity = new Vector2(CurrentSpeed, Physics2D.Velocity.y);
-
         if (CharacterAnimator)
         {
             CharacterAnimator.SetFloat(ANIM_HORIZONTAL_VELOCITY, Physics2D.Velocity.x);
