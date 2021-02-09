@@ -58,7 +58,6 @@ public class EHAttackComponent : MonoBehaviour
     {
         IntersectedDamageableComponents.Clear();
     }
-
     
     /// <summary>
     /// This method will be called when a hitbox component enters the hurtbox component of another damageable component

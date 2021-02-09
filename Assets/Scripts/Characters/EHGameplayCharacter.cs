@@ -11,6 +11,7 @@ public class EHGameplayCharacter : EHCharacter
 {
     #region const variables
     private const string ANIM_CHARACTER_DIED = "Dead";
+    private const string DEAD_LAYER = "Dead";
 
     #endregion const varibles
 
@@ -58,11 +59,12 @@ public class EHGameplayCharacter : EHCharacter
     /// </summary>
     public virtual void OnCharacterDied(FDamageData DamageData) 
     {
+        print("DamageData Type: " + DamageData.DamageType);
         // If this is not a Death type attack, then we will skip this method
         if (DamageData.DamageType != EHDamageableComponent.EDamageType.DEATH) return;
 
-        Debug.Log(this.name + " Has Died");
         CharacterAnim.SetTrigger(ANIM_CHARACTER_DIED);
+        this.gameObject.layer = LayerMask.NameToLayer(DEAD_LAYER);
     }
 
     public void SpawnCharacterToPosition(Vector3 NewPosition, bool bIgnoreSweep = true)
@@ -73,11 +75,17 @@ public class EHGameplayCharacter : EHCharacter
 
     private void OnHitStunStart()
     {
-        MovementComponent.enabled = false;
+        if (MovementComponent)
+        {
+            MovementComponent.enabled = false;
+        }
     }
 
     private void OnHitStunEnd()
     {
-        MovementComponent.enabled = true;
+        if (MovementComponent)
+        {
+            MovementComponent.enabled = true;
+        }
     }
 }

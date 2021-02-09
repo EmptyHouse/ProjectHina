@@ -55,6 +55,7 @@ public class EHDamageableComponent : MonoBehaviour
     /// <param name="DamageToTake"></param>
     public void TakeDamage(EHAttackComponent AttackComponentThatHurtUs, int DamageToTake)
     {
+        print("Damage is being called");
         FDamageData DamageData = new FDamageData();
         DamageData.AttackSource = AttackComponentThatHurtUs;
         DamageData.DamageAmount = DamageToTake;

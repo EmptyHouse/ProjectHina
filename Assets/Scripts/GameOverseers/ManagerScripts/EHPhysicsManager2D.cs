@@ -235,7 +235,7 @@ public class EHPhysicsManager2D : ITickableComponent
         }
     }
 
-    public static bool RayTrace2D(ref EHRayTraceParams Params, out EHRayTraceHit RayHit, int LayerMask = 0, bool DebugDraw = false)
+    public static bool RayTrace2D(ref EHRayTraceParams Params, out EHRayTraceHit RayHit, int LayerMask = 0, bool bDebugDraw = false)
     {
         if (CachedInstance == null)
         {
@@ -250,7 +250,7 @@ public class EHPhysicsManager2D : ITickableComponent
 
         foreach (KeyValuePair<EHBaseCollider2D.EColliderType, HashSet<EHBaseCollider2D>> ColliderSet in CachedInstance.ColliderComponentDictionary)
         {
-            if (RayTrace2D(ref Params, ColliderSet.Key, out TempRayTraceHit, LayerMask, DebugDraw))
+            if (RayTrace2D(ref Params, ColliderSet.Key, out TempRayTraceHit, LayerMask, bDebugDraw))
             {
                 float CollisionDistance = Vector2.Distance(Params.RayOrigin, TempRayTraceHit.HitPoint);
                 if (!bMadeCollision || ClosestDistance > CollisionDistance)

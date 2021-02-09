@@ -20,31 +20,22 @@ public class BombProjectile : EHBaseProjectile
         base.Awake();
         BombRadius = GetComponentInChildren<SpriteRenderer>().bounds.size.x / 2f;
     }
-
-    private void Update()
-    {
-        CheckIntersectWithOtherCollider();
-    }
     #endregion monobeahviour methods
     /// <summary>
     /// 
     /// </summary>
-    private void CheckIntersectWithOtherCollider()
+    protected override void CheckForIntersectionWithOtherColliders()
     {
         const float BombAngle = 180f;
         float AngleIncrement = BombAngle / (RayTraceCount - 1);
-        Vector2 InitialMovementDirection = Physics.Velocity * EHTime.DeltaTime;
         Vector2 BombTransformPosition = this.transform.position;
-        float CurrentAngle = Mathf.Atan2(InitialMovementDirection.y, InitialMovementDirection.x) * Mathf.Rad2Deg - 90;
+        float CurrentAngle = Mathf.Atan2(Physics.Velocity.y, Physics.Velocity.x) * Mathf.Rad2Deg - 90;
 
-        EHRayTraceParams RayParams = default;
         EHRayTraceHit RayHit;
         for (int i = 0; i < RayTraceCount; ++i)
         {
-            RayParams.RayOrigin = BombTransformPosition + new Vector2(Mathf.Cos(CurrentAngle * Mathf.Deg2Rad) * BombRadius, Mathf.Sin(CurrentAngle * Mathf.Deg2Rad)) * BombRadius;
-            RayParams.RayDirection = InitialMovementDirection;
-            RayParams.RayLength = InitialMovementDirection.magnitude;
-            if (EHPhysicsManager2D.RayTrace2D(ref RayParams, out RayHit, 0, true))
+            Vector2 OriginPosition = BombTransformPosition + new Vector2(Mathf.Cos(CurrentAngle * Mathf.Deg2Rad) * BombRadius, Mathf.Sin(CurrentAngle * Mathf.Deg2Rad)) * BombRadius;
+            if (CastRayFromVelocity(OriginPosition, out RayHit))
             {
                 Explode();
                 return;

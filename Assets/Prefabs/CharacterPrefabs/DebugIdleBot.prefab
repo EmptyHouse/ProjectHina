@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1784670147}
   - component: {fileID: 1684526327100405834}
   - component: {fileID: 544775125}
+  - component: {fileID: 6189185939814926498}
   m_Layer: 9
   m_Name: DebugIdleBot
   m_TagString: Untagged
@@ -113,6 +114,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 10
+--- !u!114 &6189185939814926498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5444862123059223851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcbd6c86c4c06304aac0b90069259feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterName: 
 --- !u!1 &5444862123864165390
 GameObject:
   m_ObjectHideFlags: 0

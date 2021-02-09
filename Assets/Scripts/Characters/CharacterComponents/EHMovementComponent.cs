@@ -46,14 +46,6 @@ public class EHMovementComponent : MonoBehaviour
     private bool IsFacingLeft = false;
     [SerializeField]
     private SpriteRenderer CharacterSpriteRenderer;
-    /// <summary>
-    /// The child transform of the character that this component attaches that contains the character's sprite renderer object
-    /// </summary>
-    private Transform CharacterSpriteTransform;
-    /// <summary>
-    /// The last local X Scale of our character. X Scale will be used for indicating whether or not we should change the direction of our character
-    /// </summary>
-    private float CachedXScale;
 
     [Header("Walking")]
     [Tooltip("The max walking speed of our character")]
@@ -84,12 +76,19 @@ public class EHMovementComponent : MonoBehaviour
     public float TimeToReachApex = .5f;
     [Tooltip("The multiplier to gravity that we will apply when we are falling")]
     public float LowJumpMultiplier = 2f;
+
     // The velocity at which we will perform our jump
     [HideInInspector]
     [SerializeField]
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
+
+    //Animation Controlled variables
+    [HideInInspector]
+    public bool bIsBeingAnimationControlled = false;
+    [HideInInspector]
+    public Vector2 AnimatedGoalVelocity = Vector2.zero;
 
     #endregion main variables
 
@@ -123,9 +122,8 @@ public class EHMovementComponent : MonoBehaviour
 
         AssociatedCollider.OnCollision2DBegin += OnEHCollisionEnter;
         CharacterAnimator = GetComponent<Animator>();
-        CharacterSpriteTransform = CharacterSpriteRenderer.transform;
-        CachedXScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
         CachedGravityScale = Physics2D.GravityScale;
+        SetIsFacingLeft(IsFacingLeft, true);
     }
 
     protected virtual void Update()
@@ -187,9 +185,20 @@ public class EHMovementComponent : MonoBehaviour
             JumpVelocity = 2 * JumpHeightApex / TimeToReachApex;
         }
 
-        if (IsFacingLeft && CharacterSpriteTransform.localScale.x > 0)
+        if (CharacterSpriteRenderer == null)
         {
-            SetIsFacingLeft(IsFacingLeft);
+            CharacterSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+        if (CharacterSpriteRenderer)
+        {
+            if (IsFacingLeft && CharacterSpriteRenderer.transform.localScale.x > 0)
+            {
+                SetIsFacingLeft(IsFacingLeft, true);
+            }
+            if (!IsFacingLeft && CharacterSpriteRenderer.transform.localScale.x < 0)
+            {
+                SetIsFacingLeft(IsFacingLeft, true);
+            }
         }
     }
     #endregion monobehaviour methods
@@ -456,22 +465,24 @@ public class EHMovementComponent : MonoBehaviour
     /// <summary>
     /// Set the orientation of the character
     /// </summary>
-    /// <param name="IsFacingLeft"></param>
-    public void SetIsFacingLeft(bool IsFacingLeft)
+    /// <param name="bIsFacingLeft"></param>
+    /// <param name="bForceFaceDirection"></param>
+    public void SetIsFacingLeft(bool bIsFacingLeft, bool bForceFaceDirection = false)
     {
-        if (IsFacingLeft == this.IsFacingLeft)
+        if (bIsFacingLeft == this.IsFacingLeft && !bForceFaceDirection)
         {
             return;
         }
-        this.IsFacingLeft = IsFacingLeft;
-
-        if (IsFacingLeft)
+        this.IsFacingLeft = bIsFacingLeft;
+        Transform CharacterSpriteTransform = CharacterSpriteRenderer.transform;
+        float XScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
+        if (bIsFacingLeft)
         {
-            CharacterSpriteTransform.localScale = new Vector3(-CachedXScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
+            CharacterSpriteTransform.localScale = new Vector3(-XScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
         }
         else
         {
-            CharacterSpriteTransform.localScale = new Vector3(CachedXScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
+            CharacterSpriteTransform.localScale = new Vector3(XScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
         }
     }
 
