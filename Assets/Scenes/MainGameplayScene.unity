@@ -214,9 +214,13 @@ PrefabInstance:
       propertyPath: IsFacingLeft
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: GroundAcceleration
+      value: 130
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975867184269768, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalScale.x
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5197975867515113633, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.y

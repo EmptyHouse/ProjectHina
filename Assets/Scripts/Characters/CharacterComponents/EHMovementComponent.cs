@@ -312,7 +312,7 @@ public class EHMovementComponent : MonoBehaviour
        if (bIsAnimationControlled)
         {
             GoalSpeed = AnimatedGoalVelocity.x * Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x);
-            Acceleration /= 4;//Remember to remove this. Just for testing.
+            Acceleration /= 3;//Remember to remove this. Just for testing.
         }
         else
         {
@@ -475,10 +475,11 @@ public class EHMovementComponent : MonoBehaviour
     /// <param name="bForceFaceDirection"></param>
     public void SetIsFacingLeft(bool bIsFacingLeft, bool bForceFaceDirection = false)
     {
-        if (bIsFacingLeft == this.IsFacingLeft && !bForceFaceDirection)
+        if ((bIsFacingLeft == this.IsFacingLeft || !CanChangeDirections()) && !bForceFaceDirection)
         {
             return;
         }
+
         this.IsFacingLeft = bIsFacingLeft;
         Transform CharacterSpriteTransform = CharacterSpriteRenderer.transform;
         float XScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
@@ -490,6 +491,11 @@ public class EHMovementComponent : MonoBehaviour
         {
             CharacterSpriteTransform.localScale = new Vector3(XScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
         }
+    }
+
+    private bool CanChangeDirections()
+    {
+        return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
     }
 
     /// <summary>
