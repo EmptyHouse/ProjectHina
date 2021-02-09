@@ -312,6 +312,7 @@ public class EHMovementComponent : MonoBehaviour
        if (bIsAnimationControlled)
         {
             GoalSpeed = AnimatedGoalVelocity.x * Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x);
+            Acceleration /= 4;//Remember to remove this. Just for testing.
         }
         else
         {

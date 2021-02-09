@@ -59,7 +59,6 @@ public class EHGameplayCharacter : EHCharacter
     /// </summary>
     public virtual void OnCharacterDied(FDamageData DamageData) 
     {
-        print("DamageData Type: " + DamageData.DamageType);
         // If this is not a Death type attack, then we will skip this method
         if (DamageData.DamageType != EHDamageableComponent.EDamageType.DEATH) return;
 
