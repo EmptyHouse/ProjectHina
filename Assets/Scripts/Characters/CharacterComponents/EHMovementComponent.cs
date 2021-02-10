@@ -20,6 +20,7 @@ public class EHMovementComponent : MonoBehaviour
 
     private const string ANIM_HORIZONTAL_VELOCITY = "HorizontalSpeed";
     private const string ANIM_VERTICAL_VELOCITY = "VerticalSpeed";
+    private const string ANIM_JUMP = "Jump";
     #endregion const values
 
     #region enums
@@ -235,6 +236,17 @@ public class EHMovementComponent : MonoBehaviour
     {
         CurrentMovementInput.y = Mathf.Clamp(VerticalInput, -1f, 1f);
     }
+
+    public void InputJump()
+    {
+        CharacterAnimator.SetTrigger(ANIM_JUMP);
+    }
+
+    public void ReleaseInputJump()
+    {
+        CharacterAnimator.SetBool(ANIM_JUMP, false);
+    }
+
 
     /// <summary>
     /// Returns the current input for our movement component

@@ -14,12 +14,13 @@ public class EHPlayerController : EHBaseController
     #endregion const variables
 
     private EHAttackComponent AttackComponent;
+    private EHMovementComponent MovementComponent;
+    private DashComponent DashComponent;
 
     #region monobehaivour methods
     protected override void Awake()
     {
         base.Awake();
-        AttackComponent = GetComponent<EHAttackComponent>();
         BaseGameOverseer.Instance.PlayerController = this;
     }
 
@@ -29,11 +30,12 @@ public class EHPlayerController : EHBaseController
     #region override methods
     public override void SetUpInput()
     {
-        EHMovementComponent MovementComponent = GetComponent<EHMovementComponent>();
-        DashComponent DashComponent = GetComponent<DashComponent>();
-        EHAttackComponent AttackComponent = GetComponent<EHAttackComponent>();
+        DashComponent = GetComponent<DashComponent>();
+        AttackComponent = GetComponent<EHAttackComponent>();
+        MovementComponent = GetComponent<EHMovementComponent>();
 
-        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, MovementComponent.AttemptJump);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, Jump);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, JumpBufferEnded);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Released, MovementComponent.EndJump);
         BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Pressed, DashComponent.AttemptDash);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Pressed, Attack);
@@ -53,6 +55,16 @@ public class EHPlayerController : EHBaseController
     private void AttackBufferEnded()
     {
         AttackComponent.ReleaseAttack(0);
+    }
+
+    private void Jump()
+    {
+        MovementComponent.InputJump();
+    }
+
+    private void JumpBufferEnded()
+    {
+        MovementComponent.ReleaseInputJump();
     }
     #endregion input helper methods
 }
