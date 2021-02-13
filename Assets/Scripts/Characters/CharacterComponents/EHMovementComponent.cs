@@ -269,7 +269,14 @@ public class EHMovementComponent : MonoBehaviour
                 Jump();
                 return;
             case EMovementType.CROUCH:
-                if (AttemptStand()) Jump();
+                if (AttemptDropDownJump())
+                {
+
+                }
+                else if (AttemptStand())
+                {
+                    Jump();
+                }
                 return;
             case EMovementType.IN_AIR:
                 if (RemainingDoubleJumps-- > 0)
@@ -438,6 +445,32 @@ public class EHMovementComponent : MonoBehaviour
         return false;
     }
 
+    public bool AttemptDropDownJump()
+    {
+        if (CurrentMovementType != EMovementType.CROUCH)
+        {
+            return false;
+        }
+        EHBounds2D ColliderBounds = AssociatedCollider.GetBounds();
+        EHRect2D CastBox = new EHRect2D();
+        CastBox.RectPosition = ColliderBounds.MinBounds + Vector2.down * .1f;
+        CastBox.RectSize = new Vector2(ColliderBounds.MaxBounds.x - ColliderBounds.MinBounds.x, .1f);
+        if (EHPhysicsManager2D.BoxCast2D(ref CastBox, out EHBaseCollider2D ColliderWeHit, LayerMask.GetMask(ENVIRONMENT_LAYER)))
+        {
+            if (ColliderWeHit is EHOneSidedBoxCollider2D)
+            {
+                DropDownJump();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void DropDownJump()
+    {
+        transform.position += Vector3.down * .1f;
+        AssociatedCollider.UpdateColliderBounds(true);//Ignores the sweep of our collider so they can move through our platform
+    }
     
     /// <summary>
     /// This will set the velocity of our character to perform a jump
