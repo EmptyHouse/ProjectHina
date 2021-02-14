@@ -15,7 +15,7 @@ MonoBehaviour:
   DataTableName: RomonaAttackTable
   DataElements:
   - AttackName: Attack_01
-    AttackDataAnimationClip: {fileID: 7400000, guid: 59d367cef1e98d4448e1d02e6ef60612, type: 2}
+    AttackDataAnimationClip: {fileID: 7400000, guid: 55b61dccab506cf4fb1b427c28d1d274, type: 2}
     AttackData:
       AttackDamage: 2
       HitStunTime: 0.5
