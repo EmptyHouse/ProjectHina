@@ -543,6 +543,11 @@ public class EHMovementComponent : MonoBehaviour
         return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
     }
 
+    public void OnTransformPositionInPixels(int x)
+    {
+        transform.position += Vector3.right * (Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x) * x / 16f);
+    }
+
     /// <summary>
     /// Returns true if our character facing to the left.
     /// </summary>
