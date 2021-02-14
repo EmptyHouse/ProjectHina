@@ -387,12 +387,15 @@ MonoBehaviour:
   - InputName: Jump
     MainKey: 32
     AlternateKey: 330
+    BufferTime: 0
   - InputName: Dash
     MainKey: 106
     AlternateKey: 331
+    BufferTime: 0
   - InputName: Attack
     MainKey: 107
     AlternateKey: 332
+    BufferTime: 0
   AxisInputNodes:
   - AxisName: Horizontal
   - AxisName: Vertical

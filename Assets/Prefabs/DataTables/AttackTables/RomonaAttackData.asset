@@ -41,7 +41,7 @@ MonoBehaviour:
       CameraShakeDuration: 0.08
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 7, y: 0}
-  - AttackName: Jump_Air
+  - AttackName: Jump_Attack
     AttackDataAnimationClip: {fileID: 7400000, guid: fa7b8e291bcbf8f4ab5898bf377ba6cd, type: 2}
     AttackData:
       AttackDamage: 1
@@ -49,4 +49,4 @@ MonoBehaviour:
       HitFreezeTime: 0.1
       CameraShakeDuration: 0.05
       CameraShakeIntensity: 0.2
-      LaunchForce: {x: 2, y: 0}
+      LaunchForce: {x: 4.5, y: 0}
