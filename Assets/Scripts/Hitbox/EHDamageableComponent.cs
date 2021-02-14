@@ -25,7 +25,7 @@ public class EHDamageableComponent : MonoBehaviour
 
 
     [Tooltip("The maximum health of our Damageable component")]
-    public int MaxHealth = 100;
+    public int MaxHealth = 1;
     /// <summary>
     /// The ccurrent health of our character component
     /// </summary>

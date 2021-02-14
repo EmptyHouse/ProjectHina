@@ -37,7 +37,7 @@ MonoBehaviour:
     AttackData:
       AttackDamage: 2
       HitStunTime: 0.75
-      HitFreezeTime: 0.15
+      HitFreezeTime: 0.2
       CameraShakeDuration: 0.08
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 7, y: 0}
@@ -46,7 +46,7 @@ MonoBehaviour:
     AttackData:
       AttackDamage: 1
       HitStunTime: 0.5
-      HitFreezeTime: 0.1
+      HitFreezeTime: 0.13
       CameraShakeDuration: 0.05
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 4.5, y: 0}

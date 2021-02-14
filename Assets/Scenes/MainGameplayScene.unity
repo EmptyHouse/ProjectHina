@@ -140,11 +140,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392888, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.266
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392888, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.101
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392888, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.z
@@ -177,6 +177,18 @@ PrefabInstance:
     - target: {fileID: 5197975866366392888, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[0].BufferTime
+      value: 0.16666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[1].BufferTime
+      value: 0.16666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[2].BufferTime
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5d302cdeb8920429b2582b71259148, type: 3}

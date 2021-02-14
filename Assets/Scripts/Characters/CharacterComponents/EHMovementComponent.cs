@@ -29,6 +29,7 @@ public class EHMovementComponent : MonoBehaviour
         STANDING = 0x00,
         CROUCH = 0x01,
         IN_AIR = 0x02,
+        FLYING = 0x03
     }
     #endregion enums
 
