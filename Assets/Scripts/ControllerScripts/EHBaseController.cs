@@ -10,7 +10,7 @@ using UnityEngine.Events;
 public abstract class EHBaseController : MonoBehaviour
 {
     #region const values
-    private const float BUFFER_TIME = 12f * 1f / 60f;
+    private const float DEFAULT_BUFFER_TIME = 12f * 1f / 60f;
     #endregion const values
 
     public enum ButtonInputType
@@ -80,11 +80,11 @@ public abstract class EHBaseController : MonoBehaviour
             {
                 ButtonNode.OnButtonPressed?.Invoke();
 
-                if (ButtonBufferDictionary[ButtonNode.InputName] <= 0)
+                if (ButtonNode.BufferTime > 0 && ButtonBufferDictionary[ButtonNode.InputName] <= 0)
                 {
                     StartCoroutine(BeginButtonBuffer(ButtonNode.InputName));
                 }
-                ButtonBufferDictionary[ButtonNode.InputName] = BUFFER_TIME;
+                ButtonBufferDictionary[ButtonNode.InputName] = ButtonNode.BufferTime;
             }
             if (ButtonNode.ButtonReleased)
             {
@@ -105,7 +105,7 @@ public abstract class EHBaseController : MonoBehaviour
     /// <param name="InputName"></param>
     /// <param name="InputType"></param>
     /// <param name="ButtonAction"></param>
-    public void BindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction)
+    public void BindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction, float BufferTime = 0f)
     {
         if (InputName == null || !ButtonInputNodeDictionary.ContainsKey(InputName))
         {
@@ -123,6 +123,7 @@ public abstract class EHBaseController : MonoBehaviour
                 break;
             case ButtonInputType.Button_Buffer:
                 ButtonInput.OnButtonBufferEnded += ButtonAction;
+                ButtonInput.BufferTime = BufferTime;
                 break;
         }
     }
@@ -208,6 +209,8 @@ public abstract class EHBaseController : MonoBehaviour
         public UnityAction OnButtonPressed;
         public UnityAction OnButtonReleased;
         public UnityAction OnButtonBufferEnded;
+        // Only applicable if our input type is buffer
+        public float BufferTime;
 
         public bool ButtonDown
         {
@@ -243,6 +246,7 @@ public abstract class EHBaseController : MonoBehaviour
         while(ButtonBufferDictionary[ButtonInput] > 0)
         {
             ButtonBufferDictionary[ButtonInput] -= EHTime.DeltaTime;
+            print(ButtonBufferDictionary[ButtonInput]);
             yield return null;
         }
         ButtonBufferDictionary[ButtonInput] = 0;
