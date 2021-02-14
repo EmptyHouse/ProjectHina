@@ -105,7 +105,7 @@ public abstract class EHBaseController : MonoBehaviour
     /// <param name="InputName"></param>
     /// <param name="InputType"></param>
     /// <param name="ButtonAction"></param>
-    public void BindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction, float BufferTime = 0f)
+    public void BindActionToInput(string InputName, ButtonInputType InputType, UnityAction ButtonAction)
     {
         if (InputName == null || !ButtonInputNodeDictionary.ContainsKey(InputName))
         {
@@ -123,7 +123,6 @@ public abstract class EHBaseController : MonoBehaviour
                 break;
             case ButtonInputType.Button_Buffer:
                 ButtonInput.OnButtonBufferEnded += ButtonAction;
-                ButtonInput.BufferTime = BufferTime;
                 break;
         }
     }
