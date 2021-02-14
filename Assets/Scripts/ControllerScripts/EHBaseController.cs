@@ -246,7 +246,6 @@ public abstract class EHBaseController : MonoBehaviour
         while(ButtonBufferDictionary[ButtonInput] > 0)
         {
             ButtonBufferDictionary[ButtonInput] -= EHTime.DeltaTime;
-            print(ButtonBufferDictionary[ButtonInput]);
             yield return null;
         }
         ButtonBufferDictionary[ButtonInput] = 0;
