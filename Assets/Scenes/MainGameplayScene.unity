@@ -190,6 +190,10 @@ PrefabInstance:
       propertyPath: ButtonInputNodes.Array.data[2].BufferTime
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392892, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
 --- !u!1 &841370190
@@ -231,6 +235,7 @@ MonoBehaviour:
     CameraShakeDuration: 0.02
     CameraShakeIntensity: 0.1
     LaunchForce: {x: 1, y: 0}
+    bIsConstantHitbox: 0
 --- !u!114 &841370192
 MonoBehaviour:
   m_ObjectHideFlags: 0

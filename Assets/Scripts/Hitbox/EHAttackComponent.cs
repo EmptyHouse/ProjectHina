@@ -91,6 +91,10 @@ public class EHAttackComponent : MonoBehaviour
             BaseGameOverseer.Instance.MainGameCamera.CameraShake.BeginCameraShake(AttackData.CameraShakeDuration, AttackData.CameraShakeIntensity);
         }
         StartCoroutine(StopTimeWhenHitCoroutine(AttackData.HitFreezeTime, DamageableComponentWeHit, AttackData));
+        if (AttackData.bIsConstantHitbox)
+        {
+            StartCoroutine(ClearHitListNextFrame());
+        }
     }
 
     public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }
@@ -131,15 +135,24 @@ public class EHAttackComponent : MonoBehaviour
         float OriginalTimeScale = EHTime.TimeScale;
         EHTime.SetTimeScale(0);
         float TimeThatHasPassed = 0;
+
+        float ScaleX = Mathf.Sign(DamageComponentThatWeHit.transform.position.x - transform.position.x);
+        if (ScaleX == 0) ScaleX = 1;
+        DamageComponentThatWeHit.ApplyKnockback(AttackData.HitStunTime, new Vector2(ScaleX, 1) * AttackData.LaunchForce);
+
         while (TimeThatHasPassed < SecondsToPauseGameWhenHitConnected)
         {
             TimeThatHasPassed += EHTime.RealDeltaTime;
             yield return null;
         }
         EHTime.SetTimeScale(OriginalTimeScale);
-        float ScaleX = Mathf.Sign(DamageComponentThatWeHit.transform.position.x - transform.position.x);
-        if (ScaleX == 0) ScaleX = 1;
-        DamageComponentThatWeHit.ApplyKnockback(AttackData.HitStunTime, new Vector2(ScaleX, 1) * AttackData.LaunchForce);
+        
+    }
+
+    private IEnumerator ClearHitListNextFrame()
+    {
+        yield return null;
+        OnClearAllIntersectedDamageableComponents();
     }
 }
 
@@ -149,10 +162,18 @@ public class EHAttackComponent : MonoBehaviour
 [System.Serializable]
 public struct FAttackData
 {
+    [Tooltip("The damage that will be applied to the damageable component that we hit")]
     public int AttackDamage;
+    [Tooltip("The amount of time the actor we hit will be locked in hitstun")]
     public float HitStunTime;
+    [Tooltip("The time in which time will freeze when hitting the other opponent")]
     public float HitFreezeTime;
+    [Tooltip("The time in seconds that our camera will shake.")]
     public float CameraShakeDuration;
+    [Tooltip("Intensity of the camera shake that will be applied")]
     public float CameraShakeIntensity;
+    [Tooltip("The force at which we will lauch the damageable component actor that we hit")]
     public Vector2 LaunchForce;
+    [Tooltip("Indicates whether or not we can keep hitting a character")]
+    public bool bIsConstantHitbox;
 }

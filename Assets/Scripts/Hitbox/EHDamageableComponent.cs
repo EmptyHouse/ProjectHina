@@ -5,6 +5,10 @@ using UnityEngine.Events;
 
 public class EHDamageableComponent : MonoBehaviour
 {
+    #region const values
+    private const string ANIM_HITSTUN = "HitStunTime";
+    #endregion const values
+
     #region enum 
     public enum EDamageType
     {
@@ -33,11 +37,14 @@ public class EHDamageableComponent : MonoBehaviour
 
     public EHPhysics2D Physics2D { get; private set; }
 
+    private Animator AnimReference;
+
     #region monobehaviour methods
     private void Awake()
     {
         Health = MaxHealth;
         Physics2D = GetComponent<EHPhysics2D>();
+        AnimReference = GetComponent<Animator>();
     }
     private void OnValidate()
     {
@@ -94,10 +101,18 @@ public class EHDamageableComponent : MonoBehaviour
         while (TimeThatHasPassed < HitStunTime)
         {
             TimeThatHasPassed += EHTime.DeltaTime;
-            Physics2D.Velocity = HitStunDropOff.Evaluate(TimeThatHasPassed) * KnockbackForce;
+            Physics2D.Velocity = HitStunDropOff.Evaluate(TimeThatHasPassed) * KnockbackForce.x * Vector2.right + Vector2.up * Physics2D.Velocity.y;
+            if (AnimReference)
+            {
+                AnimReference.SetFloat(ANIM_HITSTUN, HitStunTime - TimeThatHasPassed);
+            }
             yield return null;
         }
-        Physics2D.Velocity = Vector2.zero;
+        if (AnimReference)
+        {
+            AnimReference.SetFloat(ANIM_HITSTUN, -1);
+        }
+        Physics2D.Velocity = new Vector2(0, Physics2D.Velocity.y);
         OnHitStunEnd?.Invoke();  
     }
 }
