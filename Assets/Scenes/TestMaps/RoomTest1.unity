@@ -711,6 +711,7 @@ GameObject:
   - component: {fileID: 758054037}
   - component: {fileID: 758054036}
   - component: {fileID: 758054038}
+  - component: {fileID: 758054039}
   m_Layer: 0
   m_Name: WispyBoy
   m_TagString: Untagged
@@ -838,6 +839,20 @@ MonoBehaviour:
   GravityScale: 0
   bUseTerminalVelocity: 1
   TerminalVelocity: 10
+--- !u!114 &758054039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758054030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2adb205985f94a4c8154f037d4cd1f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Acceleration: 15
+  MaxVelocity: 5
 --- !u!1 &798636517
 GameObject:
   m_ObjectHideFlags: 0
