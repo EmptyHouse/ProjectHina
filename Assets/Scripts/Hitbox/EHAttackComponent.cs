@@ -145,7 +145,8 @@ public class EHAttackComponent : MonoBehaviour
             TimeThatHasPassed += EHTime.RealDeltaTime;
             yield return null;
         }
-        EHTime.SetTimeScale(OriginalTimeScale);
+        //TO-DO Possibly want to move this to a place where the freeze time can be managed. Possibly something like the game overseer but perhaps more universal for effects
+        EHTime.SetTimeScale(1);
         
     }
 

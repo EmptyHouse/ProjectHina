@@ -18,35 +18,39 @@ MonoBehaviour:
     AttackDataAnimationClip: {fileID: 7400000, guid: 55b61dccab506cf4fb1b427c28d1d274, type: 2}
     AttackData:
       AttackDamage: 1
-      HitStunTime: 0.5
+      HitStunTime: 1.2
       HitFreezeTime: 0.12
       CameraShakeDuration: 0.06
       CameraShakeIntensity: 0.4
       LaunchForce: {x: 4, y: 0}
+      bIsConstantHitbox: 0
   - AttackName: Attack_02
     AttackDataAnimationClip: {fileID: 7400000, guid: a1af60da3d125884f91614b478254eba, type: 2}
     AttackData:
       AttackDamage: 1
-      HitStunTime: 0.5
+      HitStunTime: 1.2
       HitFreezeTime: 0.1
       CameraShakeDuration: 0.05
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 4, y: 0}
+      bIsConstantHitbox: 0
   - AttackName: Attack_03
     AttackDataAnimationClip: {fileID: 7400000, guid: c2c4c67203c117f4e950147a332c98af, type: 2}
     AttackData:
       AttackDamage: 2
-      HitStunTime: 0.75
+      HitStunTime: 1.6
       HitFreezeTime: 0.2
       CameraShakeDuration: 0.08
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 7, y: 0}
+      bIsConstantHitbox: 0
   - AttackName: Jump_Attack
     AttackDataAnimationClip: {fileID: 7400000, guid: fa7b8e291bcbf8f4ab5898bf377ba6cd, type: 2}
     AttackData:
       AttackDamage: 1
-      HitStunTime: 0.5
+      HitStunTime: 1.2
       HitFreezeTime: 0.13
       CameraShakeDuration: 0.05
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 4.5, y: 0}
+      bIsConstantHitbox: 0

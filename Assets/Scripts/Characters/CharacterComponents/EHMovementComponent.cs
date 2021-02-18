@@ -85,15 +85,6 @@ public class EHMovementComponent : MonoBehaviour
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
-
-    //Animation Controlled variables
-    [HideInInspector]
-    public bool bIsAnimationControlled = false;
-    [HideInInspector]
-    public Vector2 AnimatedGoalVelocity = Vector2.zero;
-
-    #endregion main variables
-
     private EHPhysics2D Physics2D;
     private Vector2 PreviousVelocity;
     private EHBox2DCollider AssociatedCollider;
@@ -106,11 +97,15 @@ public class EHMovementComponent : MonoBehaviour
     private int RemainingDoubleJumps;
     // Reference to the animator component
     private Animator CharacterAnimator;
+    #endregion main variables
 
-    #region animation values
-
-    #endregion animation values
-
+    #region animation controlled varaibles
+    //Animation Controlled variables
+    [HideInInspector]
+    public bool bIsAnimationControlled = false;
+    [HideInInspector]
+    public Vector2 AnimatedGoalVelocity = Vector2.zero;
+    #endregion animation controlled variables
 
     #region monobehaviour methods
     protected virtual void Awake()

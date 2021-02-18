@@ -28,24 +28,6 @@ public class EHFlightMovementComponent : MonoBehaviour
 
     private void Update()
     {
-        CurrentInput = Vector2.zero;
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            SetVerticalInput(-1);
-        }
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            SetVerticalInput(1);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            SetHorizontalInput(1);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            SetHorizontalInput(-1);
-        }
-
         UpdateVelocityFromInput();
         PreviousInput = CurrentInput;
     }

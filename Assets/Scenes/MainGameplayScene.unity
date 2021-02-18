@@ -194,6 +194,38 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: AirSpeed
+      value: 12.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: IsFacingLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: JumpVelocity
+      value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: RunningSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: JumpHeightApex
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: TimeToReachApex
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392893, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: LowJumpMultiplier
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975867184269768, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
 --- !u!1 &841370190
