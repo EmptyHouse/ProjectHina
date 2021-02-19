@@ -534,6 +534,10 @@ public class EHMovementComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns whether or not our character can change directions
+    /// </summary>
+    /// <returns></returns>
     private bool CanChangeDirections()
     {
         return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
