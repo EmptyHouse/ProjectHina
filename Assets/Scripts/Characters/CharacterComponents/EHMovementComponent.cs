@@ -6,9 +6,8 @@ using UnityEngine;
 /// <summary>
 /// Handles all the logic for our character's movement. This include movemet in the air as well as specific movement options while grounded
 /// </summary>
-[RequireComponent(typeof(EHPhysics2D))]
 [RequireComponent(typeof(EHBox2DCollider))]
-public class EHMovementComponent : MonoBehaviour
+public class EHMovementComponent : EHBaseMovementComponent
 {
     #region const values
     private const string ANIM_MOVEMENT_STATE = "MovementState";
@@ -85,49 +84,37 @@ public class EHMovementComponent : MonoBehaviour
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
-    private EHPhysics2D Physics2D;
     private Vector2 PreviousVelocity;
     private EHBox2DCollider AssociatedCollider;
-    private Vector2 CurrentMovementInput = Vector2.zero;
-    private Vector2 PreviousMovementInput = Vector2.zero;
 
     // The current movement type of our character
     private EMovementType CurrentMovementType;
     // The number of double jumps remainging. This should reset every time we land
     private int RemainingDoubleJumps;
-    // Reference to the animator component
-    private Animator CharacterAnimator;
     #endregion main variables
 
-    #region animation controlled varaibles
-    //Animation Controlled variables
-    [HideInInspector]
-    public bool bIsAnimationControlled = false;
-    [HideInInspector]
-    public Vector2 AnimatedGoalVelocity = Vector2.zero;
-    #endregion animation controlled variables
 
     #region monobehaviour methods
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        Physics2D = GetComponent<EHPhysics2D>();
+        base.Awake();
         AssociatedCollider = GetComponent<EHBox2DCollider>();
         StandingHeight = AssociatedCollider.ColliderSize.y;
 
-        if (Physics2D == null) Debug.LogError("There is no associated with physics component with our movement component");
-        if (AssociatedCollider == null) Debug.LogError("There is no associated Collider2D component associated with our movement component");
-
+        if (Physics2D == null) Debug.LogError("There is no associated physics component with our movement component");
+        if (AssociatedCollider == null)
+        {
+            Debug.LogError("There is no associated Collider2D component associated with our movement component");
+            return;
+        }
         AssociatedCollider.OnCollision2DBegin += OnEHCollisionEnter;
-        CharacterAnimator = GetComponent<Animator>();
         CachedGravityScale = Physics2D.GravityScale;
         SetIsFacingLeft(IsFacingLeft, true);
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
-        UpdateMovementVelocity();
-        PreviousMovementInput = CurrentMovementInput;
-        UpdateMovementBasedOnMovementType();
+        base.Update();
         if (CurrentMovementType != EMovementType.IN_AIR && Mathf.Abs(Physics2D.Velocity.y) > 0)
         {
             SetMovementType(EMovementType.IN_AIR);
@@ -201,38 +188,6 @@ public class EHMovementComponent : MonoBehaviour
     #endregion monobehaviour methods
 
     #region input methods
-    /// <summary>
-    /// Sets the horizontal input for our movement component
-    /// </summary>
-    /// <param name="HorizontalInput"></param>
-    public void SetHorizontalInput(float HorizontalInput)
-    {
-        CurrentMovementInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
-
-        if (CurrentMovementInput.x < 0 && !GetIsFacingLeft())
-        {
-            SetIsFacingLeft(true);
-        }
-        else if (CurrentMovementInput.x > 0 && GetIsFacingLeft())
-        {
-            SetIsFacingLeft(false);
-        }
-
-        if (CharacterAnimator)
-        {
-            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, Mathf.Abs(CurrentMovementInput.x));
-        }
-    }
-
-    /// <summary>
-    /// Sets the vertical input for our movement component
-    /// </summary>
-    /// <param name="VerticalInput"></param>
-    public void SetVerticalInput(float VerticalInput)
-    {
-        CurrentMovementInput.y = Mathf.Clamp(VerticalInput, -1f, 1f);
-    }
-
     public void InputJump()
     {
         CharacterAnimator.SetTrigger(ANIM_JUMP);
@@ -241,16 +196,6 @@ public class EHMovementComponent : MonoBehaviour
     public void ReleaseInputJump()
     {
         CharacterAnimator.SetBool(ANIM_JUMP, false);
-    }
-
-
-    /// <summary>
-    /// Returns the current input for our movement component
-    /// </summary>
-    /// <returns></returns>
-    public Vector2 GetMovementInput()
-    {
-        return CurrentMovementInput;
     }
 
     /// <summary>
@@ -287,7 +232,7 @@ public class EHMovementComponent : MonoBehaviour
     /// <summary>
     /// TO-DO why do we use CurrentSpeed? Look into this later
     /// </summary>
-    private void UpdateMovementVelocity()
+    protected override void UpdateVelocityFromInput(Vector2 CurrentInput, Vector2 PreviousInput)
     {
         float GoalSpeed = 0;
         float Acceleration = 0;
@@ -296,25 +241,25 @@ public class EHMovementComponent : MonoBehaviour
         {
             case EMovementType.STANDING:
                 Acceleration = GroundAcceleration;
-                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_RUN_THRESHOLD)
+                if (Mathf.Abs(CurrentInput.x) > JOYSTICK_RUN_THRESHOLD)
                 {
                     GoalSpeed = RunningSpeed;
                 }
-                else if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                else if (Mathf.Abs(CurrentInput.x) > JOYSTICK_WALK_THRESHOLD)
                 {
                     GoalSpeed = WalkingSpeed;
                 }
                 break;
             case EMovementType.CROUCH:
                 Acceleration = GroundAcceleration;
-                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                if (Mathf.Abs(CurrentInput.x) > JOYSTICK_WALK_THRESHOLD)
                 {
                     GoalSpeed = CrouchingSpeed;
                 }
                 break;
             case EMovementType.IN_AIR:
                 Acceleration = HorizontalAirAcceleration;
-                if (Mathf.Abs(CurrentMovementInput.x) > JOYSTICK_WALK_THRESHOLD)
+                if (Mathf.Abs(CurrentInput.x) > JOYSTICK_WALK_THRESHOLD)
                 {
                     GoalSpeed = AirSpeed;
                 }
@@ -331,7 +276,7 @@ public class EHMovementComponent : MonoBehaviour
         }
         else
         {
-            GoalSpeed *= Mathf.Sign(CurrentMovementInput.x);
+            GoalSpeed *= Mathf.Sign(CurrentInput.x);
         }
 
         CurrentSpeed = Mathf.MoveTowards(CurrentSpeed, GoalSpeed, EHTime.DeltaTime * Acceleration);
@@ -346,18 +291,18 @@ public class EHMovementComponent : MonoBehaviour
     /// <summary>
     /// Updates the movmeent component based on the state
     /// </summary>
-    private void UpdateMovementBasedOnMovementType()
+    protected override void UpdateMovementTypeFromInput(Vector2 CurrentInput)
     {
         switch (CurrentMovementType)
         {
             case EMovementType.STANDING:
-                if (CurrentMovementInput.y < -JOYSTICK_CROUCH_THRESHOLD)
+                if (CurrentInput.y < -JOYSTICK_CROUCH_THRESHOLD)
                 {
                     SetMovementType(EMovementType.CROUCH);
                 }
                 return;
             case EMovementType.CROUCH:
-                if (CurrentMovementInput.y > -JOYSTICK_CROUCH_THRESHOLD)
+                if (CurrentInput.y > -JOYSTICK_CROUCH_THRESHOLD)
                 {
                     //Attempt to stand if the player has gone above the crouch threshold
                     AttemptStand();
@@ -510,35 +455,10 @@ public class EHMovementComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// Set the orientation of the character
-    /// </summary>
-    /// <param name="bIsFacingLeft"></param>
-    /// <param name="bForceFaceDirection"></param>
-    public void SetIsFacingLeft(bool bIsFacingLeft, bool bForceFaceDirection = false)
-    {
-        if ((bIsFacingLeft == this.IsFacingLeft || !CanChangeDirections()) && !bForceFaceDirection)
-        {
-            return;
-        }
-
-        this.IsFacingLeft = bIsFacingLeft;
-        Transform CharacterSpriteTransform = CharacterSpriteRenderer.transform;
-        float XScale = Mathf.Abs(CharacterSpriteTransform.localScale.x);
-        if (bIsFacingLeft)
-        {
-            CharacterSpriteTransform.localScale = new Vector3(-XScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
-        }
-        else
-        {
-            CharacterSpriteTransform.localScale = new Vector3(XScale, CharacterSpriteTransform.localScale.y, CharacterSpriteTransform.localScale.z);
-        }
-    }
-
-    /// <summary>
     /// Returns whether or not our character can change directions
     /// </summary>
     /// <returns></returns>
-    private bool CanChangeDirections()
+    protected override bool CanChangeDirection()
     {
         return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
     }
@@ -547,10 +467,4 @@ public class EHMovementComponent : MonoBehaviour
     {
         transform.position += Vector3.right * (Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x) * x / 16f);
     }
-
-    /// <summary>
-    /// Returns true if our character facing to the left.
-    /// </summary>
-    /// <returns></returns>
-    public bool GetIsFacingLeft() { return this.IsFacingLeft; }
 }

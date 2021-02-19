@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EHPhysics2D))]
 public abstract class EHBaseMovementComponent : MonoBehaviour
 {
     #region const variables
@@ -10,10 +11,11 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     #endregion const variables
 
     #region main variables
-    private SpriteRenderer CharacterSpriteRenderer;
-    private bool bIsFacingLeft;
     protected EHPhysics2D Physics2D;
     protected Animator CharacterAnimator;
+    private SpriteRenderer CharacterSpriteRenderer;
+    private bool bIsFacingLeft;
+
     #endregion main variables
 
     #region animation controlled varaibles
@@ -28,7 +30,7 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// to true
     /// </summary>
     [HideInInspector]
-    public Vector2 AnimationGoalVelocity;
+    public Vector2 AnimatedGoalVelocity;
 
     /// <summary>
     /// Set this value to true if you want to disable the movement component entirely. This will be good if we want another function
@@ -39,7 +41,9 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     #endregion animation controlled variables
 
     #region input varaibles
+    // The currently held directional Input that our movement will consider when setting the velocity
     private Vector2 CurrentInput;
+    // The previously held direction
     private Vector3 PreviousInput;
     #endregion input varaibles 
 
@@ -53,22 +57,56 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
 
     protected virtual void Update()
     {
-        UpdateVelocityFromInput(CurrentInput, PreviousInput);
+        if (!bMovementComponentDisabled)
+        {
+            UpdateVelocityFromInput(CurrentInput, PreviousInput);
+        }
+        UpdateMovementTypeFromInput(CurrentInput);
+        if (CharacterAnimator)
+        {
+            CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, Mathf.Abs(CurrentInput.x));
+        }
     }
     #endregion monobehaviour methods
 
     #region update methods
     protected abstract void UpdateVelocityFromInput(Vector2 CurrentInput, Vector2 PreviousInput);
+    protected abstract void UpdateMovementTypeFromInput(Vector2 CurrentInput);
     #endregion update methods
 
     #region input methods
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetMovementInput()
+    {
+        return CurrentInput;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public Vector2 GetPreviousMovementInput()
+    {
+        return PreviousInput;
+    }
     /// <summary>
     /// Sets the current input
     /// </summary>
     /// <param name="HorizontalInput"></param>
     public void SetHorizontalInput(float HorizontalInput)
     {
-        CurrentInput.x = Mathf.Clamp(HorizontalInput, -1, 1);
+        CurrentInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
+        if (HorizontalInput < 0 && !bIsFacingLeft)
+        {
+            SetIsFacingLeft(true);
+        }
+        else if(HorizontalInput > 0 && bIsFacingLeft)
+        {
+            SetIsFacingLeft(false);
+        }
     }
 
     /// <summary>
@@ -77,7 +115,7 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// <param name="VerticalInput"></param>
     public void SetVerticalInput(float VerticalInput)
     {
-        CurrentInput.y = Mathf.Clamp(VerticalInput, -1, 1);
+        CurrentInput.y = Mathf.Clamp(VerticalInput, -1f, 1f);
     }
     #endregion input methods
 
@@ -94,7 +132,7 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// Returns whether or not our character can change directions
     /// </summary>
     /// <returns></returns>
-    public virtual bool CanChangeDirection()
+    protected virtual bool CanChangeDirection()
     {
         return true;
     }
@@ -107,11 +145,13 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// <param name="bIsFacingLeft"></param>
     public void SetIsFacingLeft(bool bIsFacingLeft, bool bForceSetDirection = false)
     {
-        if (this.bIsFacingLeft == bIsFacingLeft && !bForceSetDirection)
+        if ((this.bIsFacingLeft == bIsFacingLeft || !CanChangeDirection()) && !bForceSetDirection)
         {
             return;
         }
         this.bIsFacingLeft = bIsFacingLeft;
-        CharacterSpriteRenderer.transform.localScale = Vector3.Scale(new Vector3((bIsFacingLeft ? -1 : 1), 1, 1), CharacterSpriteRenderer.transform.localScale);
+        Vector3 NewScale = CharacterSpriteRenderer.transform.localScale;
+        NewScale.x = Mathf.Abs(NewScale.x) * (bIsFacingLeft ? -1f : 1f);
+        CharacterSpriteRenderer.transform.localScale = NewScale;
     }
 }
