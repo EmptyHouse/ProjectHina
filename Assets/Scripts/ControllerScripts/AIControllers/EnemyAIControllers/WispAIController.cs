@@ -22,6 +22,7 @@ public class WispAIController : EHBaseAIController
     {
         private WispAIController WispController;
         private Transform TargetTransform;
+        private EHBox2DCollider PlayerCollider;
         private float Range = 15f;
 
         public FollowPlayerState(EHBaseAIController AIController) : base(AIController)
@@ -32,6 +33,7 @@ public class WispAIController : EHBaseAIController
         public override void OnStateBegin()
         {
             TargetTransform = BaseGameOverseer.Instance.PlayerController.transform;
+            PlayerCollider = BaseGameOverseer.Instance.PlayerController.GetComponent<EHBox2DCollider>();
         }
 
         public override void OnStateEnded()
@@ -44,7 +46,9 @@ public class WispAIController : EHBaseAIController
             float Distance = Vector2.Distance(TargetTransform.position, AIControllerOwner.transform.position);
             if (Distance < Range)
             {
-                Vector2 DirectionToFly = TargetTransform.position - AIControllerOwner.transform.position;
+                EHBounds2D PlayerCharacterBounds = PlayerCollider.GetBounds();
+                Vector3 CenterColliderPosition = PlayerCharacterBounds.MinBounds + (PlayerCharacterBounds.MaxBounds - PlayerCharacterBounds.MinBounds) / 2f;
+                Vector2 DirectionToFly = CenterColliderPosition - AIControllerOwner.transform.position;
                 DirectionToFly.Normalize();
                 WispController.FlightMovement.SetHorizontalInput(DirectionToFly.x);
                 WispController.FlightMovement.SetVerticalInput(DirectionToFly.y);
