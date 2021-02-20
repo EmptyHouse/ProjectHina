@@ -13,8 +13,8 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     #region main variables
     protected EHPhysics2D Physics2D;
     protected Animator CharacterAnimator;
-    private SpriteRenderer CharacterSpriteRenderer;
-    private bool bIsFacingLeft;
+    protected SpriteRenderer CharacterSpriteRenderer;
+    protected bool bIsFacingLeft;
 
     #endregion main variables
 

@@ -89,8 +89,12 @@ public class EHAttackComponent : MonoBehaviour
         if (BaseGameOverseer.Instance.MainGameCamera && BaseGameOverseer.Instance.MainGameCamera.CameraShake)
         {
             BaseGameOverseer.Instance.MainGameCamera.CameraShake.BeginCameraShake(AttackData.CameraShakeDuration, AttackData.CameraShakeIntensity);
+            BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(AttackData.HitFreezeTime);
         }
-        StartCoroutine(StopTimeWhenHitCoroutine(AttackData.HitFreezeTime, DamageableComponentWeHit, AttackData));
+
+        float ScaleX = Mathf.Sign(DamageableComponentWeHit.transform.position.x - transform.position.x);
+        if (ScaleX == 0) ScaleX = 1;
+        DamageableComponentWeHit.ApplyKnockback(AttackData.HitStunTime, new Vector2(ScaleX, 1) * AttackData.LaunchForce);
         if (AttackData.bIsConstantHitbox)
         {
             StartCoroutine(ClearHitListNextFrame());
@@ -132,22 +136,16 @@ public class EHAttackComponent : MonoBehaviour
     /// <returns></returns>
     private IEnumerator StopTimeWhenHitCoroutine(float SecondsToPauseGameWhenHitConnected, EHDamageableComponent DamageComponentThatWeHit, FAttackData AttackData)
     {
-        float OriginalTimeScale = EHTime.TimeScale;
-        EHTime.SetTimeScale(0);
+
         float TimeThatHasPassed = 0;
 
-        float ScaleX = Mathf.Sign(DamageComponentThatWeHit.transform.position.x - transform.position.x);
-        if (ScaleX == 0) ScaleX = 1;
-        DamageComponentThatWeHit.ApplyKnockback(AttackData.HitStunTime, new Vector2(ScaleX, 1) * AttackData.LaunchForce);
+        
 
         while (TimeThatHasPassed < SecondsToPauseGameWhenHitConnected)
         {
             TimeThatHasPassed += EHTime.RealDeltaTime;
             yield return null;
         }
-        //TO-DO Possibly want to move this to a place where the freeze time can be managed. Possibly something like the game overseer but perhaps more universal for effects
-        EHTime.SetTimeScale(1);
-        
     }
 
     private IEnumerator ClearHitListNextFrame()

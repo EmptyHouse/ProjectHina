@@ -48,8 +48,13 @@ public class DashComponent : MonoBehaviour
     {
         if (!bIsPerformingDash)
         {
-            StartCoroutine(BeginDash());
+            BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash, BeginActualDash);
         }
+    }
+
+    private void BeginActualDash()
+    {
+        StartCoroutine(BeginDash());
     }
 
     /// <summary>
@@ -59,29 +64,9 @@ public class DashComponent : MonoBehaviour
     private IEnumerator BeginDash()
     {
         bIsPerformingDash = true;
-        yield return StartCoroutine(PerformDelayBeforeDash());
         yield return StartCoroutine(PerformDash());
         bIsPerformingDash = false;
         yield return StartCoroutine(PerformDashCoolDown());
-    }
-
-    /// <summary>
-    /// Pauses the entire game for a few seconds before performing the actual dash. Ideally this will give the player
-    /// a greater feeling of impact when performing the dash
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator PerformDelayBeforeDash()
-    {
-        if (DelayBeforeStartDash <= 0) yield break;
-        float CachedTimeScale = EHTime.TimeScale;
-        EHTime.SetTimeScale(0);
-        float TimeThatHasPassed = 0;
-        while (TimeThatHasPassed < DelayBeforeStartDash)
-        {
-            yield return null;
-            TimeThatHasPassed += EHTime.RealDeltaTime;
-        }
-        EHTime.SetTimeScale(CachedTimeScale);
     }
 
     /// <summary>

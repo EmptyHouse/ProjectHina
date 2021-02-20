@@ -37,20 +37,36 @@ public class BaseGameOverseer : MonoBehaviour
     /// </summary>
     public EHHitboxManager HitboxManager { get; } = new EHHitboxManager();
     /// <summary>
-    /// 
+    /// Contains a collection of datatables that can be used in our game. 
     /// </summary>
     public DataTableManager DataTableManager { get; } = new DataTableManager();
-
+    /// <summary>
+    /// Contains logic for managing certain global effects in our game such as CameraShake and Freeze time as these types of effects should not be managed by 
+    /// individual actors
+    /// </summary>
+    public EHGlobalEffectManager GlobalEffectManager { get; } = new EHGlobalEffectManager();
+    /// <summary>
+    /// The currently loaded room that our character is in
+    /// </summary>
     public RoomActor CurrentlyLoadedRoom { get; set; }
-
+    /// <summary>
+    /// The Associated GameHUD
+    /// </summary>
     public EHGameHUD GameHUD { get; set; }
 
     #region game component references
+    /// <summary>
+    /// Our main camera component in the game scene. The camera component that is currently following our character
+    /// </summary>
     public MainCameraFollow MainGameCamera { get; set; }
 
+    /// <summary>
+    /// The associated player controller in our game. This will also have a reference to the player's gameplay character
+    /// </summary>
     public EHPlayerController PlayerController { get; set; }
 
-    public EHUtilities.SceneField DefaultScene;
+    [SerializeField]
+    private EHUtilities.SceneField DefaultScene;
     #endregion game component references
 
     #region monobehaviour methods
@@ -68,6 +84,11 @@ public class BaseGameOverseer : MonoBehaviour
             SceneManager.LoadScene(DefaultScene.SceneName, LoadSceneMode.Additive);
             Debug.LogError("No Environment scene was loaded. Loading Default Scene...");
         }
+    }
+
+    protected virtual void Update()
+    {
+        GlobalEffectManager.Tick(EHTime.DeltaTime);
     }
 
     protected virtual void LateUpdate()

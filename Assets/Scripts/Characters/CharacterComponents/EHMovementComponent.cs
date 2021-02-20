@@ -42,11 +42,6 @@ public class EHMovementComponent : EHBaseMovementComponent
     #endregion const values
 
     #region main variables
-    [Header("Orientation Variables")]
-    [SerializeField]
-    private bool IsFacingLeft = false;
-    [SerializeField]
-    private SpriteRenderer CharacterSpriteRenderer;
 
     [Header("Walking")]
     [Tooltip("The max walking speed of our character")]
@@ -109,7 +104,6 @@ public class EHMovementComponent : EHBaseMovementComponent
         }
         AssociatedCollider.OnCollision2DBegin += OnEHCollisionEnter;
         CachedGravityScale = Physics2D.GravityScale;
-        SetIsFacingLeft(IsFacingLeft, true);
     }
 
     protected override void Update()
@@ -175,13 +169,13 @@ public class EHMovementComponent : EHBaseMovementComponent
         }
         if (CharacterSpriteRenderer)
         {
-            if (IsFacingLeft && CharacterSpriteRenderer.transform.localScale.x > 0)
+            if (bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x > 0)
             {
-                SetIsFacingLeft(IsFacingLeft, true);
+                SetIsFacingLeft(bIsFacingLeft, true);
             }
-            if (!IsFacingLeft && CharacterSpriteRenderer.transform.localScale.x < 0)
+            if (!bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x < 0)
             {
-                SetIsFacingLeft(IsFacingLeft, true);
+                SetIsFacingLeft(bIsFacingLeft, true);
             }
         }
     }
