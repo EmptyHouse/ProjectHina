@@ -8,10 +8,10 @@ using UnityEngine.Events;
 /// </summary>
 public class EHAttackComponent : MonoBehaviour
 {
+
     private const string ATTACK_ANIM = "Attack";
 
     public UnityAction<FAttackData> OnAttackCharacterDel;
-
     [Tooltip("The assigned DataTable that will contain all the information for each attack.")]
     public AttackDataTable AssociatedAttackTable;
 

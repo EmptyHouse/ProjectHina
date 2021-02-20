@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// </summary>
 [RequireComponent(typeof(EHDamageableComponent))]
 public class EHGameplayCharacter : EHCharacter
-{
+{ 
     #region const variables
     private const string ANIM_CHARACTER_DIED = "Dead";
     private const string DEAD_LAYER = "Dead";

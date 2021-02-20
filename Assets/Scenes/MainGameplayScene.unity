@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392889, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: GravityScale
+      value: 4.4642854
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: ButtonInputNodes.Array.data[0].BufferTime
       value: 0.16666667
@@ -224,6 +228,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197975867184269768, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6884688406005091713, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: CharacterTeam
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

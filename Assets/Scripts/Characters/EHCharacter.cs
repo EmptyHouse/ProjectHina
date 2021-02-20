@@ -7,10 +7,18 @@ using UnityEngine;
 /// </summary>
 public class EHCharacter : MonoBehaviour
 {
-    /// <summary>
-    /// Name of the character 
-    /// </summary>
+    public enum ECharacterTeam
+    {
+        NONE,
+        PLAYER,
+        ENEMY,
+    }
+
+    [Tooltip("The name of our character.")]
     public string CharacterName;
+
+    [Tooltip("The team allignment of our character")]
+    public ECharacterTeam CharacterTeam = ECharacterTeam.NONE;
 
     /// <summary>
     /// Associated character animator.
