@@ -11,6 +11,8 @@ public class DashComponent : MonoBehaviour
 {
     #region const variables
     private const float DASH_INPUT_THRESHOLD = .45f;
+    private const string ANIM_DASH_TRIGGER = "Dash";
+    private const string ANIM_IS_DASHING = "IsDashing";
     #endregion const variables
 
     [Tooltip("The initial speed of our dash")]
@@ -32,12 +34,14 @@ public class DashComponent : MonoBehaviour
     private bool bIsPerformingDash;
     private EHMovementComponent MovementComponent;
     private EHPhysics2D Physics2D;
+    private Animator CharacterAnim;
 
     #region monobehaviour methods
     private void Awake()
     {
         MovementComponent = GetComponent<EHMovementComponent>();
         Physics2D = GetComponent<EHPhysics2D>();
+        CharacterAnim = GetComponent<Animator>();
     }
     #endregion monobehaviour methods
 
@@ -48,12 +52,18 @@ public class DashComponent : MonoBehaviour
     {
         if (!bIsPerformingDash)
         {
-            BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash, BeginActualDash);
+            CharacterAnim.SetTrigger(ANIM_DASH_TRIGGER);
         }
+    }
+
+    public void CancelDash()
+    {
+        CharacterAnim.ResetTrigger(ANIM_DASH_TRIGGER);
     }
 
     private void BeginActualDash()
     {
+        BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash, BeginActualDash);
         StartCoroutine(BeginDash());
     }
 
@@ -64,8 +74,10 @@ public class DashComponent : MonoBehaviour
     private IEnumerator BeginDash()
     {
         bIsPerformingDash = true;
+        CharacterAnim.SetBool(ANIM_IS_DASHING, bIsPerformingDash);
         yield return StartCoroutine(PerformDash());
         bIsPerformingDash = false;
+        CharacterAnim.SetBool(ANIM_IS_DASHING, bIsPerformingDash);
         yield return StartCoroutine(PerformDashCoolDown());
     }
 

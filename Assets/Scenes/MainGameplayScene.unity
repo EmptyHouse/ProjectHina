@@ -226,6 +226,18 @@ PrefabInstance:
       propertyPath: LowJumpMultiplier
       value: 1.75
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392895, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: DashTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392895, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: InitialDashSpeed
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392895, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: DelayBeforeStartDash
+      value: 0.049
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975867184269768, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

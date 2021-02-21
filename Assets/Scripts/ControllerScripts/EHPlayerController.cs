@@ -38,6 +38,7 @@ public class EHPlayerController : EHBaseController
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, JumpBufferEnded);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Released, MovementComponent.EndJump);
         BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Pressed, DashComponent.AttemptDash);
+        BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Buffer, DashComponent.CancelDash);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Pressed, Attack);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Buffer, AttackBufferEnded);
 

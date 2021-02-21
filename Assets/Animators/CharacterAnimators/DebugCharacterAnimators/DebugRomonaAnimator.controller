@@ -288,6 +288,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: MovementStateTrigger
     m_EventTreshold: 2
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsDashing
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: -9082755897009863542}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -563,6 +566,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: MovementStateTrigger
     m_EventTreshold: 1
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsDashing
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: -4981032754134677874}
   m_DstState: {fileID: 0}
   m_Solo: 0
@@ -887,8 +893,8 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.06250006
-  m_HasExitTime: 0
+  m_ExitTime: 1
+  m_HasExitTime: 1
   m_HasFixedDuration: 0
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -1011,6 +1017,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: MovementStateTrigger
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsDashing
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 5342568368234448245}
   m_DstState: {fileID: 0}
@@ -1269,13 +1278,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 8594416311960752483}
-    m_Position: {x: 570, y: -210, z: 0}
+    m_Position: {x: 700, y: -210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2147745834190438057}
-    m_Position: {x: 700, y: 140, z: 0}
+    m_Position: {x: 700, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1110958956914741131}
-    m_Position: {x: 480, y: 140, z: 0}
+    m_Position: {x: 480, y: 110, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 5342568368234448245}
@@ -1301,7 +1310,7 @@ AnimatorStateMachine:
   - first: {fileID: -9082755897009863542}
     second: []
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 590, y: -10, z: 0}
+  m_AnyStatePosition: {x: 720, y: -10, z: 0}
   m_EntryPosition: {x: 0, y: -10, z: 0}
   m_ExitPosition: {x: 950, y: -20, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}

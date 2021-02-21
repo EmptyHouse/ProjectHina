@@ -48,6 +48,7 @@ public class EHDamageableComponent : MonoBehaviour
         Physics2D = GetComponent<EHPhysics2D>();
         AnimReference = GetComponent<Animator>();
         AssociatedHitboxComponent = GetComponent<EHHitboxActorComponent>();
+        AnimReference.SetFloat(ANIM_HITSTUN, -1);
     }
     private void OnValidate()
     {
