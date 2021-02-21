@@ -1,7 +1,31 @@
 fileFormatVersion: 2
 guid: 5d096510f1b244b47965c5cef9c68edb
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5174156090230492893
+    second: player_dash_animation_0
+  - first:
+      213: 2857137225907938165
+    second: player_dash_animation_1
+  - first:
+      213: 3595290707085781105
+    second: player_dash_animation_2
+  - first:
+      213: 30443722209554910
+    second: player_dash_animation_3
+  - first:
+      213: 5277984941531167713
+    second: player_dash_animation_4
+  - first:
+      213: 4247702207007110021
+    second: player_dash_animation_5
+  - first:
+      213: 616376347605984977
+    second: player_dash_animation_6
+  - first:
+      213: 8986939705180382358
+    second: player_dash_animation_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +65,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -89,7 +113,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: player_dash_animation_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 0
+        width: 23
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5652174, y: -0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddecc9adc8b4ec740800000000000000
+      internalID: 5174156090230492893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 20
+        height: 40
+      alignment: 9
+      pivot: {x: 0.55, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573a9c05b2796a720800000000000000
+      internalID: 2857137225907938165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_2
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 0
+        width: 18
+        height: 40
+      alignment: 9
+      pivot: {x: 0.6111111, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1786c1479d905e130800000000000000
+      internalID: 3595290707085781105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_3
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 19
+        height: 40
+      alignment: 9
+      pivot: {x: 0.6315789, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed1f0ff67682c6000800000000000000
+      internalID: 30443722209554910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_4
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 21
+        height: 38
+      alignment: 9
+      pivot: {x: 0.61904764, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb73d1275b2f3940800000000000000
+      internalID: 5277984941531167713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_5
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 0
+        width: 23
+        height: 40
+      alignment: 9
+      pivot: {x: 0.5652174, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5833d48e6aed2fa30800000000000000
+      internalID: 4247702207007110021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_6
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 0
+        width: 19
+        height: 40
+      alignment: 9
+      pivot: {x: 0.57894737, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d6e10fb50fcd8800800000000000000
+      internalID: 616376347605984977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: player_dash_animation_7
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 0
+        width: 22
+        height: 41
+      alignment: 9
+      pivot: {x: 0.54545456, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69461290c0608bc70800000000000000
+      internalID: 8986939705180382358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
