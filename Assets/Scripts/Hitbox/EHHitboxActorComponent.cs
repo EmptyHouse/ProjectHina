@@ -6,14 +6,21 @@ public class EHHitboxActorComponent : MonoBehaviour
 {
     public EHAttackComponent AttackComponent { get; private set; }
     public EHDamageableComponent DamageableComponent { get; private set; }
+    public EHGameplayCharacter CharacterOwner { get; private set; }
 
     #region monobehaviour methods
     private void Awake()
     {
         AttackComponent = GetComponent<EHAttackComponent>();
         DamageableComponent = GetComponent<EHDamageableComponent>();
+        CharacterOwner = GetComponent<EHGameplayCharacter>();
     }
     #endregion monobehaviour methods
+
+    public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)
+    {
+        this.CharacterOwner = CharacterOwner;
+    }
 
     /// <summary>
     /// This method should be called from an EHHitbox
@@ -76,5 +83,14 @@ public class EHHitboxActorComponent : MonoBehaviour
     private void OurHitboxEndintersectOtherHurtbox(EHHitbox OurHitbox, EHHitbox OtherHitbox)
     {
 
+    }
+
+    public EHCharacter.ECharacterTeam GetAllignedCharacterTeam()
+    {
+        if (CharacterOwner == null)
+        {
+            return EHCharacter.ECharacterTeam.NONE;
+        }
+        return CharacterOwner.CharacterTeam;
     }
 }

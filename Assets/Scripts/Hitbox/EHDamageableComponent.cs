@@ -37,6 +37,8 @@ public class EHDamageableComponent : MonoBehaviour
 
     public EHPhysics2D Physics2D { get; private set; }
 
+    private EHHitboxActorComponent AssociatedHitboxComponent;
+
     private Animator AnimReference;
 
     #region monobehaviour methods
@@ -45,6 +47,7 @@ public class EHDamageableComponent : MonoBehaviour
         Health = MaxHealth;
         Physics2D = GetComponent<EHPhysics2D>();
         AnimReference = GetComponent<Animator>();
+        AssociatedHitboxComponent = GetComponent<EHHitboxActorComponent>();
     }
     private void OnValidate()
     {
@@ -54,6 +57,15 @@ public class EHDamageableComponent : MonoBehaviour
         }
     }
     #endregion monobehaviour methods
+
+    public EHCharacter.ECharacterTeam GetAllignedCharacterTeam()
+    {
+        if (AssociatedHitboxComponent)
+        {
+            return AssociatedHitboxComponent.GetAllignedCharacterTeam();
+        }
+        return EHCharacter.ECharacterTeam.NONE;
+    }
 
     /// <summary>
     /// This method will be called to apply damage to 

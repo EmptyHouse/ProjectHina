@@ -19,15 +19,12 @@ public class EHAttackComponent : MonoBehaviour
     public FAttackData DefaultAttackData;
 
     /// <summary>
-    /// The owner of our Attack component. This will help in determining which object is appropiate to intersect with
-    /// </summary>
-    public EHGameplayCharacter CharacterOwner { get; private set; }
-
-    /// <summary>
     /// List of all the damageable components that we have interacted with. Anything in this list has already been registered as a hit. We will not apply damage to a component in this list
     /// until it has been removed
     /// </summary>
     private HashSet<EHDamageableComponent> IntersectedDamageableComponents = new HashSet<EHDamageableComponent>();
+
+    private EHHitboxActorComponent AssociatedHitboxComponent;
 
     /// <summary>
     /// 
@@ -38,17 +35,21 @@ public class EHAttackComponent : MonoBehaviour
     private void Awake()
     {
         AssociatedAnimator = GetComponent<Animator>();
-        SetCharacterOwner(GetComponent<EHGameplayCharacter>());
         if (AssociatedAttackTable != null)
         {
             BaseGameOverseer.Instance.DataTableManager.AddAttackDataTable(AssociatedAttackTable);
         }
+        AssociatedHitboxComponent = GetComponent<EHHitboxActorComponent>();
     }
     #endregion monobehaviour methods
 
-    public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)
+    public EHCharacter.ECharacterTeam GetAllignedCharacterTeam()
     {
-        this.CharacterOwner = CharacterOwner;
+        if (AssociatedHitboxComponent != null)
+        {
+            return AssociatedHitboxComponent.GetAllignedCharacterTeam();
+        }
+        return EHCharacter.ECharacterTeam.NONE;
     }
 
     /// <summary>
@@ -68,6 +69,11 @@ public class EHAttackComponent : MonoBehaviour
         {
             // Skip if we have already hit this component before resetting...
             return;
+        }
+
+        if (DamageableComponentWeHit.GetAllignedCharacterTeam() == GetAllignedCharacterTeam())
+        {
+            return;//Don't hit characters that are on the same team as us
         }
 
         FAttackData AttackData;
