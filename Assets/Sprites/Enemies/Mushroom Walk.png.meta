@@ -1,7 +1,40 @@
 fileFormatVersion: 2
 guid: b43b9857c12ce464b9dbdbf4d41bffdd
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 3001633074628786767
+    second: Mushroom Walk_0
+  - first:
+      213: 5801826883937518415
+    second: Mushroom Walk_1
+  - first:
+      213: 1912255167959338715
+    second: Mushroom Walk_2
+  - first:
+      213: 5042373900160035835
+    second: Mushroom Walk_3
+  - first:
+      213: -9145298838351179368
+    second: Mushroom Walk_4
+  - first:
+      213: -2993277768297981038
+    second: Mushroom Walk_5
+  - first:
+      213: -5153953639064079258
+    second: Mushroom Walk_6
+  - first:
+      213: 2019130748085545321
+    second: Mushroom Walk_7
+  - first:
+      213: 4347382533145650683
+    second: Mushroom Walk_8
+  - first:
+      213: 2856757307205078531
+    second: Mushroom Walk_9
+  - first:
+      213: -8241548270085008407
+    second: Mushroom Walk_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -89,7 +122,238 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Mushroom Walk_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 7
+        width: 43
+        height: 36
+      alignment: 9
+      pivot: {x: 0.53488374, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4aff47c061f7a920800000000000000
+      internalID: 3001633074628786767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_1
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 6
+        width: 43
+        height: 39
+      alignment: 9
+      pivot: {x: 0.53488374, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f434861cfca348050800000000000000
+      internalID: 5801826883937518415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_2
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 6
+        width: 43
+        height: 36
+      alignment: 9
+      pivot: {x: 0.53488374, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bde0f1691f1b98a10800000000000000
+      internalID: 1912255167959338715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_3
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 6
+        width: 43
+        height: 36
+      alignment: 9
+      pivot: {x: 0.53488374, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfb6db7b85c1af540800000000000000
+      internalID: 5042373900160035835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_4
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 7
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.53488374, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 891194f092f551180800000000000000
+      internalID: -9145298838351179368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_5
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 8
+        width: 41
+        height: 37
+      alignment: 9
+      pivot: {x: 0.48780486, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b56829abdb576d0800000000000000
+      internalID: -2993277768297981038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_6
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 7
+        width: 42
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664f0cad87a7978b0800000000000000
+      internalID: -5153953639064079258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_7
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 6
+        width: 42
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: -0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96925b2b7b4650c10800000000000000
+      internalID: 2019130748085545321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_8
+      rect:
+        serializedVersion: 2
+        x: 387
+        y: 6
+        width: 42
+        height: 35
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf562e66161055c30800000000000000
+      internalID: 4347382533145650683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_9
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 6
+        width: 43
+        height: 37
+      alignment: 9
+      pivot: {x: 0.5116279, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30ec57992ad35a720800000000000000
+      internalID: 2856757307205078531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mushroom Walk_10
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 7
+        width: 42
+        height: 37
+      alignment: 9
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e31952938320ad80800000000000000
+      internalID: -8241548270085008407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

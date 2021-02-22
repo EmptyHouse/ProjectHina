@@ -133,12 +133,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5887989}
   - component: {fileID: 5887992}
+  - component: {fileID: 5887996}
   - component: {fileID: 5887991}
   - component: {fileID: 5887990}
   - component: {fileID: 5887995}
   - component: {fileID: 5887994}
   - component: {fileID: 5887993}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shroomy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,10 +264,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 1
-  ColliderType: 0
+  ColliderType: 2
   bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 0.78, y: 1.26}
+--- !u!114 &5887996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce49bcc40fb4fe24abb9866d743a8207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AssociatedAttackTable: {fileID: 0}
+  DefaultAttackData:
+    AttackDamage: 1
+    HitStunTime: 0
+    HitFreezeTime: 0
+    CameraShakeDuration: 0
+    CameraShakeIntensity: 0
+    LaunchForce: {x: 0, y: 0}
+    bIsConstantHitbox: 0
 --- !u!1 &67351580
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 162102410}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hurtboxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,8 +354,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 878930251}
-  - {fileID: 808294061}
-  - {fileID: 1298832020}
+  - {fileID: 1323377718}
   m_Father: {fileID: 1412791022}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -735,7 +756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796678859}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hitboxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,36 +860,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &808294060
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 808294061}
-  m_Layer: 0
-  m_Name: Hurtbox2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &808294061
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 808294060}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 162102410}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &809425823
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -935,13 +926,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 878930251}
-  m_Layer: 0
+  - component: {fileID: 878930252}
+  m_Layer: 9
   m_Name: Hurtbox1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &878930251
 Transform:
   m_ObjectHideFlags: 0
@@ -956,6 +948,21 @@ Transform:
   m_Father: {fileID: 162102410}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &878930252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878930250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034a52149bc79845a2812b7a76e635d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitboxType: 1
+  HitboxOffset: {x: 0, y: 0}
+  HitboxSize: {x: 1, y: 1}
 --- !u!4 &910192927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 425207590376021051, guid: 8cbd061185d933d47807164a070119a8, type: 3}
@@ -1019,7 +1026,7 @@ GameObject:
   m_Component:
   - component: {fileID: 959721580}
   - component: {fileID: 959721581}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShroomSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1455,7 +1462,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2076503964691515905, guid: ca770f07736aca24881f2c6eef0485b0, type: 3}
   m_PrefabInstance: {fileID: 2003288317}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1298832019
+--- !u!1 &1323377717
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1463,28 +1470,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1298832020}
-  m_Layer: 0
-  m_Name: Hurtbox3
+  - component: {fileID: 1323377718}
+  - component: {fileID: 1323377719}
+  m_Layer: 9
+  m_Name: Hurtbox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1298832020
+  m_IsActive: 0
+--- !u!4 &1323377718
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298832019}
+  m_GameObject: {fileID: 1323377717}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 162102410}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1323377719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323377717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034a52149bc79845a2812b7a76e635d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitboxType: 1
+  HitboxOffset: {x: 0, y: 0}
+  HitboxSize: {x: 1, y: 1}
 --- !u!1 &1412791021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,7 +1517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412791022}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HitboxContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1949,13 +1972,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2029475876}
-  m_Layer: 0
+  - component: {fileID: 2029475877}
+  m_Layer: 9
   m_Name: Hitbox1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2029475876
 Transform:
   m_ObjectHideFlags: 0
@@ -1970,6 +1994,21 @@ Transform:
   m_Father: {fileID: 796678859}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2029475877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2029475875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0034a52149bc79845a2812b7a76e635d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitboxType: 0
+  HitboxOffset: {x: 0, y: 0}
+  HitboxSize: {x: 1, y: 1}
 --- !u!1001 &2041921307
 PrefabInstance:
   m_ObjectHideFlags: 0
