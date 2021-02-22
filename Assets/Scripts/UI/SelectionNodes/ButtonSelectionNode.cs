@@ -87,8 +87,8 @@ public class ButtonSelectionNode : BaseSelectionNode
         UIPlayerController UIController = EHHUD.Instance.UIController;
         if (UIController != null)
         {
-            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Pressed, OnSubmitPressed);
-            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Released, OnSubmitReleased);
+            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBasePlayerController.ButtonInputType.Button_Pressed, OnSubmitPressed);
+            UIController.BindActionToInput(UIPlayerController.SUBMIT, EHBasePlayerController.ButtonInputType.Button_Released, OnSubmitReleased);
         }
     }
 
@@ -100,8 +100,8 @@ public class ButtonSelectionNode : BaseSelectionNode
         UIPlayerController UIController = EHHUD.Instance.UIController;
         if (UIController)
         {
-            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Pressed, OnSubmitPressed);
-            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBaseController.ButtonInputType.Button_Released, OnSubmitReleased);
+            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBasePlayerController.ButtonInputType.Button_Pressed, OnSubmitPressed);
+            UIController.UnbindActionToInput(UIPlayerController.SUBMIT, EHBasePlayerController.ButtonInputType.Button_Released, OnSubmitReleased);
         }
     }
     #endregion override methods

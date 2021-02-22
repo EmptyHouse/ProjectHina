@@ -39,7 +39,7 @@ public class DialogueTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             PlayerCharacterReference = PlayerCharacter;
-            PlayerCharacterReference.PlayerController.BindActionToInput(EHPlayerController.JUMP_COMMAND, EHBaseController.ButtonInputType.Button_Pressed, OnActionButtonPressed);
+            PlayerCharacterReference.PlayerController.BindActionToInput(EHPlayerController.JUMP_COMMAND, EHBasePlayerController.ButtonInputType.Button_Pressed, OnActionButtonPressed);
         }
     }
 
@@ -53,7 +53,7 @@ public class DialogueTrigger : MonoBehaviour
         if (PlayerCharacter != null)
         {
             PlayerCharacterReference = null;
-            PlayerCharacterReference.PlayerController.UnbindActionToInput(EHPlayerController.JUMP_COMMAND, EHBaseController.ButtonInputType.Button_Pressed, OnActionButtonPressed);
+            PlayerCharacterReference.PlayerController.UnbindActionToInput(EHPlayerController.JUMP_COMMAND, EHBasePlayerController.ButtonInputType.Button_Pressed, OnActionButtonPressed);
         }
     }
 }

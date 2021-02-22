@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIPlayerController : EHBaseController
+public class UIPlayerController : EHBasePlayerController
 {
     public static float JOYSTICK_DEADZONE_THRESHOLD = .65f;
 

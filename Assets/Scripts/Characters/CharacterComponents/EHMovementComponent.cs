@@ -125,8 +125,10 @@ public class EHMovementComponent : EHBaseMovementComponent
         }
     }
 
-    protected virtual void OnValidate()
+    protected override void OnValidate()
     {
+        base.OnValidate();
+
         if (WalkingSpeed < 0)
         {
             WalkingSpeed = 0;
@@ -161,22 +163,6 @@ public class EHMovementComponent : EHBaseMovementComponent
         {
             Physics2D.GravityScale = (2 * JumpHeightApex) / (EHPhysics2D.GRAVITATIONAL_CONSTANT * Mathf.Pow(TimeToReachApex, 2));
             JumpVelocity = 2 * JumpHeightApex / TimeToReachApex;
-        }
-
-        if (CharacterSpriteRenderer == null)
-        {
-            CharacterSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
-        if (CharacterSpriteRenderer)
-        {
-            if (bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x > 0)
-            {
-                SetIsFacingLeft(bIsFacingLeft, true);
-            }
-            if (!bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x < 0)
-            {
-                SetIsFacingLeft(bIsFacingLeft, true);
-            }
         }
     }
     #endregion monobehaviour methods

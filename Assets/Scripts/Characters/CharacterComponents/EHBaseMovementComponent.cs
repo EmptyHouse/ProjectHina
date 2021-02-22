@@ -14,6 +14,7 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     protected EHPhysics2D Physics2D;
     protected Animator CharacterAnimator;
     protected SpriteRenderer CharacterSpriteRenderer;
+    [SerializeField]
     protected bool bIsFacingLeft;
 
     #endregion main variables
@@ -65,6 +66,25 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
         if (CharacterAnimator)
         {
             CharacterAnimator.SetFloat(ANIM_HORIZONTAL_INPUT, Mathf.Abs(CurrentInput.x));
+        }
+    }
+
+    protected virtual void OnValidate()
+    {
+        if (CharacterSpriteRenderer == null)
+        {
+            CharacterSpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+        if (CharacterSpriteRenderer)
+        {
+            if (bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x > 0)
+            {
+                SetIsFacingLeft(bIsFacingLeft, true);
+            }
+            if (!bIsFacingLeft && CharacterSpriteRenderer.transform.localScale.x < 0)
+            {
+                SetIsFacingLeft(bIsFacingLeft, true);
+            }
         }
     }
     #endregion monobehaviour methods

@@ -7,7 +7,7 @@ using UnityEngine.Events;
 /// <summary>
 /// The base class for all controller that can be used by players
 /// </summary>
-public abstract class EHBaseController : MonoBehaviour
+public abstract class EHBasePlayerController : EHController
 {
     #region const values
     private const float DEFAULT_BUFFER_TIME = 12f * 1f / 60f;

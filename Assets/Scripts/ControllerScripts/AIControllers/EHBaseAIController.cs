@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract  class EHBaseAIController : MonoBehaviour
+public abstract  class EHBaseAIController : EHController
 {
     private List<BaseAIState> AIStateList = new List<BaseAIState>();
     private BaseAIState CurrentState;

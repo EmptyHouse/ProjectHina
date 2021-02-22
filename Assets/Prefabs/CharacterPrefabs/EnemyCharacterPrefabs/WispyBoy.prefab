@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2076503964691515905}
+  - component: {fileID: 6311078339307032808}
   - component: {fileID: 2076503964691515935}
-  - component: {fileID: 2076503964691515934}
   - component: {fileID: 2076503964691515932}
   - component: {fileID: 2076503964691515933}
   - component: {fileID: 2076503964691515931}
@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 2076503964691515928}
   - component: {fileID: 2076503964691515929}
   - component: {fileID: 2076503964691515926}
+  - component: {fileID: 6094862524546552436}
   m_Layer: 0
   m_Name: WispyBoy
   m_TagString: Untagged
@@ -71,6 +72,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6311078339307032808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076503964691515904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 115f589202b384a4b8f71a46c35ea9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterName: Wisp
+  CharacterTeam: 2
 --- !u!114 &2076503964691515935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,20 +99,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 1
---- !u!114 &2076503964691515934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2076503964691515904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcbd6c86c4c06304aac0b90069259feb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CharacterName: Wisp
-  CharacterTeam: 2
 --- !u!95 &2076503964691515932
 Animator:
   serializedVersion: 3
@@ -206,6 +207,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ce7f135083b97458c3712025881965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6094862524546552436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076503964691515904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e730862882e3d9b479e96682a635a71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bIsCharacterCollider: 1
+  ColliderType: 2
+  bIsTrigger: 0
+  ColliderOffset: {x: 0, y: 0}
+  ColliderSize: {x: 0.68, y: 0.52}
 --- !u!1 &2076503964691761327
 GameObject:
   m_ObjectHideFlags: 0

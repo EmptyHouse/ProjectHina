@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EHPlayerController : EHBaseController
+public class EHPlayerController : EHBasePlayerController
 {
     #region const variables
     public const string JUMP_COMMAND = "Jump";
