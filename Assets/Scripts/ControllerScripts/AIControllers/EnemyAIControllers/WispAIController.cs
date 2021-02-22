@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class WispAIController : EHBaseAIController
 {
+    /// <summary>
+    /// State to follow our player. You can set the range at which we will begin following our player
+    /// </summary>
+    [SerializeField]
+    private WispFollowPlayer WispFollowPlayerState;
+
+    /// <summary>
+    /// Returns the 
+    /// </summary>
+    [SerializeField]
+    private WispIdle WispIdleState;
+
     private EHFlightMovementComponent FlightMovement;
 
 
@@ -11,21 +23,42 @@ public class WispAIController : EHBaseAIController
     {
         FlightMovement = GetComponent<EHFlightMovementComponent>();
         base.Awake();
+        StartNewState(WispFollowPlayerState);
     }
 
-    protected override void InitializeAIController()
+    #region AI States
+    private class WispIdle : BaseAIState
     {
-        AddState(new FollowPlayerState(this));
+        private Transform TargetTransform;
+
+        public WispIdle(EHBaseAIController AIController) : base(AIController)
+        {
+
+        }
+
+        public override void OnStateBegin()
+        {
+        }
+
+        public override void OnStateTick(float DeltaTime)
+        {
+        }
+
+        public override void OnStateEnded()
+        {
+        }
     }
 
-    private class FollowPlayerState : BaseAIState
+    private class WispFollowPlayer : BaseAIState
     {
+        [SerializeField]
+        private float Range = 15f;
         private WispAIController WispController;
         private Transform TargetTransform;
         private EHBox2DCollider PlayerCollider;
-        private float Range = 15f;
+        
 
-        public FollowPlayerState(EHBaseAIController AIController) : base(AIController)
+        public WispFollowPlayer(EHBaseAIController AIController) : base(AIController)
         {
             WispController = (WispAIController)AIController;
         }
@@ -60,4 +93,5 @@ public class WispAIController : EHBaseAIController
             }
         }
     }
+    #endregion AI States
 }

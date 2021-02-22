@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseAIState
+public abstract class BaseAIState : ScriptableObject
 {
     /// <summary>
     /// The owning AI Controller

@@ -4,17 +4,12 @@ using UnityEngine;
 
 public abstract  class EHBaseAIController : EHController
 {
-    private List<BaseAIState> AIStateList = new List<BaseAIState>();
+    private Vector3 OriginalPosition;
     private BaseAIState CurrentState;
     #region monobehaviour methods
     protected virtual void Awake()
     {
-        InitializeAIController();
-    }
-
-    protected virtual void Start()
-    {
-        StartNewState(AIStateList[0]);
+        OriginalPosition = this.transform.position;
     }
 
     protected virtual void Update()
@@ -25,12 +20,6 @@ public abstract  class EHBaseAIController : EHController
         }
     }
     #endregion monobehaivour methods
-    protected abstract void InitializeAIController();
-
-    protected void AddState(BaseAIState AIState)
-    {
-        AIStateList.Add(AIState);
-    }
 
     public void StartNewState(BaseAIState NextAIState)
     {
