@@ -26,6 +26,15 @@ public class WispAIController : EHBaseAIController
         StartNewState(WispFollowPlayerState);
     }
 
+    private void OnValidate()
+    {
+        if (!WispFollowPlayerState)
+        {
+            WispFollowPlayerState = ScriptableObject.CreateInstance<WispFollowPlayer>();
+            WispIdleState = ScriptableObject.CreateInstance<WispIdle>();
+        }
+    }
+
     #region AI States
     private class WispIdle : BaseAIState
     {

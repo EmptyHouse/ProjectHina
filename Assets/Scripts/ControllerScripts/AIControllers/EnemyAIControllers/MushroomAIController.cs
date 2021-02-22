@@ -15,6 +15,15 @@ public class MushroomAIController : EHBaseAIController
         StartNewState(MushroomIdleState);
     }
 
+    private void OnValidate()
+    {
+        if (!MushroomIdleState)
+        {
+            MushroomIdleState = new MushroomIdle(this);
+            MushroomAgroState = new MushroomAgro(this);
+        }
+    }
+
     /// <summary>
     /// 
     /// </summary>
@@ -22,6 +31,7 @@ public class MushroomAIController : EHBaseAIController
     {
         [SerializeField]
         private float PatrolRange = 5f;
+
 
         public MushroomIdle(EHBaseAIController AIControllerOwner) : base(AIControllerOwner)
         {
