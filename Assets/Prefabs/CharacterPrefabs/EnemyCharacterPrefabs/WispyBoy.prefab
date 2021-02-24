@@ -48,8 +48,8 @@ GameObject:
   - component: {fileID: 2076503964691515930}
   - component: {fileID: 2076503964691515928}
   - component: {fileID: 2076503964691515929}
-  - component: {fileID: 2076503964691515926}
   - component: {fileID: 6094862524546552436}
+  - component: {fileID: 6579501244408909591}
   m_Layer: 0
   m_Name: WispyBoy
   m_TagString: Untagged
@@ -190,23 +190,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2adb205985f94a4c8154f037d4cd1f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bIsFacingLeft: 0
   bIsAnimationControlled: 0
   AnimatedGoalVelocity: {x: 0, y: 0}
   bMovementComponentDisabled: 0
   Acceleration: 5
   MaxVelocity: 2.7
---- !u!114 &2076503964691515926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2076503964691515904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ce7f135083b97458c3712025881965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6094862524546552436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +213,20 @@ MonoBehaviour:
   bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
   ColliderSize: {x: 0.68, y: 0.52}
+--- !u!114 &6579501244408909591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076503964691515904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50ce7f135083b97458c3712025881965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WispFollowPlayerState:
+    Range: 15
 --- !u!1 &2076503964691761327
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,16 +26,8 @@ public class WispAIController : EHBaseAIController
         StartNewState(WispFollowPlayerState);
     }
 
-    private void OnValidate()
-    {
-        if (!WispFollowPlayerState)
-        {
-            WispFollowPlayerState = ScriptableObject.CreateInstance<WispFollowPlayer>();
-            WispIdleState = ScriptableObject.CreateInstance<WispIdle>();
-        }
-    }
-
     #region AI States
+    [System.Serializable]
     private class WispIdle : BaseAIState
     {
         private Transform TargetTransform;
@@ -57,6 +49,7 @@ public class WispAIController : EHBaseAIController
         }
     }
 
+    [System.Serializable]
     private class WispFollowPlayer : BaseAIState
     {
         [SerializeField]

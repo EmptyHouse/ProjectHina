@@ -15,15 +15,7 @@ public class MushroomAIController : EHBaseAIController
         StartNewState(MushroomIdleState);
     }
 
-    private void OnValidate()
-    {
-        if (!MushroomIdleState)
-        {
-            MushroomIdleState = ScriptableObject.CreateInstance<MushroomIdle>();
-            MushroomAgroState = ScriptableObject.CreateInstance<MushroomAgro>();
-        }
-    }
-
+    [System.Serializable]
     /// <summary>
     /// 
     /// </summary>
@@ -54,7 +46,7 @@ public class MushroomAIController : EHBaseAIController
         }
     }
 
-
+    [System.Serializable]
     private class MushroomAgro : BaseAIState
     {
         public override void InitilalizeState(EHBaseAIController AIControllerOwner)

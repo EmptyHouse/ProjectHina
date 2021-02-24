@@ -23,6 +23,7 @@ public class EHPlayerController : EHBasePlayerController
     {
         base.Awake();
         BaseGameOverseer.Instance.PlayerController = this;
+        PlayerCharacter = GetComponent<EHPlayerCharacter>();
     }
 
     

@@ -33,6 +33,10 @@ public abstract  class EHBaseAIController : EHController
             CurrentState.OnStateEnded();
         }
         CurrentState = NextAIState;
+        if (!CurrentState.bIsInitialized)
+        {
+            CurrentState.InitilalizeState(this);
+        }
         CurrentState.OnStateBegin();
     }
 }

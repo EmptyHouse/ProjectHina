@@ -74,6 +74,11 @@ public class EHGameplayCharacter : EHCharacter
         }
     }
 
+    public bool GetCharacterIsDead()
+    {
+        return DamageableComponent.Health <= 0;
+    }
+
     /// <summary>
     /// This method will be called when the health of our character in the Damageable Component has reached 0. Any cleanup shoud be done here
     /// </summary>
@@ -115,7 +120,7 @@ public class EHGameplayCharacter : EHCharacter
 
     private void OnHitStunEnd()
     {
-        if (MovementComponent)
+        if (MovementComponent && !GetCharacterIsDead())
         {
             MovementComponent.enabled = true;
         }
