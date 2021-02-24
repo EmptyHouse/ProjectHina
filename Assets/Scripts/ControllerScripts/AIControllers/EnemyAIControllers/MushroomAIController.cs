@@ -19,8 +19,8 @@ public class MushroomAIController : EHBaseAIController
     {
         if (!MushroomIdleState)
         {
-            MushroomIdleState = new MushroomIdle(this);
-            MushroomAgroState = new MushroomAgro(this);
+            MushroomIdleState = ScriptableObject.CreateInstance<MushroomIdle>();
+            MushroomAgroState = ScriptableObject.CreateInstance<MushroomAgro>();
         }
     }
 
@@ -33,8 +33,9 @@ public class MushroomAIController : EHBaseAIController
         private float PatrolRange = 5f;
 
 
-        public MushroomIdle(EHBaseAIController AIControllerOwner) : base(AIControllerOwner)
+        public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
+            base.InitilalizeState(AIControllerOwner);
         }
 
         public override void OnStateBegin()
@@ -56,11 +57,11 @@ public class MushroomAIController : EHBaseAIController
 
     private class MushroomAgro : BaseAIState
     {
-        public MushroomAgro(EHBaseAIController AIControllerOwner) : base(AIControllerOwner)
-        { 
-
+        public override void InitilalizeState(EHBaseAIController AIControllerOwner)
+        {
+            base.InitilalizeState(AIControllerOwner);
         }
-        
+
         public override void OnStateBegin()
         {
 

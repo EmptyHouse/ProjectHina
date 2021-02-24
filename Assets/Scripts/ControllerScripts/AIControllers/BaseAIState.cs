@@ -8,10 +8,12 @@ public abstract class BaseAIState : ScriptableObject
     /// The owning AI Controller
     /// </summary>
     protected EHBaseAIController AIControllerOwner;
+    protected EHPlayerCharacter PlayerReference;
 
-    public BaseAIState(EHBaseAIController AIControllerOwner)
+    public virtual void InitilalizeState(EHBaseAIController AIControllerOwner)
     {
         this.AIControllerOwner = AIControllerOwner;
+        PlayerReference = BaseGameOverseer.Instance.PlayerController.GetPlayerCharacter();
     }
 
     public abstract void OnStateBegin();

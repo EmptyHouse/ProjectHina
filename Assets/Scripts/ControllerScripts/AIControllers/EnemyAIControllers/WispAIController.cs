@@ -40,11 +40,10 @@ public class WispAIController : EHBaseAIController
     {
         private Transform TargetTransform;
 
-        public WispIdle(EHBaseAIController AIController) : base(AIController)
+        public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
-
+            base.InitilalizeState(AIControllerOwner);
         }
-
         public override void OnStateBegin()
         {
         }
@@ -65,11 +64,12 @@ public class WispAIController : EHBaseAIController
         private WispAIController WispController;
         private Transform TargetTransform;
         private EHBox2DCollider PlayerCollider;
-        
 
-        public WispFollowPlayer(EHBaseAIController AIController) : base(AIController)
+
+        public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
-            WispController = (WispAIController)AIController;
+            base.InitilalizeState(AIControllerOwner);
+            WispController = (WispAIController)AIControllerOwner;
         }
 
         public override void OnStateBegin()

@@ -16,6 +16,7 @@ public class EHPlayerController : EHBasePlayerController
     private EHAttackComponent AttackComponent;
     private EHMovementComponent MovementComponent;
     private DashComponent DashComponent;
+    private EHPlayerCharacter PlayerCharacter;
 
     #region monobehaivour methods
     protected override void Awake()
@@ -68,4 +69,6 @@ public class EHPlayerController : EHBasePlayerController
         MovementComponent.ReleaseInputJump();
     }
     #endregion input helper methods
+
+    public EHPlayerCharacter GetPlayerCharacter() { return PlayerCharacter; }
 }
