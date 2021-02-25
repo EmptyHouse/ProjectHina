@@ -10,17 +10,20 @@ public abstract class EHBaseProjectile : MonoBehaviour
     protected byte RayTraceCount;
 
     protected Animator ProjectileAnim;
-    protected EHPhysics2D Physics;
+    protected EHPhysics2D Physics2D;
     protected Vector2 LaunchDirection;
     protected float LaunchSpeed;
     protected Vector2 CurrentMovementDirection;
+    protected EHHitboxActorComponent HitboxActorComponent;
+    protected EHGameplayCharacter CharacterThatLaunchedProjectile;
 
 
     #region monobehaviour methods
     protected virtual void Awake()
     {
         ProjectileAnim = GetComponent<Animator>();
-        Physics = GetComponent<EHPhysics2D>();
+        Physics2D = GetComponent<EHPhysics2D>();
+        HitboxActorComponent = GetComponent<EHHitboxActorComponent>();
     }
 
     protected virtual void Update()
@@ -40,19 +43,31 @@ public abstract class EHBaseProjectile : MonoBehaviour
 
     protected bool CastRayFromVelocity(Vector2 OriginPosition, out EHRayTraceHit RayHit, int LayerMask = 0, bool bDebugDrawLines = false)
     {
-        Vector2 ProjectileVelocity = Physics.Velocity;
+        Vector2 ProjectileVelocity = Physics2D.Velocity;
         EHRayTraceParams Params = new EHRayTraceParams();
         Params.RayOrigin = OriginPosition;
-        Params.RayDirection = ProjectileVelocity;
-        Params.RayLength = ProjectileVelocity.magnitude;
+        Params.RayDirection = ProjectileVelocity.normalized;
+        Params.RayLength = ProjectileVelocity.magnitude * EHTime.DeltaTime;
         return EHPhysicsManager2D.RayTrace2D(ref Params, out RayHit, LayerMask, bDebugDrawLines);
 
     }
     #endregion monobehaviour methods
 
-    public abstract void LaunchProjectile(Vector2 VelocityOfLaucnh);
-    public virtual void CleanUpProjectile()
+    public virtual void LaunchProjectile(Vector2 VelocityOfLaucnh)
+    {
+        Physics2D.Velocity = VelocityOfLaucnh;
+    }
+    public virtual void OnCleanUpProjectile()
     {
         Destroy(this.gameObject);
+    }
+
+    public void SetCharacterOwner(EHGameplayCharacter CharacterOwner)    
+    {
+        this.CharacterThatLaunchedProjectile = CharacterOwner;
+        if (HitboxActorComponent)
+        {
+            HitboxActorComponent.SetCharacterOwner(CharacterOwner);
+        }
     }
 }

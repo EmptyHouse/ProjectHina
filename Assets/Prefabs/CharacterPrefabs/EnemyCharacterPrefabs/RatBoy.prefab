@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7525863414225521492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3232415708385060829}
+  m_Layer: 9
+  m_Name: BombLaunchTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3232415708385060829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525863414225521492}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.85, y: 0.85, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8121711246662745683}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
 --- !u!1 &8121711246131869592
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,13 +142,15 @@ GameObject:
   - component: {fileID: 8121711246361311611}
   - component: {fileID: 8121711246361311608}
   - component: {fileID: 8121711246361312897}
+  - component: {fileID: 1201473857}
+  - component: {fileID: 1201473858}
   m_Layer: 9
   m_Name: RatBoy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8121711246361311609
 Transform:
   m_ObjectHideFlags: 0
@@ -274,6 +306,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df794d99083b31c46a916f7e7abfaf31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1201473857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121711246361311606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1343dc537d10a70428762f7bc8c0c601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RatAttack:
+    TimeBetweenShots: 2.5
+    RangeBeforeIgnore: 10
+--- !u!114 &1201473858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8121711246361311606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e82ba0b70435e49a7ab4382533bd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectileToLaunch: {fileID: 2536065014837835306, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
+  ProjectileLaunchPointTransform:
+  - {fileID: 3232415708385060829}
+  LaunchSpeed: 10
 --- !u!1 &8121711246525107912
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +458,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 8121711246211041751}
+  - {fileID: 3232415708385060829}
   m_Father: {fileID: 8121711246361311609}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

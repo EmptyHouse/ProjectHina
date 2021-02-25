@@ -29,24 +29,23 @@ public class BombProjectile : EHBaseProjectile
         const float BombAngle = 180f;
         float AngleIncrement = BombAngle / (RayTraceCount - 1);
         Vector2 BombTransformPosition = this.transform.position;
-        float CurrentAngle = Mathf.Atan2(Physics.Velocity.y, Physics.Velocity.x) * Mathf.Rad2Deg - 90;
+        float CurrentAngle = Mathf.Atan2(Physics2D.Velocity.y, Physics2D.Velocity.x) * Mathf.Rad2Deg - 90;
 
         EHRayTraceHit RayHit;
         for (int i = 0; i < RayTraceCount; ++i)
         {
             Vector2 OriginPosition = BombTransformPosition + new Vector2(Mathf.Cos(CurrentAngle * Mathf.Deg2Rad) * BombRadius, Mathf.Sin(CurrentAngle * Mathf.Deg2Rad)) * BombRadius;
-            if (CastRayFromVelocity(OriginPosition, out RayHit))
+            if (CastRayFromVelocity(OriginPosition, out RayHit, 0, true))
             {
-                Explode();
-                return;
+                EHGameplayCharacter CharacterThatWeHit = RayHit.HitCollider.GetComponent<EHGameplayCharacter>();
+                if (CharacterThatWeHit == null || CharacterThatWeHit != CharacterThatLaunchedProjectile)
+                {
+                    Explode();
+                    return;
+                }
             }
             CurrentAngle += AngleIncrement;
         }
-    }
-
-    public override void LaunchProjectile(Vector2 VelocityOfLaunch)
-    {
-        
     }
 
     /// <summary>
@@ -54,7 +53,8 @@ public class BombProjectile : EHBaseProjectile
     /// </summary>
     public void Explode()
     {
-        Physics.enabled = false;
+        Physics2D.enabled = false;
         ProjectileAnim.SetTrigger(EXPLODE_ANIM);
+        this.enabled = false;
     }
 }

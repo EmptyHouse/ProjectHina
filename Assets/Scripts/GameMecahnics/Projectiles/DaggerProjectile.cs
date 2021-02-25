@@ -26,7 +26,7 @@ public class DaggerProjectile : EHBaseProjectile
     #region override methods
     public override void LaunchProjectile(Vector2 VelocityOfLaucnh)
     {
-        Physics.Velocity = VelocityOfLaucnh;
+        Physics2D.Velocity = VelocityOfLaucnh;
         RotateBasedOnVelocity();
 
     }
@@ -49,7 +49,7 @@ public class DaggerProjectile : EHBaseProjectile
 
     private void RotateBasedOnVelocity()
     {
-        float ZRoation = Mathf.Atan2(Physics.Velocity.y, Physics.Velocity.x) * Mathf.Rad2Deg;
+        float ZRoation = Mathf.Atan2(Physics2D.Velocity.y, Physics2D.Velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, ZRoation);
     }
 }
