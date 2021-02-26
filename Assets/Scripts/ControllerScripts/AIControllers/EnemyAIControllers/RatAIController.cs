@@ -63,7 +63,6 @@ public class RatAIController : EHBaseAIController
             {
                 RatProjectilLauncherComponent.OnLaucnhProjectile();
                 TimeSinceLastShot = 0;
-                Debug.Log(TimeSinceLastShot);
             }
         }
     }

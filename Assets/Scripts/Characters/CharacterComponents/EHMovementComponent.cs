@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 /// <summary>
@@ -40,6 +41,10 @@ public class EHMovementComponent : EHBaseMovementComponent
     // Value required in the down position before we register that our character is crouching
     private const float JOYSTICK_CROUCH_THRESHOLD = .6f;
     #endregion const values
+
+    #region events
+    public UnityAction OnCharacterLanded;
+    #endregion events
 
     #region main variables
 
@@ -170,7 +175,10 @@ public class EHMovementComponent : EHBaseMovementComponent
     #region input methods
     public void InputJump()
     {
-        CharacterAnimator.SetTrigger(ANIM_JUMP);
+        if (RemainingDoubleJumps > 0 || CurrentMovementType != EMovementType.IN_AIR)
+        {
+            CharacterAnimator.SetTrigger(ANIM_JUMP);
+        }
     }
 
     public void ReleaseInputJump()
@@ -206,6 +214,11 @@ public class EHMovementComponent : EHBaseMovementComponent
                 }
                 return;
         }
+    }
+
+    private bool CanJump()
+    {
+        return false;
     }
     #endregion input methods
 
@@ -402,6 +415,11 @@ public class EHMovementComponent : EHBaseMovementComponent
         Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
     }
 
+    public bool GetIsInAir()
+    {
+        return CurrentMovementType == EMovementType.IN_AIR;
+    }
+
     /// <summary>
     /// When this method is called it will begin 
     /// </summary>
@@ -416,10 +434,11 @@ public class EHMovementComponent : EHBaseMovementComponent
     /// <summary>
     /// This method will be called when our character lands after leaving the IN_AIR state
     /// </summary>
-    public void OnLanded()
+    private void OnLanded()
     {
         SetMovementType(EMovementType.STANDING);
         Physics2D.GravityScale = CachedGravityScale;
+        OnCharacterLanded?.Invoke();
     }
 
     /// <summary>

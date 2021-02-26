@@ -229,8 +229,8 @@ MonoBehaviour:
   AssociatedAttackTable: {fileID: 0}
   DefaultAttackData:
     AttackDamage: 1
-    HitStunTime: 0.1
-    HitFreezeTime: 0.2
+    HitStunTime: 0.05
+    HitFreezeTime: 0
     CameraShakeDuration: 0
     CameraShakeIntensity: 0
     LaunchForce: {x: 0, y: 0}

@@ -17668,10 +17668,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1036424260}
     m_Modifications:
-    - target: {fileID: 1201473857, guid: f914330b8978ee24a82002087c6735a0, type: 3}
-      propertyPath: RatAttack.TimeBetweenShots
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 8121711246361311606, guid: f914330b8978ee24a82002087c6735a0, type: 3}
       propertyPath: m_Name
       value: RatBoy

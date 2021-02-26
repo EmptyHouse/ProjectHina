@@ -16,7 +16,7 @@ public class DashComponent : MonoBehaviour
     #endregion const variables
 
     [Tooltip("The initial speed of our dash")]
-    public float InitialDashSpeed = 20f;
+    public float DashSpeed = 5f;
     [Tooltip("The total amount of time that we will perform our dash")]
     public float DashTime = .016f * 4;
     [Tooltip("The delay before we start our dash animation")]
@@ -27,31 +27,50 @@ public class DashComponent : MonoBehaviour
     public float DragValueForDashCoolDown = 10;
     [Tooltip("Curve will determine the velocity of our character when using the dash ability")]
     public AnimationCurve DashAnimationCurve;
+    public int MaxDashesBeforeLanding = 1;
 
     /// <summary>
     /// True during our dash. Indicates that we can perform another dash if avaiable. This will be false during our dash cooldown
     /// </summary>
     private bool bIsPerformingDash;
     private EHMovementComponent MovementComponent;
+    private EHDamageableComponent DamageComponent;
     private EHPhysics2D Physics2D;
     private Animator CharacterAnim;
+    private int DashesRemaining;
 
     #region monobehaviour methods
     private void Awake()
     {
         MovementComponent = GetComponent<EHMovementComponent>();
+        DamageComponent = GetComponent<EHDamageableComponent>();
         Physics2D = GetComponent<EHPhysics2D>();
         CharacterAnim = GetComponent<Animator>();
+        MovementComponent.OnCharacterLanded += OnCharacterLanded;
+        DashesRemaining = MaxDashesBeforeLanding;
+        if (DamageComponent)
+        {
+            DamageComponent.OnCharacterHealthChanged += OnCharacterHealthChanged;
+        }
+    }
+
+    private void OnValidate()
+    {
+        if (MaxDashesBeforeLanding < 1)
+        {
+            MaxDashesBeforeLanding = 1;
+        }
     }
     #endregion monobehaviour methods
 
     /// <summary>
     /// Peforms our character's dash if valid
     /// </summary>
-    public void AttemptDash()
+    public void InputDash()
     {
-        if (!bIsPerformingDash)
+        if (!bIsPerformingDash && (!MovementComponent.GetIsInAir() || DashesRemaining >= 1))
         {
+            print(DashesRemaining);
             CharacterAnim.SetTrigger(ANIM_DASH_TRIGGER);
         }
     }
@@ -63,7 +82,8 @@ public class DashComponent : MonoBehaviour
 
     private void BeginActualDash()
     {
-        BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash, BeginActualDash);
+        --DashesRemaining;
+        BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash);
         StartCoroutine(BeginDash());
     }
 
@@ -76,9 +96,13 @@ public class DashComponent : MonoBehaviour
         bIsPerformingDash = true;
         CharacterAnim.SetBool(ANIM_IS_DASHING, bIsPerformingDash);
         yield return StartCoroutine(PerformDash());
-        bIsPerformingDash = false;
+
+        if (bIsPerformingDash)
+        {
+            bIsPerformingDash = false;
+            yield return StartCoroutine(PerformDashCoolDown());
+        }
         CharacterAnim.SetBool(ANIM_IS_DASHING, bIsPerformingDash);
-        yield return StartCoroutine(PerformDashCoolDown());
     }
 
     /// <summary>
@@ -89,8 +113,6 @@ public class DashComponent : MonoBehaviour
     private IEnumerator PerformDash()
     {
         Vector2 MovementInputAxis = MovementComponent.GetMovementInput();
-        MovementInputAxis.x = Mathf.Abs(MovementInputAxis.x) > DASH_INPUT_THRESHOLD ? Mathf.Sign(MovementInputAxis.x) : 0;
-        MovementInputAxis.y = Mathf.Abs(MovementInputAxis.y) > DASH_INPUT_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
 
         Vector2 DashDirection;
         if (MovementInputAxis == Vector2.zero)
@@ -103,9 +125,9 @@ public class DashComponent : MonoBehaviour
         float CachedGravity = Physics2D.GravityScale;
         
         Physics2D.GravityScale = 0;
-        while (TimeThatHasPassed < DashTime)
+        while (TimeThatHasPassed < DashTime && bIsPerformingDash)
         {
-            Physics2D.Velocity = InitialDashSpeed * DashAnimationCurve.Evaluate(TimeThatHasPassed / DashTime) * DashDirection;
+            Physics2D.Velocity = DashAnimationCurve.Evaluate(TimeThatHasPassed / DashTime) * DashDirection * DashSpeed;
             yield return null;
             TimeThatHasPassed += EHTime.DeltaTime;
         }
@@ -130,5 +152,18 @@ public class DashComponent : MonoBehaviour
             yield return null;
         }
         yield break;
+    }
+
+    private void OnCharacterLanded()
+    {
+        DashesRemaining = MaxDashesBeforeLanding;
+    }
+
+    private void OnCharacterHealthChanged(FDamageData DamageData)
+    {
+        if (DamageData.DamageType != EHDamageableComponent.EDamageType.HEALING)
+        {
+            bIsPerformingDash = false;
+        }
     }
 }
