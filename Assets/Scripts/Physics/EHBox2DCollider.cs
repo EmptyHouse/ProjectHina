@@ -127,21 +127,12 @@ public class EHBox2DCollider : EHBaseCollider2D
                 HitData.HitDirection = Vector2.up;
             }
 
-            FHitData OtherHitData = HitData;
-            OtherHitData.OwningCollider = HitData.OtherCollider;
-            OtherHitData.OtherCollider = HitData.OwningCollider;
-
-            OtherHitData.HitDirection *= -1;
-
-            OnCollision2DStay?.Invoke(HitData);
-            ColliderToPushOut.OnCollision2DStay?.Invoke(OtherHitData);
-
             if (!ContainOverlappingCollider(ColliderToPushOut))
             {
-                AddColliderToHitSet(ColliderToPushOut);
-                OnCollision2DBegin?.Invoke(HitData);
-                ColliderToPushOut.OnCollision2DBegin?.Invoke(OtherHitData);
+                AddColliderToHitSet(ColliderToPushOut, HitData);
             }
+
+            HitCollisionStay(ColliderToPushOut, HitData);
 
             return true;
         }

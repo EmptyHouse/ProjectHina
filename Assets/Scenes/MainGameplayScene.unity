@@ -298,7 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FrictionScale: 0.5
-  MaxFallSpeed: 0
+  MaxFallSpeed: 2
 --- !u!1 &841370190
 GameObject:
   m_ObjectHideFlags: 0

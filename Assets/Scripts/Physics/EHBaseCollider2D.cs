@@ -77,7 +77,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
             }
             else
             {
-                RemoveColliderFromHitSet(OtherCollider);
+                FHitData HitData = new FHitData();
+                HitData.OtherCollider = OtherCollider;
+                HitData.OwningCollider = this;
+                RemoveColliderFromHitSet(OtherCollider, HitData);
             }
         }
     }
@@ -178,7 +181,10 @@ public abstract class EHBaseCollider2D : MonoBehaviour
 
         if (ContainOverlappingCollider(OtherCollider))
         {
-            RemoveColliderFromHitSet(OtherCollider);
+            FHitData HitData = new FHitData();
+            HitData.OtherCollider = OtherCollider;
+            HitData.OwningCollider = this;
+            RemoveColliderFromHitSet(OtherCollider, HitData);
         }
         return false;
     }
@@ -187,11 +193,24 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// This should be called anytime we begin a collision with another collider
     /// </summary>
     /// <param name="OtherCollider"></param>
-    protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider)
+    protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider, FHitData HitData)
     {
         if (OtherCollider != null && OverlappingColliders.Add(OtherCollider))
         {
             OtherCollider.OverlappingColliders.Add(this);
+            OnCollision2DBegin?.Invoke(HitData);
+            ReverseHitData(ref HitData);
+            OtherCollider.OnCollision2DBegin?.Invoke(HitData);
+        }
+    }
+
+    protected void HitCollisionStay(EHBaseCollider2D OtherCollider, FHitData HitData)
+    {
+        if (OtherCollider != null)
+        {
+            OnCollision2DStay?.Invoke(HitData);
+            ReverseHitData(ref HitData);
+            OtherCollider.OnCollision2DStay?.Invoke(HitData);
         }
     }
 
@@ -199,12 +218,24 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// This should be called anytime we end a collision with another collider
     /// </summary>
     /// <param name="OtherCollider"></param>
-    protected void RemoveColliderFromHitSet(EHBaseCollider2D OtherCollider)
+    protected void RemoveColliderFromHitSet(EHBaseCollider2D OtherCollider, FHitData HitData)
     {
         if (OtherCollider != null && OverlappingColliders.Remove(OtherCollider))
         {
             OtherCollider.OverlappingColliders.Remove(this);
+            OnCollision2DEnd?.Invoke(HitData);
+            ReverseHitData(ref HitData);
+            OtherCollider.OnCollision2DEnd?.Invoke(HitData);
+
         }    
+    }
+
+    private void ReverseHitData(ref FHitData HitData)
+    {
+        EHBaseCollider2D OriginalOwning = HitData.OwningCollider;
+        HitData.OwningCollider = HitData.OtherCollider;
+        HitData.OtherCollider = OriginalOwning;
+        HitData.HitDirection *= -1f;
     }
 
     /// <summary>
