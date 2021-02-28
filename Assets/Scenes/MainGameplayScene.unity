@@ -299,6 +299,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FrictionScale: 0.5
   MaxFallSpeed: 2
+  WallJumpVelocity: {x: 25, y: 25}
+  bAnimIsWallRiding: 0
 --- !u!1 &841370190
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,7 +70,6 @@ public class DashComponent : MonoBehaviour
     {
         if (!bIsPerformingDash && (!MovementComponent.GetIsInAir() || DashesRemaining >= 1))
         {
-            print(DashesRemaining);
             CharacterAnim.SetTrigger(ANIM_DASH_TRIGGER);
         }
     }

@@ -466,6 +466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: WispyBoy
       objectReference: {fileID: 0}
+    - target: {fileID: 2076503964691515904, guid: ca770f07736aca24881f2c6eef0485b0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2076503964691515905, guid: ca770f07736aca24881f2c6eef0485b0, type: 3}
       propertyPath: m_RootOrder
       value: 0

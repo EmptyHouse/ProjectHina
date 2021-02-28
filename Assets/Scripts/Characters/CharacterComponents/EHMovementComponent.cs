@@ -35,11 +35,11 @@ public class EHMovementComponent : EHBaseMovementComponent
 
     #region const values
     // Value required before we can register that our character should begin walking
-    private const float JOYSTICK_WALK_THRESHOLD = .25f;
+    public const float JOYSTICK_WALK_THRESHOLD = .25f;
     // Value reuired on our joystick before we register that our character is at running speed
-    private const float JOYSTICK_RUN_THRESHOLD = .7f;
+    public const float JOYSTICK_RUN_THRESHOLD = .7f;
     // Value required in the down position before we register that our character is crouching
-    private const float JOYSTICK_CROUCH_THRESHOLD = .6f;
+    public const float JOYSTICK_CROUCH_THRESHOLD = .6f;
     #endregion const values
 
     #region events
