@@ -1,9 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainSplashScreen : BaseSelectionUI
 {
+    [SerializeField]
+    private EHUtilities.SceneField DefaultSceneToLoad;
+    [SerializeField]
+    private Image FadeOutImage;
+    [SerializeField]
+    private float TimeToFadeOutImage = 2f;
+    private bool bIsLoadingGame = false;
 
     #region input methods
     /// <summary>
@@ -11,7 +20,8 @@ public class MainSplashScreen : BaseSelectionUI
     /// </summary>
     public void OnNewGamePressed()
     {
-        Debug.Log("New Game Was Clicked");
+        this.enabled = false;
+        StartCoroutine(LoadLevelCoroutine(DefaultSceneToLoad));
     }
 
     /// <summary>
@@ -35,7 +45,25 @@ public class MainSplashScreen : BaseSelectionUI
     /// </summary>
     public void OnExitButtonPressed()
     {
+        Debug.Log("Closing Application...");
         Application.Quit();
     }
     #endregion input methods
+
+    private IEnumerator LoadLevelCoroutine(EHUtilities.SceneField SceneToLoad)
+    {
+        bIsLoadingGame = true;
+        float TimeThatHasPassed = 0;
+        Color CurrentColor = FadeOutImage.color;
+        while (TimeThatHasPassed < TimeToFadeOutImage)
+        {
+            TimeThatHasPassed += EHTime.DeltaTime;
+            yield return null;
+            CurrentColor.a = TimeThatHasPassed / TimeToFadeOutImage;
+            FadeOutImage.color = CurrentColor;
+        }
+        CurrentColor.a = 1;
+        FadeOutImage.color = CurrentColor;
+        SceneManager.LoadScene(SceneToLoad.SceneName);
+    }
 }

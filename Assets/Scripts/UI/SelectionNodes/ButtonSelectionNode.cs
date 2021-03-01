@@ -16,8 +16,10 @@ public class ButtonSelectionNode : BaseSelectionNode
         RELEASE,
     }
     [Header("UI Elements")]
-    public Image ButtonBGImage;
-    public Text ButtonText;
+    [SerializeField]
+    private Image ButtonBGImage;
+    [SerializeField]
+    private Text ButtonText;
 
     [Header("Button Events")]
     [Tooltip("Action that will be executed when our button is pressed down and then released")]
@@ -106,12 +108,18 @@ public class ButtonSelectionNode : BaseSelectionNode
     }
     #endregion override methods
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void OnSubmitPressed()
     {
         OnButtonPressedAction?.Invoke();
         ButtonIsHeld = true;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void OnSubmitReleased()
     {
         OnButtonReleasedAction?.Invoke();
@@ -121,6 +129,4 @@ public class ButtonSelectionNode : BaseSelectionNode
         }
         ButtonIsHeld = false;
     }
-
-
 }

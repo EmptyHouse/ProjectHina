@@ -8,12 +8,14 @@ using UnityEngine;
 public class EHPlayerCharacter : EHGameplayCharacter
 {
     public EHPlayerController PlayerController { get { return playerController; } }
+    WallJump CharacterWallJump;
     private EHPlayerController playerController;
 
     protected override void Awake()
     {
         base.Awake();
         DontDestroyOnLoad(this.gameObject);
+        CharacterWallJump = GetComponent<WallJump>();
         playerController = (EHPlayerController)CharacterController;
     }
 }

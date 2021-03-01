@@ -5,6 +5,7 @@ using UnityEngine;
 public class WallJump : MonoBehaviour
 {
     #region const variables
+    private const string ANIM_WALL_JUMP = "WallJump";
     private const string ANIM_WALL_HOLD = "CanWallRide";
 
     #endregion const variables
@@ -45,17 +46,18 @@ public class WallJump : MonoBehaviour
         if (bAnimIsWallRiding)
         {
             float xInput = CharacterMovement.GetMovementInput().x;
-            if (xInput * CachedWallDirection < EHMovementComponent.JOYSTICK_WALK_THRESHOLD)
+            if (xInput * CachedWallDirection <= EHMovementComponent.JOYSTICK_WALK_THRESHOLD)
             {
                 if (CharacterAnim.GetBool(ANIM_WALL_HOLD))
                 {
-                     CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
+                    print(xInput * CachedWallDirection);
+                    CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
                     return;
                 }
             }
             if (Physics2D.Velocity.y < -MaxFallSpeed)
             {
-                Physics2D.Velocity = new Vector2(0, -MaxFallSpeed);
+                Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, -MaxFallSpeed);
             }
         }
         else if (ColliderWeAreOn)
@@ -78,6 +80,22 @@ public class WallJump : MonoBehaviour
         }
     }
     #endregion monobehaviour methods
+    /// <summary>
+    /// 
+    /// </summary>
+    public void InputWallJump()
+    {
+        CharacterAnim.SetTrigger(ANIM_WALL_JUMP);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void InputCancelWallJump()
+    {
+        CharacterAnim.ResetTrigger(ANIM_WALL_JUMP);
+    }
+
     /// <summary>
     /// Call this 
     /// </summary>

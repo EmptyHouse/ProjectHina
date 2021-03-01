@@ -69,6 +69,10 @@ public class MainCameraFollow : MonoBehaviour
     private void UpdateCameraBounds()
     {
         // A lot of this stuff can probably be calculated at the beginning to avoid doind this every
+        if (!BaseGameOverseer.Instance.CurrentlyLoadedRoom)
+        {
+            return;
+        }
         Vector2 MinBounds, MaxBounds;
         float OrthoSize = CameraComponent.orthographicSize;
         Vector2 CameraSize = new Vector2(OrthoSize * Screen.width / Screen.height, OrthoSize);

@@ -625,7 +625,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784950895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.02, y: 4.38, z: 0}
+  m_LocalPosition: {x: -10, y: 4.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1614570502}
@@ -647,7 +647,7 @@ MonoBehaviour:
   ColliderType: 0
   bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
-  ColliderSize: {x: 1, y: 8.6}
+  ColliderSize: {x: 1, y: 9}
 --- !u!1 &798636517
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class EHPlayerController : EHBasePlayerController
     private EHMovementComponent MovementComponent;
     private DashComponent DashComponent;
     private EHPlayerCharacter PlayerCharacter;
+    private WallJump CharacterWallJump;
 
     #region monobehaivour methods
     protected override void Awake()
@@ -35,6 +36,7 @@ public class EHPlayerController : EHBasePlayerController
         DashComponent = GetComponent<DashComponent>();
         AttackComponent = GetComponent<EHAttackComponent>();
         MovementComponent = GetComponent<EHMovementComponent>();
+        CharacterWallJump = GetComponent<WallJump>();
 
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, Jump);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, JumpBufferEnded);
@@ -43,6 +45,8 @@ public class EHPlayerController : EHBasePlayerController
         BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Buffer, DashComponent.CancelDash);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Pressed, Attack);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Buffer, AttackBufferEnded);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, CharacterWallJump.InputWallJump);
+        BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, CharacterWallJump.InputCancelWallJump);
 
         BindActionToAxis(HORIZONTAL_AXIS, MovementComponent.SetHorizontalInput);
         BindActionToAxis(VERTICAL_AXIS, MovementComponent.SetVerticalInput);
