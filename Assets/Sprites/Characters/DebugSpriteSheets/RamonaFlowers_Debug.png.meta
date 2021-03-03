@@ -122,6 +122,36 @@ TextureImporter:
   - first:
       213: -8328370478414491779
     second: Romona_JAttack05
+  - first:
+      213: 2204846776197778382
+    second: RomonaShoot_00
+  - first:
+      213: -4891592327415138782
+    second: RomonaShoot_01
+  - first:
+      213: 7138960326210672460
+    second: RomonaShoot_02
+  - first:
+      213: -6940382980756499821
+    second: RomonaShoot_03
+  - first:
+      213: 4544966540523291877
+    second: RomonaShoot_04
+  - first:
+      213: -5295875221917626292
+    second: RomonaShoot_05
+  - first:
+      213: -3434747823219290839
+    second: RomonaShoot_06
+  - first:
+      213: 8337870145679709183
+    second: RomonaShoot_07
+  - first:
+      213: -2668149364901191975
+    second: RomonaShoot_08
+  - first:
+      213: -4772522032669353408
+    second: RomonaShoot_09
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1340,6 +1370,216 @@ TextureImporter:
       bones: []
       spriteID: d7f014cec2fab6c80800000000000000
       internalID: -8328370478414491779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_00
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 941
+        width: 36
+        height: 65
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0.03076923}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecb0f6f0670399e10800000000000000
+      internalID: 2204846776197778382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_01
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 941
+        width: 35
+        height: 66
+      alignment: 9
+      pivot: {x: 0.51428574, y: 0.028169014}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 226f46ae1b29d1cb0800000000000000
+      internalID: -4891592327415138782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_02
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 941
+        width: 35
+        height: 67
+      alignment: 9
+      pivot: {x: 0.45714286, y: 0.02739726}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c47d465c79ea21360800000000000000
+      internalID: 7138960326210672460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_03
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 941
+        width: 47
+        height: 61
+      alignment: 9
+      pivot: {x: 0.29787233, y: 0.032786883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39297d2637eceaf90800000000000000
+      internalID: -6940382980756499821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_04
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 941
+        width: 43
+        height: 61
+      alignment: 9
+      pivot: {x: 0.27906978, y: 0.032786883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e44de30df6f21f30800000000000000
+      internalID: 4544966540523291877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_05
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 941
+        width: 45
+        height: 61
+      alignment: 9
+      pivot: {x: 0.26666668, y: 0.032786883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c409ece5b854186b0800000000000000
+      internalID: -5295875221917626292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_06
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 941
+        width: 44
+        height: 61
+      alignment: 9
+      pivot: {x: 0.27272728, y: 0.032786883}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92dc7f78d035550d0800000000000000
+      internalID: -3434747823219290839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_07
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 941
+        width: 36
+        height: 64
+      alignment: 9
+      pivot: {x: 0.3888889, y: 0.03125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff3d298b8b016b370800000000000000
+      internalID: 8337870145679709183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_08
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 941
+        width: 31
+        height: 68
+      alignment: 9
+      pivot: {x: 0.54838705, y: 0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9de51610a44d8fad0800000000000000
+      internalID: -2668149364901191975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RomonaShoot_09
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 941
+        width: 36
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0.029411765}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a94084f7894cdb0800000000000000
+      internalID: -4772522032669353408
       vertices: []
       indices: 
       edges: []

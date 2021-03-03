@@ -6,6 +6,17 @@ public class EHSpawnPool : MonoBehaviour
 {
     #region static variables
     private static EHSpawnPool instance;
+    public static EHSpawnPool Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindObjectOfType<EHSpawnPool>();
+            }
+            return instance;
+        }
+    }
     #endregion static variables
 
     public SpawnComponent[] InitialSpawnObjects = new SpawnComponent[0];
@@ -36,6 +47,11 @@ public class EHSpawnPool : MonoBehaviour
         }
     }
 
+    public void DespawnAfterTime(ISpawnable ObjectToDespawn, float TimeUntilDespawn, bool bIsRealTime = false)
+    {
+        StartCoroutine(DespawnCoroutine(ObjectToDespawn, TimeUntilDespawn, bIsRealTime));
+    }
+
     private void CreateObjectForPool(GameObject ObjectToCreate)
     {
         GameObject NewObject = Instantiate(ObjectToCreate);
@@ -48,6 +64,16 @@ public class EHSpawnPool : MonoBehaviour
             SpawnPoolDictionary.Add(NewObject.name, new Queue<ISpawnable>());
         }
         // To do, be sure to add a way to add the spawn pool object to the dictionary 
+    }
+
+    private IEnumerator DespawnCoroutine(ISpawnable Spawnable, float TimeUntilDespawn, bool bIsRealTime = false)
+    {
+        float TimeThatHasPassed = 0;
+        while ((TimeThatHasPassed += EHTime.DeltaTime) < TimeUntilDespawn)
+        {
+            yield return null;
+        }
+        Destroy(Spawnable.GetGameObject());
     }
 
     [System.Serializable]

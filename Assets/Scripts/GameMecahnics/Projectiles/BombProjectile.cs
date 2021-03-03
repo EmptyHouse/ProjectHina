@@ -56,5 +56,6 @@ public class BombProjectile : EHBaseProjectile
         Physics2D.enabled = false;
         ProjectileAnim.SetTrigger(EXPLODE_ANIM);
         this.enabled = false;
+        EHSpawnPool.Instance.DespawnAfterTime(this, 1);
     }
 }

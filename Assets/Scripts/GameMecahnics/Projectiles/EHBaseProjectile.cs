@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(EHPhysics2D))]
-public abstract class EHBaseProjectile : MonoBehaviour
+public abstract class EHBaseProjectile : MonoBehaviour, ISpawnable
 {
     [SerializeField]
     [Tooltip("The number of rays we will cast to determine whether or not we collide with something")]
@@ -69,5 +69,20 @@ public abstract class EHBaseProjectile : MonoBehaviour
         {
             HitboxActorComponent.SetCharacterOwner(CharacterOwner);
         }
+    }
+
+    public virtual void OnSpawn()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual void OnDespawn()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public GameObject GetGameObject()
+    {
+        return this.gameObject;
     }
 }

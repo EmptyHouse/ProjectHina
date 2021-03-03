@@ -8,6 +8,7 @@ public class EHPlayerController : EHBasePlayerController
     public const string JUMP_COMMAND = "Jump";
     public const string DASH_COMMAND = "Dash";
     public const string ATTACK_COMMAND = "Attack";
+    public const string SHOOT_COMMAND = "Shoot";
 
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
@@ -43,6 +44,8 @@ public class EHPlayerController : EHBasePlayerController
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Released, MovementComponent.EndJump);
         BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Pressed, DashComponent.InputDash);
         BindActionToInput(DASH_COMMAND, ButtonInputType.Button_Buffer, DashComponent.CancelDash);
+        BindActionToInput(SHOOT_COMMAND, ButtonInputType.Button_Pressed, Shoot);
+        BindActionToInput(SHOOT_COMMAND, ButtonInputType.Button_Buffer, ShootBufferEnd);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Pressed, Attack);
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Buffer, AttackBufferEnded);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, CharacterWallJump.InputWallJump);
@@ -64,6 +67,15 @@ public class EHPlayerController : EHBasePlayerController
         AttackComponent.ReleaseAttack(0);
     }
 
+    private void Shoot()
+    {
+        AttackComponent.AttemptAttack(1);
+    }
+
+    private void ShootBufferEnd()
+    {
+        AttackComponent.ReleaseAttack(1);
+    }
     private void Jump()
     {
         MovementComponent.InputJump();
