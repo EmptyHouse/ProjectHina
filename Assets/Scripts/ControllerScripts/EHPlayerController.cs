@@ -13,7 +13,7 @@ public class EHPlayerController : EHBasePlayerController
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
     #endregion const variables
-
+    
     private EHAttackComponent AttackComponent;
     private EHMovementComponent MovementComponent;
     private DashComponent DashComponent;
@@ -57,35 +57,57 @@ public class EHPlayerController : EHBasePlayerController
     #endregion override methods
 
     #region input helper methods
+    /// <summary>
+    /// Enables a trigger to allow our character to perform a melee attack
+    /// </summary>
     private void Attack()
     {
         AttackComponent.AttemptAttack(0);
     }
 
+    /// <summary>
+    /// Disables a trigger for our character to perform a melee attack
+    /// </summary>
     private void AttackBufferEnded()
     {
         AttackComponent.ReleaseAttack(0);
     }
 
+    /// <summary>
+    /// Enables trigger to allow our character to perform a shoot animation
+    /// </summary>
     private void Shoot()
     {
         AttackComponent.AttemptAttack(1);
     }
 
+    /// <summary>
+    /// Disables trigger for our shoot animation
+    /// </summary>
     private void ShootBufferEnd()
     {
         AttackComponent.ReleaseAttack(1);
     }
+
+    /// <summary>
+    /// Enables a trigger to allow our character to jump
+    /// </summary>
     private void Jump()
     {
         MovementComponent.InputJump();
     }
 
+    /// <summary>
+    /// Disables the trigger that would allow our character to jump
+    /// </summary>
     private void JumpBufferEnded()
     {
         MovementComponent.ReleaseInputJump();
     }
     #endregion input helper methods
-
+    /// <summary>
+    /// Returns the assigned PlayerCharacter that is associated with this player controller
+    /// </summary>
+    /// <returns></returns>
     public EHPlayerCharacter GetPlayerCharacter() { return PlayerCharacter; }
 }

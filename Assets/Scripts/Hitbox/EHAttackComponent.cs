@@ -105,6 +105,8 @@ public class EHAttackComponent : MonoBehaviour
         {
             StartCoroutine(ClearHitListNextFrame());
         }
+
+        OnAttackCharacterDel?.Invoke(AttackData);
     }
 
     public virtual void OnDamageableComponentIntersectionEnd(EHDamageableComponent DamageableComponentHit) { }

@@ -8,6 +8,11 @@ public class DaggerProjectile : EHBaseProjectile
     public float ProjectileHorizontalOffset;
 
     #region monobehaviour methods
+    protected override void Awake()
+    {
+        base.Awake();
+        GetComponent<EHAttackComponent>().OnAttackCharacterDel += OnCharacterHit;
+    }
     protected override void Update()
     {
         RotateBasedOnVelocity();
@@ -51,5 +56,10 @@ public class DaggerProjectile : EHBaseProjectile
     {
         float ZRoation = Mathf.Atan2(Physics2D.Velocity.y, Physics2D.Velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, ZRoation);
+    }
+
+    private void OnCharacterHit(FAttackData AttackData)
+    {
+        Destroy(this.gameObject);
     }
 }

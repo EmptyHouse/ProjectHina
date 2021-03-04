@@ -204,6 +204,36 @@ MonoBehaviour:
   HitboxType: 1
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
+--- !u!1 &1719638848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719638849}
+  m_Layer: 9
+  m_Name: ProjectileLaunchPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719638849
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719638848}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5197975867184269768}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1737860270
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,6 +333,8 @@ GameObject:
   - component: {fileID: 5197975866366392833}
   - component: {fileID: 5197975866366392892}
   - component: {fileID: 5197975866366392894}
+  - component: {fileID: 784950896}
+  - component: {fileID: 92752397534300810}
   m_Layer: 9
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -339,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterName: Hina
+  CharacterTeam: 1
 --- !u!114 &5197975866366392889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37e8701f8965004da09e0085542da44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GravityScale: 4.3304358
+  GravityScale: 4.4642854
   bUseTerminalVelocity: 1
   TerminalVelocity: 10
 --- !u!114 &5197975866366392891
@@ -387,15 +420,19 @@ MonoBehaviour:
   - InputName: Jump
     MainKey: 32
     AlternateKey: 330
-    BufferTime: 0
+    BufferTime: 0.16666667
   - InputName: Dash
     MainKey: 106
     AlternateKey: 331
-    BufferTime: 0
+    BufferTime: 0.16666667
   - InputName: Attack
     MainKey: 107
     AlternateKey: 332
-    BufferTime: 0
+    BufferTime: 0.33333334
+  - InputName: Shoot
+    MainKey: 108
+    AlternateKey: 333
+    BufferTime: 0.33333334
   AxisInputNodes:
   - AxisName: Horizontal
   - AxisName: Vertical
@@ -411,23 +448,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ee640781bb8db4ab40a003eaebbf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFacingLeft: 0
-  CharacterSpriteRenderer: {fileID: 5197975867184269771}
+  bIsFacingLeft: 0
+  bIsAnimationControlled: 0
+  AnimatedGoalVelocity: {x: 0, y: 0}
+  bMovementComponentDisabled: 0
   WalkingSpeed: 5
-  RunningSpeed: 11
+  RunningSpeed: 12
   GroundAcceleration: 130
   CrouchingAcceleration: 100
   CrouchingSpeed: 5
   CrouchingHeight: 0.6
   HorizontalAirAcceleration: 100
-  AirSpeed: 11
+  AirSpeed: 12.5
   DoubleJumpCount: 1
-  JumpHeightApex: 2.75
-  TimeToReachApex: 0.36
-  LowJumpMultiplier: 1.55
-  JumpVelocity: 15.277777
-  bIsAnimationControlled: 0
-  AnimatedGoalVelocity: {x: 0, y: 0}
+  JumpHeightApex: 3.5
+  TimeToReachApex: 0.4
+  LowJumpMultiplier: 1.75
+  JumpVelocity: 17.5
 --- !u!114 &5197975866366392895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,9 +477,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb5ff10986a1b0438107b02c07b5131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialDashSpeed: 45
-  DashTime: 0.1
-  DelayBeforeStartDash: 0.064
+  DashSpeed: 45
+  DashTime: 0.3
+  DelayBeforeStartDash: 0.049
   DashCoolDownTime: 0.15
   DragValueForDashCoolDown: 500
   DashAnimationCurve:
@@ -469,6 +506,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  MaxDashesBeforeLanding: 1
 --- !u!114 &376532133074414608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +552,7 @@ MonoBehaviour:
     CameraShakeDuration: 0
     CameraShakeIntensity: 0
     LaunchForce: {x: 0, y: 0}
+    bIsConstantHitbox: 0
 --- !u!95 &5197975866366392892
 Animator:
   serializedVersion: 3
@@ -545,6 +584,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d67f3df8f6400e4da3e2842aee639c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &784950896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197975866366392886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88ece81254f27ed43be2d1fbcf54abf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrictionScale: 0.5
+  MaxFallSpeed: 2
+  WallJumpVelocity: {x: 25, y: 25}
+  bAnimIsWallRiding: 0
+--- !u!114 &92752397534300810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5197975866366392886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e82ba0b70435e49a7ab4382533bd03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProjectileToLaunch: {fileID: 298994801276364183, guid: b125afd51cd22494cba113fa7410988b, type: 3}
+  ProjectileLaunchPointTransform:
+  - {fileID: 1719638849}
+  LaunchSpeed: 10
 --- !u!1 &5197975867184269769
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +645,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 194325037}
+  - {fileID: 1719638849}
   m_Father: {fileID: 5197975866366392888}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -888,7 +960,7 @@ Transform:
   m_GameObject: {fileID: 7865722967889252834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1368358, y: 1.225, z: 1}
+  m_LocalScale: {x: 0.9805209, y: 1.225, z: 1}
   m_Children: []
   m_Father: {fileID: 1360566447}
   m_RootOrder: 0

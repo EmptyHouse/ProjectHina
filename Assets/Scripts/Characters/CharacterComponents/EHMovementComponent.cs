@@ -70,6 +70,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     public float HorizontalAirAcceleration = 100f;
     [Tooltip("The speed at which our character will try to move while in the air")]
     public float AirSpeed;
+    [Tooltip("The number of double jumps that our character can make before landing again")]
     public int DoubleJumpCount = 1;
     [Tooltip("The max height of our jump")]
     public float JumpHeightApex = 5;
@@ -84,6 +85,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     private float JumpVelocity;
     // The original gravity multiplier before applying any multipliers
     private float CachedGravityScale;
+    // The velocity of our character before wer 
     private Vector2 PreviousVelocity;
     private EHBox2DCollider AssociatedCollider;
 
@@ -109,6 +111,7 @@ public class EHMovementComponent : EHBaseMovementComponent
         }
         AssociatedCollider.OnCollision2DBegin += OnEHCollisionEnter;
         CachedGravityScale = Physics2D.GravityScale;
+        RemainingDoubleJumps = DoubleJumpCount;
     }
 
     protected override void Update()
@@ -265,7 +268,7 @@ public class EHMovementComponent : EHBaseMovementComponent
        if (bIsAnimationControlled)
         {
             GoalSpeed = AnimatedGoalVelocity.x * Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x);
-            Acceleration /= 3;//Remember to remove this. Just for testing.
+            Acceleration /= 3;//Remember to remove this. Just for testing. Thinking about having an animation controlled acceleration as well
         }
         else
         {
@@ -379,6 +382,10 @@ public class EHMovementComponent : EHBaseMovementComponent
         return false;
     }
 
+    /// <summary>
+    /// Attempts to perform a jump down from a one way platform
+    /// </summary>
+    /// <returns></returns>
     public bool AttemptDropDownJump()
     {
         if (CurrentMovementType != EMovementType.CROUCH)
@@ -400,6 +407,9 @@ public class EHMovementComponent : EHBaseMovementComponent
         return false;
     }
 
+    /// <summary>
+    /// Actually perform the drop down jump. This should only be done in attempt dropdownjump to ensure that our character can properly perform the jump
+    /// </summary>
     private void DropDownJump()
     {
         transform.position += Vector3.down * .1f;
@@ -415,6 +425,10 @@ public class EHMovementComponent : EHBaseMovementComponent
         Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
     }
 
+    /// <summary>
+    /// returns whether or not our character is currently in the air
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsInAir()
     {
         return CurrentMovementType == EMovementType.IN_AIR;
@@ -462,6 +476,11 @@ public class EHMovementComponent : EHBaseMovementComponent
         return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
     }
 
+    /// <summary>
+    /// Moves our character by the pixes that are passed in
+    /// Called by our Animator, This is the reason there is only one int value that can be passed in to the method
+    /// </summary>
+    /// <param name="x"></param>
     public void OnTransformPositionInPixels(int x)
     {
         transform.position += Vector3.right * (Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x) * x / 16f);

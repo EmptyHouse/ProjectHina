@@ -23,7 +23,7 @@ public class EHProjectileLauncher : MonoBehaviour
     /// <summary>
     /// Call this method to launch our projectiles
     /// </summary>
-    public virtual void OnLaucnhProjectile()
+    public virtual void OnLaunchProjectile()
     {
         foreach (Transform LaunchTransform in ProjectileLaunchPointTransform)
         {

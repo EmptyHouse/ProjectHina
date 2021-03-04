@@ -61,7 +61,7 @@ public class RatAIController : EHBaseAIController
             TimeSinceLastShot += DeltaTime;
             if (TimeSinceLastShot >= TimeBetweenShots)
             {
-                RatProjectilLauncherComponent.OnLaucnhProjectile();
+                RatProjectilLauncherComponent.OnLaunchProjectile();
                 TimeSinceLastShot = 0;
             }
         }

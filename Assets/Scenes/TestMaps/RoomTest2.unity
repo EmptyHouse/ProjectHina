@@ -17699,6 +17699,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RatBoy
       objectReference: {fileID: 0}
+    - target: {fileID: 8121711246361311606, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8121711246361311609, guid: f914330b8978ee24a82002087c6735a0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -17741,6 +17745,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8121711246361311609, guid: f914330b8978ee24a82002087c6735a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121711246525107912, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121711246525107915, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121711246525107915, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121711246525107915, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121711246525107915, guid: f914330b8978ee24a82002087c6735a0, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
