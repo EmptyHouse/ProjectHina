@@ -6,11 +6,15 @@ using UnityEngine;
 public abstract class EHBaseMovementComponent : MonoBehaviour
 {
     #region const variables
+    // Animation key value used for our animation controller to set the horizontal input
     private const string ANIM_HORIZONTAL_INPUT = "HorizontalInput";
+    // Key used to for our animation controller to set the vertical input
     private const string ANIM_VERTICAL_INPUT = "VerticalInput";
+    public const float JOYSTICK_DEAD_ZONE = 0.12f;
     #endregion const variables
 
     #region main variables
+
     protected EHPhysics2D Physics2D;
     protected Animator CharacterAnimator;
     protected SpriteRenderer CharacterSpriteRenderer;
@@ -32,6 +36,12 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public Vector2 AnimatedGoalVelocity;
+
+    /// <summary>
+    /// The scale that we will apply to our character's acceleration. This will only be applied if our character is animation controlled
+    /// </summary>
+    [HideInInspector]
+    public float AnimatedScaledAcceleration = 1;
 
     /// <summary>
     /// Set this value to true if you want to disable the movement component entirely. This will be good if we want another function
@@ -90,13 +100,22 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     #endregion monobehaviour methods
 
     #region update methods
+    /// <summary>
+    /// Updates the velocity of our physics component based on the directional input that has been set
+    /// </summary>
+    /// <param name="CurrentInput"></param>
+    /// <param name="PreviousInput"></param>
     protected abstract void UpdateVelocityFromInput(Vector2 CurrentInput, Vector2 PreviousInput);
+    /// <summary>
+    /// Updates the movement type of our character
+    /// </summary>
+    /// <param name="CurrentInput"></param>
     protected abstract void UpdateMovementTypeFromInput(Vector2 CurrentInput);
     #endregion update methods
 
     #region input methods
     /// <summary>
-    /// 
+    /// Returns the value of our movement component 
     /// </summary>
     /// <returns></returns>
     public Vector2 GetMovementInput()
@@ -105,7 +124,7 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Returns the value of our input in the previous frame before before we start the next Movement update
     /// </summary>
     /// <returns></returns>
     public Vector2 GetPreviousMovementInput()
@@ -118,7 +137,12 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// <param name="HorizontalInput"></param>
     public void SetHorizontalInput(float HorizontalInput)
     {
+        if (Mathf.Abs(HorizontalInput) < JOYSTICK_DEAD_ZONE)
+        {
+            HorizontalInput = 0;
+        }
         CurrentInput.x = Mathf.Clamp(HorizontalInput, -1f, 1f);
+
         if (HorizontalInput < 0 && !bIsFacingLeft)
         {
             SetIsFacingLeft(true);
@@ -135,6 +159,10 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// <param name="VerticalInput"></param>
     public void SetVerticalInput(float VerticalInput)
     {
+        if (Mathf.Abs(VerticalInput) < JOYSTICK_DEAD_ZONE)
+        {
+            VerticalInput = 0;
+        }
         CurrentInput.y = Mathf.Clamp(VerticalInput, -1f, 1f);
     }
     #endregion input methods
@@ -173,5 +201,14 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
         Vector3 NewScale = CharacterSpriteRenderer.transform.localScale;
         NewScale.x = Mathf.Abs(NewScale.x) * (bIsFacingLeft ? -1f : 1f);
         CharacterSpriteRenderer.transform.localScale = NewScale;
+    }
+
+    public void SetIsFacingLeft(float HorizontalInput, bool bForceSetDirection = false)
+    {
+        if (Mathf.Abs(HorizontalInput) < JOYSTICK_DEAD_ZONE)
+        {
+            return;
+        }
+        SetIsFacingLeft(HorizontalInput < 0, bForceSetDirection);
     }
 }

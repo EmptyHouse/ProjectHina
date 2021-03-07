@@ -33,10 +33,13 @@ public class DashComponent : MonoBehaviour
     /// True during our dash. Indicates that we can perform another dash if avaiable. This will be false during our dash cooldown
     /// </summary>
     private bool bIsPerformingDash;
+    // The attached movement component of our character
     private EHMovementComponent MovementComponent;
+    // Reference to the damageable component, used to indicate if our character was hurt to cancel out the dash
     private EHDamageableComponent DamageComponent;
     private EHPhysics2D Physics2D;
     private Animator CharacterAnim;
+    // Remainging dashes that we can perform before landing again.
     private int DashesRemaining;
 
     #region monobehaviour methods
@@ -74,14 +77,23 @@ public class DashComponent : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Cancels the dash trigger in our Animation Controller
+    /// </summary>
     public void CancelDash()
     {
         CharacterAnim.ResetTrigger(ANIM_DASH_TRIGGER);
     }
 
+    /// <summary>
+    /// Begins the process of performing a dash
+    /// </summary>
     private void BeginActualDash()
     {
-        --DashesRemaining;
+        if (MovementComponent.GetIsInAir())
+        {
+            --DashesRemaining;
+        }
         BaseGameOverseer.Instance.GlobalEffectManager.StartFreezeTimeForSeconds(DelayBeforeStartDash);
         StartCoroutine(BeginDash());
     }
@@ -118,8 +130,12 @@ public class DashComponent : MonoBehaviour
         {
             MovementInputAxis = Vector2.right * (MovementComponent.GetIsFacingLeft() ? -1 : 1);
         }
-        DashDirection = MovementInputAxis.normalized;
 
+        float HorizontalDashDirection = MovementInputAxis.x != 0 ? Mathf.Sign(MovementInputAxis.x) : 0;
+        float VerticalDashDirection = Mathf.Abs(MovementInputAxis.y) > EHMovementComponent.JOYSTICK_WALK_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
+        DashDirection = new Vector2(HorizontalDashDirection, VerticalDashDirection);
+
+        MovementComponent.SetIsFacingLeft(DashDirection.x, true);
         float TimeThatHasPassed = 0;
         float CachedGravity = Physics2D.GravityScale;
         
@@ -140,24 +156,34 @@ public class DashComponent : MonoBehaviour
     private IEnumerator PerformDashCoolDown()
     {
         float TimeThatHasPassed = 0;
-        Vector2 PreviousVelocity = Physics2D.Velocity;
-        while (TimeThatHasPassed < DashCoolDownTime && !bIsPerformingDash && PreviousVelocity.y <= Physics2D.Velocity.y)
+        float OriginalYSpeed = Physics2D.Velocity.y;
+        if (OriginalYSpeed > 0)
         {
-            TimeThatHasPassed += EHTime.DeltaTime;
-            if (Physics2D.Velocity.y > 0)
+            while (TimeThatHasPassed < DashCoolDownTime && !bIsPerformingDash && OriginalYSpeed <= Physics2D.Velocity.y)
             {
-                Physics2D.Velocity -= EHTime.DeltaTime * DragValueForDashCoolDown * Vector2.up;
+                TimeThatHasPassed += EHTime.DeltaTime;
+                if (Physics2D.Velocity.y > 0)
+                {
+                    Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, Mathf.MoveTowards(OriginalYSpeed, 0, 1 - (DashCoolDownTime / TimeThatHasPassed)));
+                }
+                yield return null;
             }
-            yield return null;
+            Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, 0);
         }
-        yield break;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     private void OnCharacterLanded()
     {
         DashesRemaining = MaxDashesBeforeLanding;
     }
 
+    /// <summary>
+    /// Called any time our character's health has changed. Makes it so that our dashg properly cancels if the character is hurt
+    /// </summary>
+    /// <param name="DamageData"></param>
     private void OnCharacterHealthChanged(FDamageData DamageData)
     {
         if (DamageData.DamageType != EHDamageableComponent.EDamageType.HEALING)

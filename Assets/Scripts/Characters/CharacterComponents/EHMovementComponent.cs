@@ -78,6 +78,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     public float TimeToReachApex = .5f;
     [Tooltip("The multiplier to gravity that we will apply when we are falling")]
     public float LowJumpMultiplier = 2f;
+    private bool IsHoldingJump;
 
     // The velocity at which we will perform our jump
     [HideInInspector]
@@ -178,6 +179,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     #region input methods
     public void InputJump()
     {
+        IsHoldingJump = true;
         if (RemainingDoubleJumps > 0 || CurrentMovementType != EMovementType.IN_AIR)
         {
             CharacterAnimator.SetTrigger(ANIM_JUMP);
@@ -421,7 +423,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     /// </summary>
     private void Jump()
     {
-        Physics2D.GravityScale = CachedGravityScale;
+        Physics2D.GravityScale = CachedGravityScale * (IsHoldingJump ? 1 : LowJumpMultiplier);
         Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
     }
 
@@ -439,6 +441,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     /// </summary>
     public void EndJump()
     {
+        IsHoldingJump = false;
         if (CurrentMovementType == EMovementType.IN_AIR)
         {
             Physics2D.GravityScale = CachedGravityScale * LowJumpMultiplier;
