@@ -17,7 +17,7 @@ public class WallJump : MonoBehaviour
     [SerializeField]
     private Vector2 WallJumpVelocity = Vector2.one;
     private EHPhysics2D Physics2D;
-    private EHMovementComponent CharacterMovement;
+    private EHCharacterMovementComponent CharacterMovement;
     private EHBox2DCollider CharacterCollider;
     private Animator CharacterAnim;
 
@@ -30,7 +30,7 @@ public class WallJump : MonoBehaviour
     #region monobehaviour methods
     private void Awake()
     {
-        CharacterMovement = GetComponent<EHMovementComponent>();
+        CharacterMovement = GetComponent<EHCharacterMovementComponent>();
         CharacterCollider = GetComponent<EHBox2DCollider>();
         Physics2D = GetComponent<EHPhysics2D>();
         CharacterAnim = GetComponent<Animator>();
@@ -46,7 +46,7 @@ public class WallJump : MonoBehaviour
         if (bAnimIsWallRiding)
         {
             float xInput = CharacterMovement.GetMovementInput().x;
-            if (xInput * CachedWallDirection <= EHMovementComponent.JOYSTICK_WALK_THRESHOLD)
+            if (xInput * CachedWallDirection <= EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD)
             {
                 if (CharacterAnim.GetBool(ANIM_WALL_HOLD))
                 {
@@ -62,7 +62,7 @@ public class WallJump : MonoBehaviour
         }
         else if (ColliderWeAreOn)
         {
-            if (CachedWallDirection * CharacterMovement.GetMovementInput().x > EHMovementComponent.JOYSTICK_WALK_THRESHOLD)
+            if (CachedWallDirection * CharacterMovement.GetMovementInput().x > EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD)
             {
                 if (!CharacterAnim.GetBool(ANIM_WALL_HOLD))
                 {

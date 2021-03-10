@@ -8,7 +8,7 @@ using UnityEngine.Events;
 /// Handles all the logic for our character's movement. This include movemet in the air as well as specific movement options while grounded
 /// </summary>
 [RequireComponent(typeof(EHBox2DCollider))]
-public class EHMovementComponent : EHBaseMovementComponent
+public class EHCharacterMovementComponent : EHBaseMovementComponent
 {
     #region const values
     private const string ANIM_MOVEMENT_STATE = "MovementState";
@@ -78,7 +78,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     public float TimeToReachApex = .5f;
     [Tooltip("The multiplier to gravity that we will apply when we are falling")]
     public float LowJumpMultiplier = 2f;
-    private bool IsHoldingJump;
+    private bool bIsHoldingJump;
 
     // The velocity at which we will perform our jump
     [HideInInspector]
@@ -179,7 +179,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     #region input methods
     public void InputJump()
     {
-        IsHoldingJump = true;
+        bIsHoldingJump = true;
         if (RemainingDoubleJumps > 0 || CurrentMovementType != EMovementType.IN_AIR)
         {
             CharacterAnimator.SetTrigger(ANIM_JUMP);
@@ -270,7 +270,7 @@ public class EHMovementComponent : EHBaseMovementComponent
        if (bIsAnimationControlled)
         {
             GoalSpeed = AnimatedGoalVelocity.x * Mathf.Sign(CharacterSpriteRenderer.transform.localScale.x);
-            Acceleration /= 3;//Remember to remove this. Just for testing. Thinking about having an animation controlled acceleration as well
+            Acceleration = Acceleration * AnimatedScaledAcceleration; //Remember to remove this. Just for testing. Thinking about having an animation controlled acceleration as well
         }
         else
         {
@@ -423,7 +423,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     /// </summary>
     private void Jump()
     {
-        Physics2D.GravityScale = CachedGravityScale * (IsHoldingJump ? 1 : LowJumpMultiplier);
+        Physics2D.GravityScale = CachedGravityScale * (bIsHoldingJump ? 1 : LowJumpMultiplier);
         Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
     }
 
@@ -441,7 +441,7 @@ public class EHMovementComponent : EHBaseMovementComponent
     /// </summary>
     public void EndJump()
     {
-        IsHoldingJump = false;
+        bIsHoldingJump = false;
         if (CurrentMovementType == EMovementType.IN_AIR)
         {
             Physics2D.GravityScale = CachedGravityScale * LowJumpMultiplier;

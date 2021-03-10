@@ -6,7 +6,7 @@ using UnityEngine;
 /// Dash component handles all the logic required for successfully performing a dash
 /// </summary>
 [RequireComponent(typeof(EHPhysics2D))]
-[RequireComponent(typeof(EHMovementComponent))]
+[RequireComponent(typeof(EHCharacterMovementComponent))]
 public class DashComponent : MonoBehaviour
 {
     #region const variables
@@ -34,7 +34,7 @@ public class DashComponent : MonoBehaviour
     /// </summary>
     private bool bIsPerformingDash;
     // The attached movement component of our character
-    private EHMovementComponent MovementComponent;
+    private EHCharacterMovementComponent MovementComponent;
     // Reference to the damageable component, used to indicate if our character was hurt to cancel out the dash
     private EHDamageableComponent DamageComponent;
     private EHPhysics2D Physics2D;
@@ -45,7 +45,7 @@ public class DashComponent : MonoBehaviour
     #region monobehaviour methods
     private void Awake()
     {
-        MovementComponent = GetComponent<EHMovementComponent>();
+        MovementComponent = GetComponent<EHCharacterMovementComponent>();
         DamageComponent = GetComponent<EHDamageableComponent>();
         Physics2D = GetComponent<EHPhysics2D>();
         CharacterAnim = GetComponent<Animator>();
@@ -132,8 +132,9 @@ public class DashComponent : MonoBehaviour
         }
 
         float HorizontalDashDirection = MovementInputAxis.x != 0 ? Mathf.Sign(MovementInputAxis.x) : 0;
-        float VerticalDashDirection = Mathf.Abs(MovementInputAxis.y) > EHMovementComponent.JOYSTICK_WALK_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
+        float VerticalDashDirection = Mathf.Abs(MovementInputAxis.y) > EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
         DashDirection = new Vector2(HorizontalDashDirection, VerticalDashDirection);
+        DashDirection.Normalize();
 
         MovementComponent.SetIsFacingLeft(DashDirection.x, true);
         float TimeThatHasPassed = 0;

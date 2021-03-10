@@ -15,7 +15,7 @@ public class EHPlayerController : EHBasePlayerController
     #endregion const variables
     
     private EHAttackComponent AttackComponent;
-    private EHMovementComponent MovementComponent;
+    private EHCharacterMovementComponent MovementComponent;
     private DashComponent DashComponent;
     private EHPlayerCharacter PlayerCharacter;
     private WallJump CharacterWallJump;
@@ -36,7 +36,7 @@ public class EHPlayerController : EHBasePlayerController
     {
         DashComponent = GetComponent<DashComponent>();
         AttackComponent = GetComponent<EHAttackComponent>();
-        MovementComponent = GetComponent<EHMovementComponent>();
+        MovementComponent = GetComponent<EHCharacterMovementComponent>();
         CharacterWallJump = GetComponent<WallJump>();
 
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, Jump);

@@ -14,7 +14,6 @@ public class EHPlayerCharacter : EHGameplayCharacter
     protected override void Awake()
     {
         base.Awake();
-        DontDestroyOnLoad(this.gameObject);
         CharacterWallJump = GetComponent<WallJump>();
         playerController = (EHPlayerController)CharacterController;
     }

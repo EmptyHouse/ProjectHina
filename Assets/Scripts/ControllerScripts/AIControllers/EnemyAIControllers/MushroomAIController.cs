@@ -23,11 +23,13 @@ public class MushroomAIController : EHBaseAIController
     {
         [SerializeField]
         private float PatrolRange = 5f;
+        private Vector2 OriginalPosition;
 
 
         public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
             base.InitilalizeState(AIControllerOwner);
+            OriginalPosition = AIControllerOwner.transform.position;
         }
 
         public override void OnStateBegin()
