@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0034a52149bc79845a2812b7a76e635d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitboxType: 1
+  HitboxType: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &5537102526189414201
@@ -187,7 +187,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5537102527136180462}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.11, y: 0, z: -5.639823}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AssociatedAttackTable: {fileID: 0}
   DefaultAttackData:
-    AttackDamage: 1
+    AttackDamage: 0
     HitStunTime: 0
     HitFreezeTime: 0
     CameraShakeDuration: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e7d7b297a161a428999ed986d0c50a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 3
+  MaxHealth: 1
 --- !u!114 &5537102527136180460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,8 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcbd6c86c4c06304aac0b90069259feb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterName: Shroomy
-  CharacterTeam: 2
+  CharacterName: 
+  CharacterTeam: 0
 --- !u!114 &5537102527136180449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,10 +275,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bIsCharacterCollider: 1
-  ColliderType: 2
+  ColliderType: 0
   bIsTrigger: 0
   ColliderOffset: {x: 0, y: 0}
-  ColliderSize: {x: 0.78, y: 1.26}
+  ColliderSize: {x: 1, y: 1}
 --- !u!114 &5537102527136180448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,9 +306,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8ee640781bb8db4ab40a003eaebbf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bIsFacingLeft: 1
+  bIsFacingLeft: 0
   bIsAnimationControlled: 0
   AnimatedGoalVelocity: {x: 0, y: 0}
+  AnimatedScaledAcceleration: 1
   bMovementComponentDisabled: 0
   WalkingSpeed: 5
   RunningSpeed: 11
@@ -361,7 +362,7 @@ Transform:
   m_GameObject: {fileID: 5537102527284334449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5537102525723969012}
   m_Father: {fileID: 5537102527136180463}
@@ -461,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0034a52149bc79845a2812b7a76e635d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HitboxType: 1
+  HitboxType: 0
   HitboxOffset: {x: 0, y: 0}
   HitboxSize: {x: 1, y: 1}
 --- !u!1 &5537102527456814544

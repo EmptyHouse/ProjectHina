@@ -98,7 +98,24 @@ public class BaseGameOverseer : MonoBehaviour
     }
     #endregion monobehaviour methods
 
+    #region room functions
+    /// <summary>
+    /// Function should be called from the awake function of room's actor
+    /// </summary>
+    /// <param name="RoomThatWasLoaded"></param>
+    public void OnRoomWasLoaded(RoomActor RoomThatWasLoaded)
+    {
+        if (CurrentlyLoadedRoom == RoomThatWasLoaded)
+        {
+            return;
+        }
+        CurrentlyLoadedRoom = RoomThatWasLoaded;
+        MainGameCamera.OnRoomLoaded(CurrentlyLoadedRoom);
+    }
+    #endregion room functions
+
     #region saving/loading
+    // The path that our game save data will be saved
     private string SAVE_GAME_PATH { get { return Application.persistentDataPath + "/SaveGame.dat"; } }
     private string BACKUP_SAVE_PATH { get { return Application.persistentDataPath + "backup_SaveGame.dat"; } }
 
@@ -175,10 +192,16 @@ public class BaseGameOverseer : MonoBehaviour
     {
         private const int SAVE_VERSION = 0;
         private int SaveGameVersion;
+        // This will indicate the slot that we are saving our game to.
+        public byte SaveGameSlot;
         public ushort LevelID;
+        // 
         public byte CheckPointID;
+        // The time of the last time we saved our game
         public DateTime TimeOfSave;
+        // The total time that we have played our game
         public float TimePlayingGame;
+        // The number of times our character has died
         public int NumberOfDeaths;
 
         public SaveGameData()
@@ -186,6 +209,10 @@ public class BaseGameOverseer : MonoBehaviour
             SaveGameVersion = SAVE_VERSION;
         }
 
+        /// <summary>
+        /// Returns whether or not our save game file is up to date
+        /// </summary>
+        /// <returns></returns>
         public bool IsSaveOutOfDate()
         {
             return SaveGameVersion == SAVE_VERSION;

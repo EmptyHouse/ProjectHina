@@ -27,7 +27,7 @@ public class ScreenTransitionUI : MonoBehaviour
     /// <param name="PlayerCharacter"></param>
     /// <param name="DoorToLoad"></param>
     /// <returns></returns>
-    public bool StartSceneTransition(EHPlayerCharacter PlayerCharacter, DoorData DoorToLoad)
+    public bool LoadNewRoomFromDoorActor(EHPlayerCharacter PlayerCharacter, DoorData DoorToLoad, bool bLoadLevelAsync = true)
     {
         if (bIsExecutingSceneTransition)
         {
@@ -94,7 +94,7 @@ public class ScreenTransitionUI : MonoBehaviour
             CharacterSpawnPosition = DoorToSpawnFrom.GetSpawnPosition();
         }
 
-        PlayerCharacter.SpawnCharacterToPosition(CharacterSpawnPosition);
+        PlayerCharacter.SetCharacterAtPosition(CharacterSpawnPosition);
         BaseGameOverseer.Instance.MainGameCamera.FocusCameraImmediate();
         PlayerCharacter.GetComponent<EHPlayerController>().enabled = true;
         TimeThatHasPassed = 0;

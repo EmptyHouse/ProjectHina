@@ -74,6 +74,7 @@ public class EHGameplayCharacter : EHCharacter
         }
     }
 
+    // Returns whether or not our gameplay character has died
     public bool GetCharacterIsDead()
     {
         return DamageableComponent.Health <= 0;
@@ -104,12 +105,20 @@ public class EHGameplayCharacter : EHCharacter
             AttackComponent.enabled = false;
     }
 
-    public void SpawnCharacterToPosition(Vector3 NewPosition, bool bIgnoreSweep = true)
+    /// <summary>
+    /// Sets the character to a position. You can set whether or not the position checks for sweep position
+    /// </summary>
+    /// <param name="NewPosition"></param>
+    /// <param name="bIgnoreSweep"></param>
+    public void SetCharacterAtPosition(Vector3 NewPosition, bool bIgnoreSweep = true)
     {
         this.transform.position = NewPosition;
         CharacterCollider.UpdateColliderBounds(bIgnoreSweep);//this is to avoid 
     }
 
+    /// <summary>
+    /// function will be called when our character's hit stun has begun
+    /// </summary>
     private void OnHitStunStart()
     {
         if (MovementComponent)
@@ -118,6 +127,9 @@ public class EHGameplayCharacter : EHCharacter
         }
     }
 
+    /// <summary>
+    /// Function will be called when our hit stun has ended
+    /// </summary>
     private void OnHitStunEnd()
     {
         if (MovementComponent && !GetCharacterIsDead())

@@ -92,7 +92,7 @@ public class DoorActor : MonoBehaviour
         if (PlayerCharacter != null)
         {
             Debug.Log("Player Has exited");
-            BaseGameOverseer.Instance.GameHUD.GetScreenTransition().StartSceneTransition(PlayerCharacter, AssociatedDoorData.GetConnectedDoorData());
+            BaseGameOverseer.Instance.GameHUD.GetScreenTransition().LoadNewRoomFromDoorActor(PlayerCharacter, AssociatedDoorData.GetConnectedDoorData());
         }
     }
     #endregion trigger events

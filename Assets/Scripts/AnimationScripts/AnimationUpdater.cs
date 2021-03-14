@@ -17,11 +17,6 @@ public class AnimationUpdater : MonoBehaviour
         Anim = GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void OnEnable()
     {
         Anim.enabled = false;
@@ -33,7 +28,10 @@ public class AnimationUpdater : MonoBehaviour
         Anim.enabled = true;
     }
     #endregion monobehaviour methods
-
+    /// <summary>
+    /// Updates our animation at the end of every frame.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AnimationCoroutine()
     {
         while (true)
@@ -42,7 +40,7 @@ public class AnimationUpdater : MonoBehaviour
             {
                 Anim.Update(EHTime.DeltaTime);
             }
-            yield return new WaitForEndOfFrame(); ;
+            yield return null;
         }
     }
 }

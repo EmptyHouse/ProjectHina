@@ -20,12 +20,18 @@ public class RoomActor : MonoBehaviour
     private RoomData AssociatedRoomData = null;
     private HashSet<DoorActor> DoorTriggers = new HashSet<DoorActor>();
 
+    /// <summary>
+    /// The default spawn position for our player when they enter the room
+    /// NOTE: This should only be used if our character is not spawned using a door
+    /// </summary>
+    public Vector2 DefaultSpawnPosition;
+
     #region monobehaviour methods
     private void Awake()
     {
         if (BaseGameOverseer.Instance != null)
         {
-            BaseGameOverseer.Instance.CurrentlyLoadedRoom = this;
+            BaseGameOverseer.Instance.OnRoomWasLoaded(this);
         }
         else
         {
