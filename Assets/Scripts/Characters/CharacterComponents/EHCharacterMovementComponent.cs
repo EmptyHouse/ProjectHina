@@ -177,6 +177,10 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
     #endregion monobehaviour methods
 
     #region input methods
+    /// <summary>
+    /// Call this method to input a jump. This does not guarantee that our character will jump, but it will
+    /// set a trigger to allow them to jump if it is possible
+    /// </summary>
     public void InputJump()
     {
         bIsHoldingJump = true;
@@ -186,6 +190,9 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
         }
     }
 
+    /// <summary>
+    /// Clears the jump trigger in our character's animator
+    /// </summary>
     public void ReleaseInputJump()
     {
         CharacterAnimator.SetBool(ANIM_JUMP, false);
@@ -228,7 +235,7 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
     #endregion input methods
 
     /// <summary>
-    /// TO-DO why do we use CurrentSpeed? Look into this later
+    /// Updates our character's velocity based on the horizontal and vertical axis inputs
     /// </summary>
     protected override void UpdateVelocityFromInput(Vector2 CurrentInput, Vector2 PreviousInput)
     {

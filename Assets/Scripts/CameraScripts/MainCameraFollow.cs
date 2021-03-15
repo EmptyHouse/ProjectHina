@@ -53,6 +53,10 @@ public class MainCameraFollow : MonoBehaviour
     private void Start()
     {
         BaseGameOverseer.Instance.MainGameCamera = this;
+        if (!bHasCachedRoomBounds)
+        {
+            OnRoomLoaded(BaseGameOverseer.Instance.CurrentlyLoadedRoom);
+        }
     }
 
     private void LateUpdate()

@@ -95,6 +95,11 @@ public class ScreenTransitionUI : MonoBehaviour
         }
 
         PlayerCharacter.SetCharacterAtPosition(CharacterSpawnPosition);
+        EHPhysics2D Physics2D = PlayerCharacter.GetComponent<EHPhysics2D>();
+        if (Physics2D)
+        {
+            Physics2D.Velocity = Vector2.zero;
+        }
         BaseGameOverseer.Instance.MainGameCamera.FocusCameraImmediate();
         PlayerCharacter.GetComponent<EHPlayerController>().enabled = true;
         TimeThatHasPassed = 0;

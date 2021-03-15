@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Room1_DoorA
   m_EditorClassIdentifier: 
   ConnectedRoom: {fileID: 11400000, guid: 4140f7313c9a36f4894f40a9ee5c06ab, type: 2}
-  ConnectedDoor: {fileID: 11400000, guid: f4113c4ea83442543afa30f9808a0c51, type: 2}
+  ConnectedDoor: {fileID: 11400000, guid: 8808c11780c324d42836f219e777e6e7, type: 2}

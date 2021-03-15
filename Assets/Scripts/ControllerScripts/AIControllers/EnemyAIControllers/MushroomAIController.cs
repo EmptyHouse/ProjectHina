@@ -12,6 +12,11 @@ public class MushroomAIController : EHBaseAIController
     protected override void Awake()
     {
         base.Awake();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
         StartNewState(MushroomIdleState);
     }
 
@@ -23,28 +28,51 @@ public class MushroomAIController : EHBaseAIController
     {
         [SerializeField]
         private float PatrolRange = 5f;
-        private Vector2 OriginalPosition;
+
+        private float TimeUntilTurnAroundIfStuck = 2f;
+        private Vector3 OriginalPosition;
+        private float LeftEndPoint;
+        private float RightEndPoint;
+        private bool bPatrolRight;
+        private EHBaseMovementComponent MovementComponent;
 
 
         public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
             base.InitilalizeState(AIControllerOwner);
             OriginalPosition = AIControllerOwner.transform.position;
+            MovementComponent = AIControllerOwner.GetComponent<EHBaseMovementComponent>();
         }
 
         public override void OnStateBegin()
         {
-            throw new System.NotImplementedException();
+            bPatrolRight = Random.Range(0, 2) != 0;
+            LeftEndPoint = OriginalPosition.x - PatrolRange / 2f;
+            RightEndPoint = OriginalPosition.x + PatrolRange / 2f;
         }
 
         public override void OnStateEnded()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         public override void OnStateTick(float DeltaTime)
         {
-            throw new System.NotImplementedException();
+            MovementComponent.SetHorizontalInput(bPatrolRight ? 1 : -1);
+            if (bPatrolRight)
+            {
+                if (AIControllerOwner.transform.position.x > RightEndPoint)
+                {
+                    bPatrolRight = !bPatrolRight;
+                }
+            }
+            else
+            {
+                if (AIControllerOwner.transform.position.x < LeftEndPoint)
+                {
+                    bPatrolRight = !bPatrolRight;
+                }
+            }
         }
     }
 

@@ -488,6 +488,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1351870915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5537102527136180462, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+  m_PrefabInstance: {fileID: 1471622851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1351870925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351870915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3e7b036abb97eb4b94ed899bd4c25a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MushroomIdleState:
+    bDebugDrawState: 0
+    PatrolRange: 5
+  MushroomAgroState:
+    bDebugDrawState: 0
 --- !u!1001 &1471622851
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -527,6 +549,22 @@ PrefabInstance:
       propertyPath: ColliderSize.y
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 5537102527136180451, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: AirSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537102527136180451, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: RunningSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537102527136180451, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: WalkingSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537102527136180451, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: CrouchingSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5537102527136180462, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
       propertyPath: m_Name
       value: Shroomy
@@ -537,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5537102527136180463, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.85973
+      value: 12.63
       objectReference: {fileID: 0}
     - target: {fileID: 5537102527136180463, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
       propertyPath: m_LocalPosition.y

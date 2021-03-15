@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b618cefed2545cb4a9a592ebca71a14f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ConnectedDoor: {fileID: 0}
+  AssociatedDoorData: {fileID: 11400000, guid: 3504492f2766d254d9c7386a80b6a61e, type: 2}
   AssociatedSpawnPoint: {fileID: 7479149320649085569}
   bCharacterEntersLeft: 1
   SpawnPointOffset: 2
@@ -65,7 +65,7 @@ MonoBehaviour:
   ColliderType: 0
   bIsTrigger: 1
   ColliderOffset: {x: 0, y: 0}
-  ColliderSize: {x: 2, y: 5}
+  ColliderSize: {x: 1.5, y: 3}
 --- !u!1 &2415117312261555993
 GameObject:
   m_ObjectHideFlags: 0

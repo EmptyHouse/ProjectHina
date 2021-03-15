@@ -6,10 +6,16 @@ public abstract  class EHBaseAIController : EHController
 {
     private Vector3 OriginalPosition;
     private BaseAIState CurrentState;
+
     #region monobehaviour methods
     protected virtual void Awake()
     {
         OriginalPosition = this.transform.position;
+    }
+
+    protected virtual void Start()
+    {
+
     }
 
     protected virtual void Update()
@@ -21,7 +27,11 @@ public abstract  class EHBaseAIController : EHController
     }
     #endregion monobehaivour methods
 
-    public void StartNewState(BaseAIState NextAIState)
+    /// <summary>
+    /// Begins the process to start a new State
+    /// </summary>
+    /// <param name="NextAIState"></param>
+    protected void StartNewState(BaseAIState NextAIState)
     {
         if (NextAIState == CurrentState)
         {
@@ -38,5 +48,14 @@ public abstract  class EHBaseAIController : EHController
             CurrentState.InitilalizeState(this);
         }
         CurrentState.OnStateBegin();
+    }
+
+    /// <summary>
+    /// Returns the position of our Actor's spawn position
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetOriginalPosition()
+    {
+        return OriginalPosition;
     }
 }

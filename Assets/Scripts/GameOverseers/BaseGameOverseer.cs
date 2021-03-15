@@ -110,7 +110,10 @@ public class BaseGameOverseer : MonoBehaviour
             return;
         }
         CurrentlyLoadedRoom = RoomThatWasLoaded;
-        MainGameCamera.OnRoomLoaded(CurrentlyLoadedRoom);
+        if (MainGameCamera)
+        {
+            MainGameCamera.OnRoomLoaded(CurrentlyLoadedRoom);
+        }
     }
     #endregion room functions
 
