@@ -150,7 +150,7 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     /// <returns></returns>
     protected Color DebugGetColor()
     {
-        if (HitboxActorComponent.bAnimationIsInvincible)
+        if (HitboxActorComponent && HitboxActorComponent.bAnimationIsInvincible)
         {
             return DEBUG_INVINCIBLE_COLOR;
         }
