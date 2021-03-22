@@ -36,7 +36,6 @@ public class MushroomAIController : EHBaseAIController
         private bool bPatrolRight;
         private EHBaseMovementComponent MovementComponent;
 
-
         public override void InitilalizeState(EHBaseAIController AIControllerOwner)
         {
             base.InitilalizeState(AIControllerOwner);

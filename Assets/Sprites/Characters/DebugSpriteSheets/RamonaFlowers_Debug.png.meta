@@ -152,6 +152,9 @@ TextureImporter:
   - first:
       213: -4772522032669353408
     second: RomonaShoot_09
+  - first:
+      213: 3399569921026747022
+    second: WallRide_00
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1580,6 +1583,27 @@ TextureImporter:
       bones: []
       spriteID: 04a94084f7894cdb0800000000000000
       internalID: -4772522032669353408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WallRide_00
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 353
+        width: 51
+        height: 52
+      alignment: 9
+      pivot: {x: 0.3529412, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8ae6ebd4d2bd2f20800000000000000
+      internalID: 3399569921026747022
       vertices: []
       indices: 
       edges: []

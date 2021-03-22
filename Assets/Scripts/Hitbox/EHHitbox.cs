@@ -142,6 +142,7 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     public readonly Color DEBUG_HITBOX_COLOR = Color.red;
     public readonly Color DEBUG_HURTBOX_COLOR = Color.cyan;
     public readonly Color DEBUG_INTERSECT_COLOR = new Color(.73f, .33f, .83f);
+    public readonly Color DEBUG_INVINCIBLE_COLOR = new Color(.75f, .75f, .75f);
     
     /// <summary>
     /// Returns the color that our debug hitbox should display.
@@ -149,6 +150,10 @@ public abstract class EHHitbox : MonoBehaviour, ITickableComponent
     /// <returns></returns>
     protected Color DebugGetColor()
     {
+        if (HitboxActorComponent.bAnimationIsInvincible)
+        {
+            return DEBUG_INVINCIBLE_COLOR;
+        }
         if (IntersectingHitboxSet.Count > 0)
         {
             return DEBUG_INTERSECT_COLOR;

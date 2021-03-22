@@ -12,6 +12,7 @@ public class MainSplashScreen : BaseSelectionUI
     private Image FadeOutImage;
     [SerializeField]
     private float TimeToFadeOutImage = 2f;
+    //
     private bool bIsLoadingGame = false;
 
     #region input methods

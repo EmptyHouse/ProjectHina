@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MushroomIdleState:
     bDebugDrawState: 0
-    PatrolRange: 5
+    PatrolRange: 10
   MushroomAgroState:
     bDebugDrawState: 0
 --- !u!1 &5537102527284334449

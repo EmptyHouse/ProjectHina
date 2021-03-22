@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class EHHitboxActorComponent : MonoBehaviour
 {
+    // Attached attack component for our character. If null attacks cannot be registered if our hitbox intersects anything
     public EHAttackComponent AttackComponent { get; private set; }
+    // Attached damageable component for our character. If null our actor will not be able to take damage if our hurtbox is intersected
     public EHDamageableComponent DamageableComponent { get; private set; }
+    // The character owner for our hitbox component. Typically it will be gameplay character that will be taking damage in our game. May be instances where that is not the case
     public EHGameplayCharacter CharacterOwner { get; private set; }
+
+    #region animation varaibles
+    [HideInInspector]
+    public bool bAnimationIsInvincible = false;
+    #endregion animation variables
 
     #region monobehaviour methods
     private void Awake()
@@ -66,7 +74,13 @@ public class EHHitboxActorComponent : MonoBehaviour
             return; 
         }
 
+        if (OtherHurtbox.HitboxActorComponent.bAnimationIsInvincible)
+        {
+            return;//Other character was invincible when we attempted to hit them, may in the future want to add some kind of wiff affect to indicate that you made contact but couldn't hurt them
+        }
+
         EHDamageableComponent OtherDamageableComponent = OtherHurtbox.HitboxActorComponent.DamageableComponent;
+        
         if (OtherDamageableComponent == null)
         {
             Debug.LogWarning("There is no Damageable component associated with the hurtbox we are intersecting");

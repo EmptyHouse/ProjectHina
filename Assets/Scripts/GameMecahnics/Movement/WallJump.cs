@@ -9,13 +9,16 @@ public class WallJump : MonoBehaviour
     private const string ANIM_WALL_HOLD = "CanWallRide";
 
     #endregion const variables
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float FrictionScale = 0.5f;
+
+    #region main varaibles
+    [Tooltip("The speed that our character will fall when they are riding along the wall")]
     [SerializeField]
     private float MaxFallSpeed = 3f;
+    [Tooltip("The velocity that our character will jump off of the wall from. Keep in mind that this value assumes that the character is jumping to the right")]
     [SerializeField]
     private Vector2 WallJumpVelocity = Vector2.one;
+
+    // Component References
     private EHPhysics2D Physics2D;
     private EHCharacterMovementComponent CharacterMovement;
     private EHBox2DCollider CharacterCollider;
@@ -23,6 +26,8 @@ public class WallJump : MonoBehaviour
 
     private EHBaseCollider2D ColliderWeAreOn;
     private float CachedWallDirection;
+    #endregion main varaibles
+
     #region animation variables
     public bool bAnimIsWallRiding;
     #endregion animation variables
@@ -81,23 +86,29 @@ public class WallJump : MonoBehaviour
     }
     #endregion monobehaviour methods
     /// <summary>
-    /// 
+    /// Begins our trigger that will allow us to perform a wall jump
     /// </summary>
     public void InputWallJump()
-    {
-        CharacterAnim.SetTrigger(ANIM_WALL_JUMP);
+    { 
+        if (bAnimIsWallRiding)
+        {
+            CharacterAnim.SetTrigger(ANIM_WALL_JUMP);
+        }
     }
 
     /// <summary>
-    /// 
+    /// Cancels our trigger to perform a wall jump
     /// </summary>
     public void InputCancelWallJump()
     {
-        CharacterAnim.ResetTrigger(ANIM_WALL_JUMP);
+        if (bAnimIsWallRiding)
+        {
+            CharacterAnim.ResetTrigger(ANIM_WALL_JUMP);
+        }
     }
 
     /// <summary>
-    /// Call this 
+    /// Call this to actually perform a wall jump 
     /// </summary>
     public void PerformWallJump()
     {
