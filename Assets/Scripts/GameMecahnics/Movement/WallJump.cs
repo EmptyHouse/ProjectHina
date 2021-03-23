@@ -5,7 +5,7 @@ using UnityEngine;
 public class WallJump : MonoBehaviour
 {
     #region const variables
-    private const string ANIM_WALL_JUMP = "WallJump";
+    private const string ANIM_WALL_JUMP = "Jump";
     private const string ANIM_WALL_HOLD = "CanWallRide";
 
     #endregion const variables
@@ -55,7 +55,6 @@ public class WallJump : MonoBehaviour
             {
                 if (CharacterAnim.GetBool(ANIM_WALL_HOLD))
                 {
-                    print(xInput * CachedWallDirection);
                     CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
                     return;
                 }
@@ -114,8 +113,11 @@ public class WallJump : MonoBehaviour
     {
         if (ColliderWeAreOn)
         {
+            CharacterMovement.ResetCachedGravityScaled();
             Vector2 AdjustedLaunchVelocity = new Vector2(WallJumpVelocity.x * (CharacterMovement.GetIsFacingLeft() ? 1f : -1f), WallJumpVelocity.y);
             Physics2D.Velocity = AdjustedLaunchVelocity;
+
+            CharacterMovement.SetIsFacingLeft(!CharacterMovement.GetIsFacingLeft(), true);
         }
     }
 
@@ -124,10 +126,18 @@ public class WallJump : MonoBehaviour
         if (HitData.HitDirection.x > 0)
         {
             ColliderWeAreOn = HitData.OtherCollider;
+            if (!CharacterMovement.GetIsFacingLeft())
+            {
+                CharacterMovement.SetIsFacingLeft(true, true);
+            }
         }
         else if (HitData.HitDirection.x < 0)
         {
             ColliderWeAreOn = HitData.OtherCollider;
+            if (CharacterMovement.GetIsFacingLeft())
+            {
+                CharacterMovement.SetIsFacingLeft(false, true);
+            }
         }
         else
         {

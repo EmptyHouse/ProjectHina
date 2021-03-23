@@ -430,8 +430,13 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
     /// </summary>
     private void Jump()
     {
-        Physics2D.GravityScale = CachedGravityScale * (bIsHoldingJump ? 1 : LowJumpMultiplier);
+        ResetCachedGravityScaled();
         Physics2D.Velocity = new Vector2(Physics2D.Velocity.x, JumpVelocity);
+    }
+
+    public void ResetCachedGravityScaled()
+    {
+        Physics2D.GravityScale = CachedGravityScale * (bIsHoldingJump ? 1 : LowJumpMultiplier);
     }
 
     /// <summary>
@@ -484,6 +489,11 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
     protected override bool CanChangeDirection()
     {
         return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
+    }
+
+    public float GetJumpVelocity()
+    {
+        return JumpVelocity;
     }
 
     /// <summary>
