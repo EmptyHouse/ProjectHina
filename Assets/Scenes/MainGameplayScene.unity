@@ -134,6 +134,14 @@ PrefabInstance:
       propertyPath: MaxFallSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 784950896, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: WallJumpVelocity.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 784950896, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: WallJumpVelocity.y
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 1719638849, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -305,91 +313,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d2e14c0ddac314a81757f221a5016e, type: 3}
---- !u!1 &841370190
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 841370194}
-  - component: {fileID: 841370193}
-  - component: {fileID: 841370192}
-  - component: {fileID: 841370191}
-  m_Layer: 0
-  m_Name: DaggerProjectile
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &841370191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841370190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce49bcc40fb4fe24abb9866d743a8207, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AssociatedAttackTable: {fileID: 0}
-  DefaultAttackData:
-    AttackDamage: 1
-    HitStunTime: 0.1
-    HitFreezeTime: 0.05
-    CameraShakeDuration: 0.02
-    CameraShakeIntensity: 0.1
-    LaunchForce: {x: 1, y: 0}
-    bIsConstantHitbox: 0
---- !u!114 &841370192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841370190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdcb26f641d488b478ce51c40c92901e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RayTraceCount: 2
-  ProjectileWidth: 0
-  ProjectileHorizontalOffset: 0
---- !u!114 &841370193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841370190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37e8701f8965004da09e0085542da44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GravityScale: 1
-  bUseTerminalVelocity: 1
-  TerminalVelocity: 10
---- !u!4 &841370194
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841370190}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11006448, y: 6.667737, z: 1.536243}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1642929390}
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1000367867 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 397468205547328734, guid: aa4575925d8a34444be398575a6539d0, type: 3}
@@ -498,36 +421,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
---- !u!1 &1642929389
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1642929390}
-  m_Layer: 0
-  m_Name: Hitbox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1642929390
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1642929389}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 841370194}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1079227210298778645
 PrefabInstance:
   m_ObjectHideFlags: 0

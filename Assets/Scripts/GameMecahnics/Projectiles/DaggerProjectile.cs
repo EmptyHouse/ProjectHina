@@ -7,6 +7,10 @@ public class DaggerProjectile : EHBaseProjectile
     public float ProjectileWidth;
     public float ProjectileHorizontalOffset;
 
+    [SerializeField]
+    private SpriteRenderer NinjaStarSprite = null;
+    [SerializeField]
+    private float NinjaStarSpinRate = 10f;
     #region monobehaviour methods
     protected override void Awake()
     {
@@ -17,6 +21,8 @@ public class DaggerProjectile : EHBaseProjectile
     {
         RotateBasedOnVelocity();
         base.Update();
+        print(NinjaStarSprite);
+        NinjaStarSprite.transform.Rotate(Vector3.forward * NinjaStarSpinRate * EHTime.DeltaTime, Space.Self);
     }
 
     protected override void OnValidate()
