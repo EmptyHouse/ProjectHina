@@ -126,13 +126,13 @@ public class DashComponent : MonoBehaviour
         Vector2 MovementInputAxis = MovementComponent.GetMovementInput();
 
         Vector2 DashDirection;
-        if (MovementInputAxis == Vector2.zero)
+        if (MovementInputAxis.x == 0)
         {
             MovementInputAxis = Vector2.right * (MovementComponent.GetIsFacingLeft() ? -1 : 1);
         }
 
         float HorizontalDashDirection = MovementInputAxis.x != 0 ? Mathf.Sign(MovementInputAxis.x) : 0;
-        float VerticalDashDirection = Mathf.Abs(MovementInputAxis.y) > EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
+        float VerticalDashDirection = 0;//Mathf.Abs(MovementInputAxis.y) > EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD ? Mathf.Sign(MovementInputAxis.y) : 0;
         DashDirection = new Vector2(HorizontalDashDirection, VerticalDashDirection);
         DashDirection.Normalize();
 
