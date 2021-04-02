@@ -54,3 +54,13 @@ MonoBehaviour:
       CameraShakeIntensity: 0.2
       LaunchForce: {x: 4.5, y: 0}
       bIsConstantHitbox: 0
+  - AttackName: Parry_Attack
+    AttackDataAnimationClip: {fileID: 7400000, guid: 7da3f5252e82ec24c80e6dd89a830368, type: 2}
+    AttackData:
+      AttackDamage: 2
+      HitStunTime: 1.2
+      HitFreezeTime: 0.3
+      CameraShakeDuration: 0.1
+      CameraShakeIntensity: 0.25
+      LaunchForce: {x: 6, y: 0}
+      bIsConstantHitbox: 0

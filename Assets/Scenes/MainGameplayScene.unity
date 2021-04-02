@@ -174,6 +174,34 @@ PrefabInstance:
       propertyPath: LaunchSpeed
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 2074331678374974400, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074331678374974400, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074331678374974400, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2074331678374974400, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.225
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.14
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392886, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
@@ -222,6 +250,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[4].MainKey
+      value: 105
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[4].InputName
+      value: Parry
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[3].BufferTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[4].BufferTime
+      value: 0.16666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[1].AlternateKey
+      value: 336
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[3].AlternateKey
+      value: 331
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: ButtonInputNodes.Array.data[4].AlternateKey
+      value: 333
+      objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392894, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -237,6 +297,22 @@ PrefabInstance:
     - target: {fileID: 5197975866366392895, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: DelayBeforeStartDash
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5932623623091488683, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117431342909887187, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7559799091183608364, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7865722967889252834, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8716684288268586891, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: CameraFollowSpeed
@@ -421,6 +497,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+--- !u!1 &2002098317 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5197975866366392886, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+  m_PrefabInstance: {fileID: 119793296}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2002098318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002098317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9283a7f8639467c48ad3b2e5e3ac21d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TimeForParry: 0.5
+  CooldownTimeForParry: 0.8
 --- !u!1001 &1079227210298778645
 PrefabInstance:
   m_ObjectHideFlags: 0

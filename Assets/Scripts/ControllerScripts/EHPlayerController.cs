@@ -9,6 +9,7 @@ public class EHPlayerController : EHBasePlayerController
     public const string DASH_COMMAND = "Dash";
     public const string ATTACK_COMMAND = "Attack";
     public const string SHOOT_COMMAND = "Shoot";
+    public const string PARRY_COMMAND = "Parry";
 
     private const string HORIZONTAL_AXIS = "Horizontal";
     private const string VERTICAL_AXIS = "Vertical";
@@ -19,6 +20,7 @@ public class EHPlayerController : EHBasePlayerController
     private DashComponent DashComponent;
     private EHPlayerCharacter PlayerCharacter;
     private WallJump CharacterWallJump;
+    private EHParry ParryComponent;
 
     #region monobehaivour methods
     protected override void Awake()
@@ -38,6 +40,7 @@ public class EHPlayerController : EHBasePlayerController
         AttackComponent = GetComponent<EHAttackComponent>();
         MovementComponent = GetComponent<EHCharacterMovementComponent>();
         CharacterWallJump = GetComponent<WallJump>();
+        ParryComponent = GetComponent<EHParry>();
 
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, Jump);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, JumpBufferEnded);
@@ -50,6 +53,8 @@ public class EHPlayerController : EHBasePlayerController
         BindActionToInput(ATTACK_COMMAND, ButtonInputType.Button_Buffer, AttackBufferEnded);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Pressed, CharacterWallJump.InputWallJump);
         BindActionToInput(JUMP_COMMAND, ButtonInputType.Button_Buffer, CharacterWallJump.InputCancelWallJump);
+        BindActionToInput(PARRY_COMMAND, ButtonInputType.Button_Pressed, ParryComponent.ParryInputDown);
+        BindActionToInput(PARRY_COMMAND, ButtonInputType.Button_Buffer, ParryComponent.ParryInputReleased);
 
         BindActionToAxis(HORIZONTAL_AXIS, MovementComponent.SetHorizontalInput);
         BindActionToAxis(VERTICAL_AXIS, MovementComponent.SetVerticalInput);

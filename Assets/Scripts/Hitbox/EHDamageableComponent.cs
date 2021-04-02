@@ -12,6 +12,7 @@ public class EHDamageableComponent : MonoBehaviour
     #region enum 
     public enum EDamageType
     {
+        NONE,
         DAMAGE,
         HEALING,
         DEATH,
@@ -41,6 +42,8 @@ public class EHDamageableComponent : MonoBehaviour
 
     private Animator AnimReference;
 
+    private bool bIsInvincible;
+
     #region monobehaviour methods
     private void Awake()
     {
@@ -69,13 +72,22 @@ public class EHDamageableComponent : MonoBehaviour
     }
 
     /// <summary>
-    /// This method will be called to apply damage to 
+    /// This method will be called to apply damage to
+    /// 
+    /// This will return true if damage was successfully given to the player
     /// </summary>
     /// <param name="AttackComponentThatHurtUs"></param>
     /// <param name="DamageToTake"></param>
-    public void TakeDamage(EHAttackComponent AttackComponentThatHurtUs, int DamageToTake)
+    public bool TakeDamage(EHAttackComponent AttackComponentThatHurtUs, int DamageToTake)
     {
         FDamageData DamageData = new FDamageData();
+        if (bIsInvincible)
+        { 
+            DamageData.DamageType = EDamageType.NONE;
+            OnCharacterHealthChanged?.Invoke(DamageData);
+            return false;
+        }
+        
         DamageData.AttackSource = AttackComponentThatHurtUs;
         DamageData.DamageAmount = DamageToTake;
         int PreviousHealth = Health;
@@ -90,6 +102,7 @@ public class EHDamageableComponent : MonoBehaviour
             DamageData.DamageType = EDamageType.DAMAGE;
         }
         OnCharacterHealthChanged?.Invoke(DamageData);
+        return true;
     }
 
     /// <summary>
@@ -104,6 +117,15 @@ public class EHDamageableComponent : MonoBehaviour
     public void ApplyKnockback(float HitStunTime, Vector2 KnockbackDirection)
     {
         StartCoroutine(KnockBackCoroutine(HitStunTime, KnockbackDirection));
+    }
+
+    public void SetIsInvincible(bool bIsInvincible)
+    {
+        if (this.bIsInvincible == bIsInvincible)
+        {
+            return;
+        }
+        this.bIsInvincible = bIsInvincible;
     }
 
     private IEnumerator KnockBackCoroutine(float HitStunTime, Vector2 KnockbackForce)

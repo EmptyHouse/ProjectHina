@@ -90,8 +90,11 @@ public class EHAttackComponent : MonoBehaviour
             AttackData = DefaultAttackData;
         }
         IntersectedDamageableComponents.Add(DamageableComponentWeHit);
-        DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage);
-
+        if (!DamageableComponentWeHit.TakeDamage(this, AttackData.AttackDamage))
+        {
+            return;//If we were not able to successfully hurt the other character we will skip all other effects
+        }
+        
         if (BaseGameOverseer.Instance.MainGameCamera && BaseGameOverseer.Instance.MainGameCamera.CameraShake)
         {
             BaseGameOverseer.Instance.MainGameCamera.CameraShake.BeginCameraShake(AttackData.CameraShakeDuration, AttackData.CameraShakeIntensity);
