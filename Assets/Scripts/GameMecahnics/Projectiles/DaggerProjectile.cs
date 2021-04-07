@@ -21,6 +21,7 @@ public class DaggerProjectile : EHBaseProjectile
     {
         RotateBasedOnVelocity();
         base.Update();
+        print(NinjaStarSprite);
         NinjaStarSprite.transform.Rotate(Vector3.forward * NinjaStarSpinRate * EHTime.DeltaTime, Space.Self);
     }
 

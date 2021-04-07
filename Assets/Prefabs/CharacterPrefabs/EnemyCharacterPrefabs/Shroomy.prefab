@@ -275,13 +275,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AssociatedAttackTable: {fileID: 0}
   DefaultAttackData:
-    AttackDamage: 1
-    HitStunTime: 0.13
-    HitFreezeTime: 0.08
-    CameraShakeDuration: 0.1
-    CameraShakeIntensity: 0.1
-    LaunchForce: {x: 6, y: 0}
-    bIsConstantHitbox: 1
+    AttackDamage: 0
+    HitStunTime: 0
+    HitFreezeTime: 0
+    CameraShakeDuration: 0
+    CameraShakeIntensity: 0
+    LaunchForce: {x: 0, y: 0}
+    bIsConstantHitbox: 0
 --- !u!114 &5537102527136180461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df794d99083b31c46a916f7e7abfaf31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bAnimationIsInvincible: 0
 --- !u!114 &1351870925
 MonoBehaviour:
   m_ObjectHideFlags: 0

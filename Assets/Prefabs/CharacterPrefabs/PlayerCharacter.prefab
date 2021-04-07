@@ -451,7 +451,6 @@ MonoBehaviour:
   bIsFacingLeft: 0
   bIsAnimationControlled: 0
   AnimatedGoalVelocity: {x: 0, y: 0}
-  AnimatedScaledAcceleration: 1
   bMovementComponentDisabled: 0
   WalkingSpeed: 5
   RunningSpeed: 12
@@ -520,7 +519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df794d99083b31c46a916f7e7abfaf31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bAnimationIsInvincible: 0
 --- !u!114 &5197975866366392832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88ece81254f27ed43be2d1fbcf54abf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FrictionScale: 0.5
   MaxFallSpeed: 2
   WallJumpVelocity: {x: 25, y: 25}
   bAnimIsWallRiding: 0
