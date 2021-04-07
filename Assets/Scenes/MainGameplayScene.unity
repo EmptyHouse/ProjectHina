@@ -196,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.33
       objectReference: {fileID: 0}
     - target: {fileID: 2674647075249699101, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.y
@@ -297,6 +297,18 @@ PrefabInstance:
     - target: {fileID: 5197975866366392895, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: DelayBeforeStartDash
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.111024015
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.11320752
+      objectReference: {fileID: 0}
+    - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.099857576
       objectReference: {fileID: 0}
     - target: {fileID: 5932623623091488683, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_IsActive
@@ -447,6 +459,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5537102527136180454, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: DefaultAttackData.HitStunTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5537102527136180454, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
+      propertyPath: DefaultAttackData.LaunchForce.x
+      value: 8.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5537102527136180462, guid: f3448c93733af9f4cb39f2ca9dde8b5a, type: 3}
       propertyPath: m_Name
       value: Shroomy
@@ -514,8 +534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9283a7f8639467c48ad3b2e5e3ac21d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimeForParry: 0.5
   CooldownTimeForParry: 0.8
+  bIsAnimParrying: 0
 --- !u!1001 &1079227210298778645
 PrefabInstance:
   m_ObjectHideFlags: 0
