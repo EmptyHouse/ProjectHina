@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: WallJumpVelocity.y
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 784950896, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: BufferTimeForWallJump
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 1719638849, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -272,7 +276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: ButtonInputNodes.Array.data[1].AlternateKey
-      value: 336
+      value: 335
       objectReference: {fileID: 0}
     - target: {fileID: 5197975866366392890, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: ButtonInputNodes.Array.data[3].AlternateKey

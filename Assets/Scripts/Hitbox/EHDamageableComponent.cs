@@ -40,7 +40,7 @@ public class EHDamageableComponent : MonoBehaviour
 
     private EHHitboxActorComponent AssociatedHitboxComponent;
 
-    private Animator AnimReference;
+    protected Animator AnimReference;
 
     private bool bIsInvincible;
 

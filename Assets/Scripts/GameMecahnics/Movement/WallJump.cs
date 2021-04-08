@@ -17,6 +17,8 @@ public class WallJump : MonoBehaviour
     [Tooltip("The velocity that our character will jump off of the wall from. Keep in mind that this value assumes that the character is jumping to the right")]
     [SerializeField]
     private Vector2 WallJumpVelocity = Vector2.one;
+    [SerializeField]
+    private float BufferTimeForWallJump = .2f;
 
     // Component References
     private EHPhysics2D Physics2D;
@@ -26,6 +28,8 @@ public class WallJump : MonoBehaviour
 
     private EHBaseCollider2D ColliderWeAreOn;
     private float CachedWallDirection;
+    private float TimeRemainingForWallHold;
+
     #endregion main varaibles
 
     #region animation variables
@@ -53,7 +57,7 @@ public class WallJump : MonoBehaviour
             float xInput = CharacterMovement.GetMovementInput().x;
             if (xInput * CachedWallDirection <= EHCharacterMovementComponent.JOYSTICK_WALK_THRESHOLD)
             {
-                if (CharacterAnim.GetBool(ANIM_WALL_HOLD))
+                if (CharacterAnim.GetBool(ANIM_WALL_HOLD) && TimeRemainingForWallHold < 0)
                 {
                     CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
                     return;
@@ -73,6 +77,10 @@ public class WallJump : MonoBehaviour
                     CharacterAnim.SetBool(ANIM_WALL_HOLD, true);
                 }
             }
+        }
+        if (TimeRemainingForWallHold >= 0)
+        {
+            TimeRemainingForWallHold -= EHTime.DeltaTime;
         }
     }
 
@@ -152,7 +160,13 @@ public class WallJump : MonoBehaviour
         if (HitData.OtherCollider == ColliderWeAreOn)
         {
             ColliderWeAreOn = null;
-            CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
+            TimeRemainingForWallHold = BufferTimeForWallJump;
+            //CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
         }
+    }
+
+    private void OnWallHoldBufferEnd()
+    {
+        CharacterAnim.SetBool(ANIM_WALL_HOLD, false);
     }
 }

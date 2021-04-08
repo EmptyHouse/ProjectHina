@@ -34,7 +34,9 @@ public class DaggerProjectile : EHBaseProjectile
         }
     }
     #endregion monobehaviour methods
+
     #region override methods
+
     public override void LaunchProjectile(Vector2 VelocityOfLaucnh)
     {
         Physics2D.Velocity = VelocityOfLaucnh;
@@ -64,7 +66,7 @@ public class DaggerProjectile : EHBaseProjectile
         transform.rotation = Quaternion.Euler(0, 0, ZRoation);
     }
 
-    private void OnCharacterHit(FAttackData AttackData)
+    private void OnCharacterHit(FAttackData AttackData, EHDamageableComponent DamageableComponent)
     {
         Destroy(this.gameObject);
     }

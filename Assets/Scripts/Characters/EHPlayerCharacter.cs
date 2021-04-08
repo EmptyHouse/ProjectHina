@@ -7,6 +7,10 @@ using UnityEngine;
 /// </summary>
 public class EHPlayerCharacter : EHGameplayCharacter
 {
+    #region animation triggers
+    private const string ANIM_KILL_CANCEL = "KillCancel";
+    #endregion animation triggers
+
     public EHPlayerController PlayerController { get { return playerController; } }
     WallJump CharacterWallJump;
     private EHPlayerController playerController;
@@ -16,5 +20,18 @@ public class EHPlayerCharacter : EHGameplayCharacter
         base.Awake();
         CharacterWallJump = GetComponent<WallJump>();
         playerController = (EHPlayerController)CharacterController;
+        AttackComponent.OnAttackCharacterDel += OnKilledCharacter;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Damage"></param>
+    private void OnKilledCharacter(FAttackData Damage, EHDamageableComponent DamageComponentWeHit)
+    {
+        if (DamageComponentWeHit.Health <= 0)
+        {
+            CharacterAnim.SetTrigger(ANIM_KILL_CANCEL);
+        }
     }
 }
