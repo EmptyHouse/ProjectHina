@@ -65,7 +65,7 @@ MonoBehaviour:
   ColliderType: 0
   bIsTrigger: 1
   ColliderOffset: {x: 0, y: 0}
-  ColliderSize: {x: 1.5, y: 3}
+  ColliderSize: {x: 2, y: 3}
 --- !u!1 &2415117312261555993
 GameObject:
   m_ObjectHideFlags: 0
