@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class EHBox2DCollider : EHBaseCollider2D
 {
     public enum ECollisionDirection : byte
@@ -213,4 +217,9 @@ public class EHBox2DCollider : EHBaseCollider2D
         return RectGeometry.RectPosition - PreviousRectGeometry.RectPosition;
     }
     #endregion override methods
+
+#if UNITY_EDITOR
+
+#endif
 }
+
