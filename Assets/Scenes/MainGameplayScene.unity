@@ -302,17 +302,21 @@ PrefabInstance:
       propertyPath: DelayBeforeStartDash
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 5197975867184269771, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -433950337943033454, guid: 4b401077f075edf41971ee99b1baff67, type: 3}
     - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_BackGroundColor.b
-      value: 0.111024015
+      value: 0.1981132
       objectReference: {fileID: 0}
     - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_BackGroundColor.g
-      value: 0.11320752
+      value: 0.17975558
       objectReference: {fileID: 0}
     - target: {fileID: 5197975867515113566, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_BackGroundColor.r
-      value: 0.099857576
+      value: 0.15979886
       objectReference: {fileID: 0}
     - target: {fileID: 5932623623091488683, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_IsActive
