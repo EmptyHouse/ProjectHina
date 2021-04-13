@@ -10,8 +10,14 @@ public class EHAttackComponent : MonoBehaviour
 {
 
     private const string ATTACK_ANIM = "Attack";
-
+    /// <summary>
+    /// 
+    /// </summary>
     public UnityAction<FAttackData, EHDamageableComponent> OnAttackCharacterDel;
+    /// <summary>
+    /// This will be called when a new attack has begun
+    /// </summary>
+    public UnityAction OnBeginNewAttackDel;
     [Tooltip("The assigned DataTable that will contain all the information for each attack.")]
     public AttackDataTable AssociatedAttackTable;
 

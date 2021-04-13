@@ -488,7 +488,7 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
     /// <returns></returns>
     protected override bool CanChangeDirection()
     {
-        return CurrentMovementType != EMovementType.IN_AIR && !bIsAnimationControlled;
+        return CurrentMovementType != EMovementType.IN_AIR && (!bIsAnimationControlled || bAnimAllowSetDirection);
     }
 
     public float GetJumpVelocity()

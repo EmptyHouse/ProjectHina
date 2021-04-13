@@ -49,6 +49,12 @@ public abstract class EHBaseMovementComponent : MonoBehaviour
     /// </summary>
     [HideInInspector]
     public bool bMovementComponentDisabled;
+
+    /// <summary>
+    /// Set this value to true if you want to allow our character to change directions while it is being animation controlled
+    /// </summary>
+    [HideInInspector]
+    public bool bAnimAllowSetDirection;
     #endregion animation controlled variables
 
     #region input varaibles

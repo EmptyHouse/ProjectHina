@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 784950896, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: BufferTimeForWallJump
-      value: 0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1719638849, guid: ee5d302cdeb8920429b2582b71259148, type: 3}
       propertyPath: m_LocalPosition.x
