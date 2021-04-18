@@ -47,7 +47,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public bool bIsCharacterCollider;
     [Tooltip("The type of our collider. This will determine how we update our collider as well as certain interactions we will have with other colliders")]
     public EColliderType ColliderType = EColliderType.STATIC;
-    private HashSet<EHBaseCollider2D> OverlappingColliders = new HashSet<EHBaseCollider2D>();
+    private Dictionary<EHBaseCollider2D, FHitData> OverlappingColliders = new Dictionary<EHBaseCollider2D, FHitData>();
     [Tooltip("Mark this true if we want to treat this collider as a trigger box insteat of a solid collision")]
     [SerializeField]
     private bool bIsTrigger = false;
@@ -68,7 +68,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        List<EHBaseCollider2D> ColliderIterator = new List<EHBaseCollider2D>(OverlappingColliders);
+        List<EHBaseCollider2D> ColliderIterator = new List<EHBaseCollider2D>(OverlappingColliders.Keys);
         foreach (EHBaseCollider2D OtherCollider in ColliderIterator)
         {
             if (bIsTrigger)
@@ -195,13 +195,18 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// <param name="OtherCollider"></param>
     protected void AddColliderToHitSet(EHBaseCollider2D OtherCollider, FHitData HitData)
     {
-        if (OtherCollider != null && OverlappingColliders.Add(OtherCollider))
+        if (OtherCollider != null && !OverlappingColliders.ContainsKey(OtherCollider))
         {
-            OtherCollider.OverlappingColliders.Add(this);
-            OnCollision2DBegin?.Invoke(HitData);
-            ReverseHitData(ref HitData);
-            OtherCollider.OnCollision2DBegin?.Invoke(HitData);
+            OverlappingColliders.Add(OtherCollider, new FHitData());
+            OtherCollider.OverlappingColliders.Add(this, new FHitData());
         }
+        OverlappingColliders[OtherCollider] = HitData;
+        OnCollision2DBegin?.Invoke(HitData);
+
+        ReverseHitData(ref HitData);
+
+        OtherCollider.OverlappingColliders[this] = HitData;
+        OtherCollider.OnCollision2DBegin?.Invoke(HitData);
     }
 
     protected void HitCollisionStay(EHBaseCollider2D OtherCollider, FHitData HitData)
@@ -248,7 +253,7 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     public void DragIntersectingColliders()
     {
         Vector3 OffsetPosition = GetOffsetFromPreviousPosition();
-        foreach (EHBaseCollider2D Collider in OverlappingColliders)
+        foreach (EHBaseCollider2D Collider in OverlappingColliders.Keys)
         {
             if (Collider.ColliderType == EColliderType.PHYSICS)
             {
@@ -264,7 +269,16 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// <returns></returns>
     protected bool ContainOverlappingCollider(EHBaseCollider2D OtherCollider)
     {
-        return OverlappingColliders.Contains(OtherCollider);
+        return OverlappingColliders.ContainsKey(OtherCollider);
+    }
+
+    protected bool MatchesOverlappingHitData(EHBaseCollider2D OtherCollider, ref FHitData HitData)
+    {
+        if (!OverlappingColliders.ContainsKey(OtherCollider))
+        {
+            return false;
+        }
+        return OverlappingColliders[OtherCollider].HitDirection != HitData.HitDirection;
     }
 
     /// <summary>
@@ -348,8 +362,8 @@ public abstract class EHBaseCollider2D : MonoBehaviour
     /// <param name="Collider2D"></param>
     private void OnTriggerOverlapBegin(EHBaseCollider2D Collider2D)
     {
-        OverlappingColliders.Add(Collider2D);
-        Collider2D.OverlappingColliders.Add(this);
+        OverlappingColliders.Add(Collider2D, new FHitData());
+        Collider2D.OverlappingColliders.Add(this, new FHitData());
         FTriggerData TriggerData = new FTriggerData();
 
         TriggerData.OwningCollider = this;

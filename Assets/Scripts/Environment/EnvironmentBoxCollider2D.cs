@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Devives from EHBoxCollider2D, but contains addional scaling requirements to more easily snap into our
+/// environment
+/// </summary>
 [RequireComponent(typeof(EHBox2DCollider))]
-public class EnvironmentBoxCollider : MonoBehaviour
+public class EnvironmentBoxCollider2D : MonoBehaviour
 {
     [SerializeField]
     private EHBox2DCollider AssociatedCollier;

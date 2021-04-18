@@ -131,7 +131,7 @@ public class EHBox2DCollider : EHBaseCollider2D
                 HitData.HitDirection = Vector2.up;
             }
 
-            if (!ContainOverlappingCollider(ColliderToPushOut))
+            if (!ContainOverlappingCollider(ColliderToPushOut) || MatchesOverlappingHitData(ColliderToPushOut, ref HitData))
             {
                 AddColliderToHitSet(ColliderToPushOut, HitData);
             }
