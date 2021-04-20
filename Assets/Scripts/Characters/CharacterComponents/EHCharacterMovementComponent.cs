@@ -212,7 +212,7 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
             case EMovementType.CROUCH:
                 if (AttemptDropDownJump())
                 {
-
+                    DropDownJump();
                 }
                 else if (AttemptStand())
                 {
@@ -405,15 +405,22 @@ public class EHCharacterMovementComponent : EHBaseMovementComponent
         EHRect2D CastBox = new EHRect2D();
         CastBox.RectPosition = ColliderBounds.MinBounds + Vector2.down * .1f;
         CastBox.RectSize = new Vector2(ColliderBounds.MaxBounds.x - ColliderBounds.MinBounds.x, .1f);
-        if (EHPhysicsManager2D.BoxCast2D(ref CastBox, out EHBaseCollider2D ColliderWeHit, LayerMask.GetMask(ENVIRONMENT_LAYER)))
+        bool bIsUnderOneWayPlatform = false;
+        if (EHPhysicsManager2D.BoxCastAll2D(ref CastBox, EHBaseCollider2D.EColliderType.STATIC, out EHBaseCollider2D[] ColliderWeHitList, LayerMask.GetMask(ENVIRONMENT_LAYER)))
         {
-            if (ColliderWeHit is EHOneSidedBoxCollider2D)
+            foreach (EHBaseCollider2D ColliderWeHit in ColliderWeHitList)
             {
-                DropDownJump();
-                return true;
+                if (!(ColliderWeHit is EHOneSidedBoxCollider2D))
+                {
+                    return false;
+                }
+                else
+                {
+                    bIsUnderOneWayPlatform = true;
+                }
             }
         }
-        return false;
+        return bIsUnderOneWayPlatform;
     }
 
     /// <summary>
